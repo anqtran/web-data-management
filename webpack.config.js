@@ -1,5 +1,4 @@
 const path = require('path');
-console.log('got in here')
 
 module.exports = {
   // the entry file for the bundle
