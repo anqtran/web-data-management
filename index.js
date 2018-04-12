@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-  var mysql      = require('mysql');
-  var connection = mysql.createConnection({
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
    host     : 'localhost',
    user     : 'root',
    password : '0123',
@@ -22,9 +22,15 @@ app.use('/auth', authRoutes);
 // start the server
 app.listen(3000, () => {
 	console.log('Server is running on http://localhost:3000 or http://127.0.0.1:3000');
+	var column = "";
 	  connection.query('SELECT * FROM property;', function(err, rows, fields) {
-   if (!err)
+   if (!err) {
      console.log('The solution is: ', rows);
+ 	 var s =  JSON.stringify(rows);
+ 	 console.log(s);
+ 	 var jsonFile = JSON.parse(s);
+ 	 console.log(jsonFile[1].Name);
+ 	}
    else
      console.log('Error while performing Query.');
 });
