@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import SignUpForm from '../components/SignUpForm.jsx';
+import VisitorSignUpForm from '../components/VisitorSignUpForm.jsx';
 
 
-class SignUpPage extends React.Component {
+class VisitorSignUpPage extends React.Component {
 
   /**
    * Class constructor.
@@ -88,7 +88,7 @@ class SignUpPage extends React.Component {
    */
   render() {
     return (
-      <SignUpForm
+      <VisitorSignUpForm
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}
@@ -99,4 +99,4 @@ class SignUpPage extends React.Component {
 
 }
 
-export default SignUpPage;
+export default VisitorSignUpPage;
