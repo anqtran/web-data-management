@@ -53,11 +53,11 @@ class OwnerSignUpPage extends React.Component {
    */
   changeUser(event, index, value) {
     console.log(event);
-    console.log("event target" + event.target.name);
+    console.log(event.target);
     //assign to user properties
     const field = event.target.name;
     const user = this.state.user;
-    user[field] = event.target.value;
+    user['propType'] = event.target.innerText;
     this.setState(this.state.user);
 
     console.log(this.state.user.propType);
