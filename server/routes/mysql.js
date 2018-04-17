@@ -78,6 +78,8 @@ app.get('/visit', function(req, res){
 
 //---------------------------------------------------------//
 
+// EXAMPLES
+// post = insert into
 app.post('/insert', function(req, res){
     var sql  = 'INSERT INTO user(Username, Email, Hashed_Password,UserType) VALUES (?, ?, ?, ?)';
     var body = [req.body.username, req.body.email,req.body.hashpassword,req.usertype];
@@ -90,6 +92,7 @@ app.post('/insert', function(req, res){
     });
 })
 
+// get = select
 app.get('/user/:id_user', function(req, res){
     var sql       = 'SELECT * FROM user WHERE Username = ?';
     var id_movie  = [req.params.id_user];
@@ -108,7 +111,7 @@ app.get('/user/:id_user', function(req, res){
 
 })
 
-// need to be changed
+// put = update
 app.put('/update', function(req, res){
     var sql  = 'UPDATE t_movie SET movie_title = ?, movie_rate = ? WHERE id_movie = "'+req.body.id_movie+'"';
     var body = [req.body.movie_title, req.body.movie_rate];
@@ -121,6 +124,7 @@ app.put('/update', function(req, res){
     });
 })
 
+// delete = delete from
 app.delete('/delete/:id_movie', function(req, res){
    var sql      = 'DELETE FROM t_movie WHERE id_movie = ?';
    var id_movie = [req.params.id_movie];
@@ -132,6 +136,23 @@ app.delete('/delete/:id_movie', function(req, res){
        }
    });
 });
+
+//---------------------------------------------------------//
+
+// Test Queries -- MINE
+app.get('/test', function(req, res){
+    var sql = 'INSERT INTO user (Email, Username, Password, UserType) VALUES("abc@gmail.com", "abc", "d68fae04506bde7857ff4aa40ebad49d", "VISITOR")';
+    connection.query(sql, function(err, rows){
+       if(err){
+           res.json({"Error": true, "Message":"Error Execute Sql"});
+       }else{
+           res.json({"Error": false, "Message": "Success", "user" : rows});
+           console.log(res.user);
+       }
+    });
+})
+
+//---------------------------------------------------------//
 
 
 app.listen(3000);
