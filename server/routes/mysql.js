@@ -141,7 +141,7 @@ app.delete('/delete/:id_movie', function(req, res){
 
 // Test Queries -- MINE
 app.get('/test', function(req, res){
-    var sql = 'INSERT INTO user (Email, Username, Password, UserType) VALUES("abc@gmail.com", "abc", "d68fae04506bde7857ff4aa40ebad49d", "VISITOR")';
+    var sql = 'INSERT INTO user (Email, Username, Password, UserType) VALUES("abc@gmail.com", "xyz", "d68fae04506bde7857ff4aa40ebad49d", "VISITOR")';
     connection.query(sql, function(err, rows){
        if(err){
            res.json({"Error": true, "Message":"Error Execute Sql"});

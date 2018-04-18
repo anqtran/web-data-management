@@ -1,7 +1,7 @@
 const express = require('express');
 const validator = require('validator');
-
 const router = new express.Router();
+var connection = require('./connected');
 
 /**
  * Validate the sign up form
@@ -16,6 +16,8 @@ function validateSignupForm(payload) {
   let message = '';
   
   console.log(payload);
+  console.log(payload.name);
+  
   if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
     isFormValid = false;
     errors.email = 'Please provide a correct email address.';
@@ -50,7 +52,6 @@ function validateSignupForm(payload) {
  *                   errors tips, and a global message for the whole form.
  */
 function validateLoginForm(payload) {
-    console.log(payload);
   const errors = {};
   let isFormValid = true;
   let message = '';
