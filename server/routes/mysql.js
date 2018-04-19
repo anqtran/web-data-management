@@ -12,7 +12,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // DISPLAY TABLES
 // User Table
 app.get('/user', function(req, res){
-    var sql = 'SELECT * FROM user';
+    var sql = 'SELECT * FROM user WHERE Username = ?';
+
     // var sql = 'show tables';
     connection.query(sql, function(err, rows){
        if(err){
@@ -81,7 +82,7 @@ app.get('/visit', function(req, res){
 // EXAMPLES
 // post = insert into
 app.post('/insert', function(req, res){
-    var sql  = 'INSERT INTO user(Username, Email, Hashed_Password,UserType) VALUES (?, ?, ?, ?)';
+    var sql  = 'INSERT INTO user(Usename, Email, Hashed_Password,UserType) VALUES (?, ?, ?, ?)';
     var body = [req.body.username, req.body.email,req.body.hashpassword,req.usertype];
     connection.query(sql, body, function(err){
        if(err){

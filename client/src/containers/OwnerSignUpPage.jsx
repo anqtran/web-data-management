@@ -84,7 +84,7 @@ class OwnerSignUpPage extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    axios.post('/auth/signup', {
+    axios.post('/auth/ownersignup', {
       user : this.state.user
     })
     .then(function (response) {

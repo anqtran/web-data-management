@@ -3,6 +3,7 @@ import LoginPage from './containers/LoginPage.jsx';
 import VisitorSignUpPage from './containers/VisitorSignUpPage.jsx';
 import OwnerSignUpPage from './containers/OwnerSignUpPage.jsx';
 import AdminDashBoardPage from './containers/AdminDashBoardPage.jsx'
+import AddPropertyPage from './containers/AddPropertyPage.jsx';
 
 const routes = {
   // base component (wrapper for the whole application).
@@ -30,6 +31,10 @@ const routes = {
     {
       path:'/admin/dashboard',
       component: AdminDashBoardPage
+    },
+    {
+      path:'/owner/addproperty',
+      component: AddPropertyPage
     }
   ]
 };
