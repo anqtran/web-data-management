@@ -97,30 +97,7 @@ function validateLoginForm(payload) {
 }
 
 router.post('/ownersignup', (req, res) => {
-  var user = req.body.user;
-  var hash = bcrypt.hashSync(user.password, salt);
-  const validationResult = validateSignupForm(req.body.user);
-  // if the input is valid
-  if (validationResult.success) {
-    //run query
-    var sql  = 'INSERT INTO user VALUES (?, ?, ?, ?)';
-    //adding hash password
-    var body = [user.name, user.email, hash, user.usertype];
-    connection.query(sql, body, function(err){
-       if(err){
-          return res.json({"Error": true, "Message": "SQL Error"});
-       } else {
-          return res.json({"Error": false, "Message": "Success"})
-       }
-    });
-  }
-  else {
-    console.log('validationResult => ',validationResult);
-    return res.status(200).end();
-  }
-});
-
-router.post('/visitorsignup', (req, res) => {
+const errors = {};
   var user = req.body.user;
   console.log(user);
   var hash = bcrypt.hashSync(user.password, salt);
@@ -134,9 +111,43 @@ router.post('/visitorsignup', (req, res) => {
     var body = [user.name, user.email, hash, user.usertype];
     connection.query(sql, body, function(err){
        if(err){
-        console.log("ERRORRRRR");
-        console.log(err);
-          return res.json({"Error": true, "Message": "SQL Error"});
+        errors.email = 'Email is already taken.';
+        console.log("user duplicated");
+        return res.status(200).json({Error: true, success: false, errors: errors});
+       } else {
+          return res.json({"Error": false, "Message": "Success"})
+       }
+    });
+  }
+  else {
+    console.log('validationResult => ',validationResult);
+    return res.status(200).json({
+      Error: true,
+      success: false,
+      message: validationResult.message,
+      errors: validationResult.errors
+    });
+  }
+});
+
+router.post('/visitorsignup', (req, res) => {
+  const errors = {};
+  var user = req.body.user;
+  console.log(user);
+  var hash = bcrypt.hashSync(user.password, salt);
+  const validationResult = validateSignupForm(req.body.user);
+  // if the input is valid
+  if (validationResult.success) {
+    //run query
+    console.log("validation success");
+    var sql  = 'INSERT INTO user VALUES (?, ?, ?, ?)';
+    //adding hash password
+    var body = [user.name, user.email, hash, user.usertype];
+    connection.query(sql, body, function(err){
+       if(err){
+        errors.email = 'Email is already taken.';
+        console.log("user duplicated");
+        return res.status(200).json({Error: true, success: false, errors: errors});
        } else {
           return res.json({"Error": false, "Message": "Success"})
        }
@@ -174,7 +185,7 @@ router.post('/login', (req, res) => {
     connection.query(sql,body, function(err, rows) {
       if(err){
         console.log('err => ',err);
-        return res.json({"Error": true, "Message":"Error Execute Sql"});
+        return res.status(200).json({Error: true, success: false, errors: errors});
       } else{
         console.log('rows => ',rows);
         // if there is no email in the system
@@ -184,14 +195,14 @@ router.post('/login', (req, res) => {
         }
 
         const user = rows[0];
-        const HashedPassword = user['Hashed Password Example'];
+        const HashedPassword = user['Password'];
         //compared hash password 
         if(bcrypt.compareSync(password, HashedPassword)) {
           // successful
           const type = user['UserType'];
           console.log('type => ',type);
           console.log(user);
-          user['Hashed Password Example'] = ''; 
+          user['Password'] = ''; 
           return res.status(200).json({
             success:true,
             user: user
