@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import OwnerSignUpForm from '../components/OwnerSignUpForm.jsx';
+import AddPropertyForm from '../components/AddPropertyForm.jsx';
 
 const styles = {
   customWidth: {
@@ -15,7 +15,7 @@ const styles = {
 };
 
 
-class OwnerSignUpPage extends React.Component {
+class AddPropertyPage extends React.Component {
 
   /**
    * Class constructor.
@@ -26,11 +26,7 @@ class OwnerSignUpPage extends React.Component {
     // set the initial component state
     this.state = {
       errors: {},
-      user: {
-        email: '',
-        name: '',
-        password: '',
-        confirmPassword:'',
+      property: {
         propertyName: '',
         streetAddress: '',
         city:'',
@@ -41,52 +37,37 @@ class OwnerSignUpPage extends React.Component {
         crop:'',
         public:'0',
         commercial:'0', 
-        usertype: 'OWNER'
+        propType: 'Garden'
       }
     };
 
     this.processForm = this.processForm.bind(this);
-    this.changeUser = this.changeUser.bind(this);
+    this.changeproperty = this.changeproperty.bind(this);
     this.changeSelectField  = this.changeSelectField.bind(this);
   }
 
   /**
-   * Change the user object.
+   * Change the property object.
    *
    * @param {object} event - the JavaScript event object
    */
-  changeUser(event) {
+  changeproperty(event) {
     const field = event.target.name;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const user = this.state.user;
-    user['propType'] = event.target.innerText;
-=======
-    console.log("value is " + value);
-    console.log("Field issss" + field);
-    const user = this.state.user;
-    user[field] = value;
-    user['propType'] = event.target.innerText;
-
->>>>>>> 4a0ab87314b5b0d9c3df2241f13d7d09f02648ed
-    this.setState(this.state.user);
-=======
-    const user = this.state.user;
-    user[field] = event.target.value;
+    const property = this.state.property;
+    property[field] = event.target.value;
         this.setState({
-      user
+      property
     });
   }
->>>>>>> f78d949b119bc0dd65968b76cf8173a4d651f792
 
   changeSelectField(event, index, value, field) {
-    const user = this.state.user;
+    const property = this.state.property;
     console.log('field => ',field);
-    user[field] = value;
-    console.log('user => ',user);
-    console.log('user[field] => ',user[field]);
+    property[field] = value;
+    console.log('property => ',property);
+    console.log('property[field] => ',property[field]);
     this.setState({
-      user : user
+      property : property
     });
   }
 
@@ -99,8 +80,8 @@ class OwnerSignUpPage extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    axios.post('/auth/ownersignup', {
-      user : this.state.user
+    axios.post('/auth/signup', {
+      property : this.state.property
     })
     .then(function (response) {
       console.log("response:", response);
@@ -117,16 +98,16 @@ class OwnerSignUpPage extends React.Component {
   render() {
     return (
 
-      <OwnerSignUpForm
+      <AddPropertyForm
         onSubmit={this.processForm}
-        onChange={this.changeUser}
+        onChange={this.changeproperty}
         selectFieldOnChange ={this.changeSelectField}
         errors={this.state.errors}
-        user={this.state.user}
+        property={this.state.property}
       />
     );
   }
 
 }
 
-export default OwnerSignUpPage;
+export default AddPropertyPage;
