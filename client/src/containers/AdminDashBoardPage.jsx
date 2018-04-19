@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import LoginForm from '../components/LoginForm.jsx';
+import AdminDashBoardForm from '../components/AdminDashBoardForm.jsx';
 
 
-class LoginPage extends React.Component {
+class AdminDashBoardPage extends React.Component {
 
   /**
    * Class constructor.
@@ -31,7 +31,7 @@ class LoginPage extends React.Component {
   processForm(event) {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
-    //axios
+
     // create a string for an HTTP body message
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
@@ -87,7 +87,7 @@ class LoginPage extends React.Component {
    */
   render() {
     return (
-      <LoginForm
+      <AdminDashBoardForm
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}
@@ -98,4 +98,4 @@ class LoginPage extends React.Component {
 
 }
 
-export default LoginPage;
+export default AdminDashBoardPage;

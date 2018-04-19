@@ -56,8 +56,17 @@ class OwnerSignUpPage extends React.Component {
     console.log(event.target);
     //assign to user properties
     const field = event.target.name;
+<<<<<<< HEAD
     const user = this.state.user;
     user['propType'] = event.target.innerText;
+=======
+    console.log("value is " + value);
+    console.log("Field issss" + field);
+    const user = this.state.user;
+    user[field] = value;
+    user['propType'] = event.target.innerText;
+
+>>>>>>> 4a0ab87314b5b0d9c3df2241f13d7d09f02648ed
     this.setState(this.state.user);
 
     console.log(this.state.user.propType);
