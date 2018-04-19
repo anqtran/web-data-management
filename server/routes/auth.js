@@ -29,6 +29,14 @@ function validateSignupForm(payload) {
     errors.password = 'Password must have at least 8 characters.';
   }
 
+  else if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
+    isFormValid = false;
+    errors.password = 'Password must have at least 8 characters.';
+  }
+  if (payload.password !== payload.confirmPassword) {
+    isFormValid = false;
+    errors.confirmPassword = 'Password does not match.';
+  }
   if (!payload || typeof payload.name !== 'string' || payload.name.trim().length === 0) {
     isFormValid = false;
     errors.name = 'Please provide your name.';
@@ -109,6 +117,35 @@ router.post('/ownersignup', (req, res) => {
   else {
     console.log('validationResult => ',validationResult);
     return res.status(200).end();
+  }
+});
+
+router.post('/visitorsignup', (req, res) => {
+  var user = req.body.user;
+  var hash = bcrypt.hashSync(user.password, salt);
+  const validationResult = validateSignupForm(req.body.user);
+  // if the input is valid
+  if (validationResult.success) {
+    //run query
+    var sql  = 'INSERT INTO user VALUES (?, ?, ?, ?)';
+    //adding hash password
+    var body = [user.name, user.email, hash, user.usertype];
+    connection.query(sql, body, function(err){
+       if(err){
+          return res.json({"Error": true, "Message": "SQL Error"});
+       } else {
+          return res.json({"Error": false, "Message": "Success"})
+       }
+    });
+  }
+  else {
+    console.log('validationResult => ',validationResult);
+    return res.status(200).json({
+      Error: true,
+      success: false,
+      message: validationResult.message,
+      errors: validationResult.errors
+    });
   }
 });
 

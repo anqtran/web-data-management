@@ -34830,19 +34830,19 @@
 
 	var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
-	var _VisitorSignUpPage = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./containers/VisitorSignUpPage.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _VisitorSignUpPage = __webpack_require__(495);
 
 	var _VisitorSignUpPage2 = _interopRequireDefault(_VisitorSignUpPage);
 
-	var _OwnerSignUpPage = __webpack_require__(497);
+	var _OwnerSignUpPage = __webpack_require__(496);
 
 	var _OwnerSignUpPage2 = _interopRequireDefault(_OwnerSignUpPage);
 
-	var _AdminDashBoardPage = __webpack_require__(525);
+	var _AdminDashBoardPage = __webpack_require__(524);
 
 	var _AdminDashBoardPage2 = _interopRequireDefault(_AdminDashBoardPage);
 
-	var _AddPropertyPage = __webpack_require__(527);
+	var _AddPropertyPage = __webpack_require__(526);
 
 	var _AddPropertyPage2 = _interopRequireDefault(_AddPropertyPage);
 
@@ -35034,42 +35034,6 @@
 	          // }        
 	        }
 	      });
-
-	      //axios
-	      // create a string for an HTTP body message
-
-	      // const email = encodeURIComponent(this.state.user.email);
-	      // const password = encodeURIComponent(this.state.user.password);
-	      // const formData = `email=${email}&password=${password}`;
-
-	      // // create an AJAX request
-	      // const xhr = new XMLHttpRequest();
-	      // xhr.open('post', '/auth/login');
-	      // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	      // xhr.resType = 'json';
-	      // xhr.addEventListener('load', () => {
-	      //   if (xhr.status === 200) {
-	      //     // success
-
-	      //     // change the component-container state
-	      //     this.setState({
-	      //       errors: {}
-	      //     });
-
-	      //     console.log('The form is valid');
-	      //   } else {
-	      //     // failure
-
-	      //     // change the component state
-	      //     const errors = xhr.response.errors ? xhr.response.errors : {};
-	      //     errors.summary = xhr.response.message;
-
-	      //     this.setState({
-	      //       errors
-	      //     });
-	      //   }
-	      // });
-	      // xhr.send(formData);
 	    }
 
 	    /**
@@ -44569,9 +44533,132 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 495 */,
-/* 496 */,
-/* 497 */
+/* 495 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _VisitorSignUpForm = __webpack_require__(528);
+
+	var _VisitorSignUpForm2 = _interopRequireDefault(_VisitorSignUpForm);
+
+	var _axios = __webpack_require__(467);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var VisitorSignUpPage = function (_React$Component) {
+	  _inherits(VisitorSignUpPage, _React$Component);
+
+	  /**
+	   * Class constructor.
+	   */
+	  function VisitorSignUpPage(props) {
+	    _classCallCheck(this, VisitorSignUpPage);
+
+	    // set the initial component state
+	    var _this = _possibleConstructorReturn(this, (VisitorSignUpPage.__proto__ || Object.getPrototypeOf(VisitorSignUpPage)).call(this, props));
+
+	    _this.state = {
+	      errors: {},
+	      user: {
+	        email: '',
+	        name: '',
+	        password: '',
+	        confirmPassword: ''
+	      }
+	    };
+
+	    _this.processForm = _this.processForm.bind(_this);
+	    _this.changeUser = _this.changeUser.bind(_this);
+	    return _this;
+	  }
+
+	  /**
+	   * Change the user object.
+	   *
+	   * @param {object} event - the JavaScript event object
+	   */
+
+
+	  _createClass(VisitorSignUpPage, [{
+	    key: 'changeUser',
+	    value: function changeUser(event) {
+	      var field = event.target.name;
+	      var user = this.state.user;
+	      user[field] = event.target.value;
+
+	      this.setState({
+	        user: user
+	      });
+	    }
+
+	    /**
+	     * Process the form.
+	     *
+	     * @param {object} event - the JavaScript event object
+	     */
+
+	  }, {
+	    key: 'processForm',
+	    value: function processForm(event) {
+	      // prevent default action. in this case, action is the form submission event
+	      var self = this;
+	      event.preventDefault();
+
+	      _axios2.default.post('/auth/visitorsignup', {
+	        user: this.state.user
+	      }).then(function (res) {
+	        if (res.data.Error) {
+	          console.log('res.data.errors => ', res.data.errors);
+	          self.setState({
+	            errors: res.data.errors
+	          });
+	        } else {
+	          // success
+	        }
+	      });
+	    }
+	    /**
+	     * Render the component.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(_VisitorSignUpForm2.default, {
+	        onSubmit: this.processForm,
+	        onChange: this.changeUser,
+	        errors: this.state.errors,
+	        user: this.state.user
+	      });
+	    }
+	  }]);
+
+	  return VisitorSignUpPage;
+	}(_react2.default.Component);
+
+	exports.default = VisitorSignUpPage;
+
+/***/ }),
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44602,15 +44689,15 @@
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
-	var _SelectField = __webpack_require__(498);
+	var _SelectField = __webpack_require__(497);
 
 	var _SelectField2 = _interopRequireDefault(_SelectField);
 
-	var _MenuItem = __webpack_require__(523);
+	var _MenuItem = __webpack_require__(522);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-	var _OwnerSignUpForm = __webpack_require__(524);
+	var _OwnerSignUpForm = __webpack_require__(523);
 
 	var _OwnerSignUpForm2 = _interopRequireDefault(_OwnerSignUpForm);
 
@@ -44741,7 +44828,7 @@
 	exports.default = OwnerSignUpPage;
 
 /***/ }),
-/* 498 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44751,7 +44838,7 @@
 	});
 	exports.default = undefined;
 
-	var _SelectField = __webpack_require__(499);
+	var _SelectField = __webpack_require__(498);
 
 	var _SelectField2 = _interopRequireDefault(_SelectField);
 
@@ -44760,7 +44847,7 @@
 	exports.default = _SelectField2.default;
 
 /***/ }),
-/* 499 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -44809,7 +44896,7 @@
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
-	var _DropDownMenu = __webpack_require__(500);
+	var _DropDownMenu = __webpack_require__(499);
 
 	var _DropDownMenu2 = _interopRequireDefault(_DropDownMenu);
 
@@ -45051,7 +45138,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 500 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45061,11 +45148,11 @@
 	});
 	exports.default = exports.MenuItem = exports.DropDownMenu = undefined;
 
-	var _DropDownMenu2 = __webpack_require__(501);
+	var _DropDownMenu2 = __webpack_require__(500);
 
 	var _DropDownMenu3 = _interopRequireDefault(_DropDownMenu2);
 
-	var _MenuItem2 = __webpack_require__(517);
+	var _MenuItem2 = __webpack_require__(516);
 
 	var _MenuItem3 = _interopRequireDefault(_MenuItem2);
 
@@ -45076,7 +45163,7 @@
 	exports.default = _DropDownMenu3.default;
 
 /***/ }),
-/* 501 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -45129,23 +45216,23 @@
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
-	var _arrowDropDown = __webpack_require__(502);
+	var _arrowDropDown = __webpack_require__(501);
 
 	var _arrowDropDown2 = _interopRequireDefault(_arrowDropDown);
 
-	var _Menu = __webpack_require__(503);
+	var _Menu = __webpack_require__(502);
 
 	var _Menu2 = _interopRequireDefault(_Menu);
 
-	var _ClearFix = __webpack_require__(509);
+	var _ClearFix = __webpack_require__(508);
 
 	var _ClearFix2 = _interopRequireDefault(_ClearFix);
 
-	var _Popover = __webpack_require__(511);
+	var _Popover = __webpack_require__(510);
 
 	var _Popover2 = _interopRequireDefault(_Popover);
 
-	var _PopoverAnimationVertical = __webpack_require__(516);
+	var _PopoverAnimationVertical = __webpack_require__(515);
 
 	var _PopoverAnimationVertical2 = _interopRequireDefault(_PopoverAnimationVertical);
 
@@ -45576,7 +45663,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 502 */
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45613,7 +45700,7 @@
 	exports.default = NavigationArrowDropDown;
 
 /***/ }),
-/* 503 */
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -45670,7 +45757,7 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _ClickAwayListener = __webpack_require__(504);
+	var _ClickAwayListener = __webpack_require__(503);
 
 	var _ClickAwayListener2 = _interopRequireDefault(_ClickAwayListener);
 
@@ -45682,11 +45769,11 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _List = __webpack_require__(505);
+	var _List = __webpack_require__(504);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _menuUtils = __webpack_require__(508);
+	var _menuUtils = __webpack_require__(507);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46299,7 +46386,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 504 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -46430,7 +46517,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 505 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -46475,7 +46562,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Subheader = __webpack_require__(506);
+	var _Subheader = __webpack_require__(505);
 
 	var _Subheader2 = _interopRequireDefault(_Subheader);
 
@@ -46540,7 +46627,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 506 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46550,7 +46637,7 @@
 	});
 	exports.default = undefined;
 
-	var _Subheader = __webpack_require__(507);
+	var _Subheader = __webpack_require__(506);
 
 	var _Subheader2 = _interopRequireDefault(_Subheader);
 
@@ -46559,7 +46646,7 @@
 	exports.default = _Subheader2.default;
 
 /***/ }),
-/* 507 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -46644,7 +46731,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 508 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46688,7 +46775,7 @@
 	}();
 
 /***/ }),
-/* 509 */
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -46709,7 +46796,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _BeforeAfterWrapper = __webpack_require__(510);
+	var _BeforeAfterWrapper = __webpack_require__(509);
 
 	var _BeforeAfterWrapper2 = _interopRequireDefault(_BeforeAfterWrapper);
 
@@ -46756,7 +46843,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 510 */
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -46912,7 +46999,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 511 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -46965,7 +47052,7 @@
 
 	var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
-	var _RenderToLayer = __webpack_require__(512);
+	var _RenderToLayer = __webpack_require__(511);
 
 	var _RenderToLayer2 = _interopRequireDefault(_RenderToLayer);
 
@@ -46977,15 +47064,15 @@
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
-	var _lodash = __webpack_require__(513);
+	var _lodash = __webpack_require__(512);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _PopoverAnimationDefault = __webpack_require__(514);
+	var _PopoverAnimationDefault = __webpack_require__(513);
 
 	var _PopoverAnimationDefault2 = _interopRequireDefault(_PopoverAnimationDefault);
 
-	var _iOSHelpers = __webpack_require__(515);
+	var _iOSHelpers = __webpack_require__(514);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47426,7 +47513,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 512 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -47611,7 +47698,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 513 */
+/* 512 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -48057,7 +48144,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 514 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -48231,7 +48318,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 515 */
+/* 514 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -48263,7 +48350,7 @@
 	};
 
 /***/ }),
-/* 516 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -48412,7 +48499,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 517 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -48465,19 +48552,19 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _Popover = __webpack_require__(511);
+	var _Popover = __webpack_require__(510);
 
 	var _Popover2 = _interopRequireDefault(_Popover);
 
-	var _check = __webpack_require__(518);
+	var _check = __webpack_require__(517);
 
 	var _check2 = _interopRequireDefault(_check);
 
-	var _ListItem = __webpack_require__(519);
+	var _ListItem = __webpack_require__(518);
 
 	var _ListItem2 = _interopRequireDefault(_ListItem);
 
-	var _Menu = __webpack_require__(503);
+	var _Menu = __webpack_require__(502);
 
 	var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -48794,7 +48881,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 518 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48831,7 +48918,7 @@
 	exports.default = NavigationCheck;
 
 /***/ }),
-/* 519 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -48898,15 +48985,15 @@
 
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 
-	var _expandLess = __webpack_require__(520);
+	var _expandLess = __webpack_require__(519);
 
 	var _expandLess2 = _interopRequireDefault(_expandLess);
 
-	var _expandMore = __webpack_require__(521);
+	var _expandMore = __webpack_require__(520);
 
 	var _expandMore2 = _interopRequireDefault(_expandMore);
 
-	var _NestedList = __webpack_require__(522);
+	var _NestedList = __webpack_require__(521);
 
 	var _NestedList2 = _interopRequireDefault(_NestedList);
 
@@ -49548,7 +49635,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 520 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49585,7 +49672,7 @@
 	exports.default = NavigationExpandLess;
 
 /***/ }),
-/* 521 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49622,7 +49709,7 @@
 	exports.default = NavigationExpandMore;
 
 /***/ }),
-/* 522 */
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -49635,7 +49722,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _List = __webpack_require__(505);
+	var _List = __webpack_require__(504);
 
 	var _List2 = _interopRequireDefault(_List);
 
@@ -49677,7 +49764,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 523 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49687,7 +49774,7 @@
 	});
 	exports.default = undefined;
 
-	var _MenuItem = __webpack_require__(517);
+	var _MenuItem = __webpack_require__(516);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
@@ -49696,7 +49783,7 @@
 	exports.default = _MenuItem2.default;
 
 /***/ }),
-/* 524 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49721,11 +49808,11 @@
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
-	var _SelectField = __webpack_require__(498);
+	var _SelectField = __webpack_require__(497);
 
 	var _SelectField2 = _interopRequireDefault(_SelectField);
 
-	var _MenuItem = __webpack_require__(523);
+	var _MenuItem = __webpack_require__(522);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
@@ -49967,7 +50054,7 @@
 	exports.default = OwnerSignUpForm;
 
 /***/ }),
-/* 525 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49982,7 +50069,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AdminDashBoardForm = __webpack_require__(526);
+	var _AdminDashBoardForm = __webpack_require__(525);
 
 	var _AdminDashBoardForm2 = _interopRequireDefault(_AdminDashBoardForm);
 
@@ -50109,7 +50196,7 @@
 	exports.default = AdminDashBoardPage;
 
 /***/ }),
-/* 526 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50206,7 +50293,7 @@
 	exports.default = AdminDashBoardForm;
 
 /***/ }),
-/* 527 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50237,15 +50324,15 @@
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
-	var _SelectField = __webpack_require__(498);
+	var _SelectField = __webpack_require__(497);
 
 	var _SelectField2 = _interopRequireDefault(_SelectField);
 
-	var _MenuItem = __webpack_require__(523);
+	var _MenuItem = __webpack_require__(522);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-	var _AddPropertyForm = __webpack_require__(528);
+	var _AddPropertyForm = __webpack_require__(527);
 
 	var _AddPropertyForm2 = _interopRequireDefault(_AddPropertyForm);
 
@@ -50373,7 +50460,7 @@
 	exports.default = AddPropertyPage;
 
 /***/ }),
-/* 528 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50398,11 +50485,11 @@
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
-	var _SelectField = __webpack_require__(498);
+	var _SelectField = __webpack_require__(497);
 
 	var _SelectField2 = _interopRequireDefault(_SelectField);
 
-	var _MenuItem = __webpack_require__(523);
+	var _MenuItem = __webpack_require__(522);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
@@ -50623,6 +50710,129 @@
 	};
 
 	exports.default = AddPropertyForm;
+
+/***/ }),
+/* 528 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(338);
+
+	var _Card = __webpack_require__(399);
+
+	var _RaisedButton = __webpack_require__(456);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _TextField = __webpack_require__(458);
+
+	var _TextField2 = _interopRequireDefault(_TextField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var VisitorSignUpForm = function VisitorSignUpForm(_ref) {
+	  var onSubmit = _ref.onSubmit,
+	      onChange = _ref.onChange,
+	      errors = _ref.errors,
+	      user = _ref.user;
+	  return _react2.default.createElement(
+	    _Card.Card,
+	    { className: 'container' },
+	    _react2.default.createElement(
+	      'form',
+	      { action: '/', onSubmit: onSubmit },
+	      _react2.default.createElement(
+	        'h2',
+	        { className: 'card-heading' },
+	        'Sign Up'
+	      ),
+	      errors.summary && _react2.default.createElement(
+	        'p',
+	        { className: 'error-message' },
+	        errors.summary
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'field-line' },
+	        _react2.default.createElement(_TextField2.default, {
+	          floatingLabelText: 'Name',
+	          name: 'name',
+	          errorText: errors.name,
+	          onChange: onChange,
+	          value: user.name
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'field-line' },
+	        _react2.default.createElement(_TextField2.default, {
+	          floatingLabelText: 'Email',
+	          name: 'email',
+	          errorText: errors.email,
+	          onChange: onChange,
+	          value: user.email
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'field-line' },
+	        _react2.default.createElement(_TextField2.default, {
+	          floatingLabelText: 'Password',
+	          type: 'password',
+	          name: 'password',
+	          onChange: onChange,
+	          errorText: errors.password,
+	          value: user.password
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'field-line' },
+	        _react2.default.createElement(_TextField2.default, {
+	          floatingLabelText: 'Confirm Password',
+	          type: 'password',
+	          name: 'confirmPassword',
+	          onChange: onChange,
+	          errorText: errors.confirmPassword,
+	          value: user.confirmPassword
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'button-line' },
+	        _react2.default.createElement(_RaisedButton2.default, { type: 'submit', label: 'Create New Account', primary: true })
+	      ),
+	      _react2.default.createElement(
+	        _Card.CardText,
+	        null,
+	        'Already have an account? ',
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/login' },
+	          'Log in'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	VisitorSignUpForm.propTypes = {
+	  onSubmit: _react.PropTypes.func.isRequired,
+	  onChange: _react.PropTypes.func.isRequired,
+	  errors: _react.PropTypes.object.isRequired,
+	  user: _react.PropTypes.object.isRequired
+	};
+
+	exports.default = VisitorSignUpForm;
 
 /***/ })
 /******/ ]);

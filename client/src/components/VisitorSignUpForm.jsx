@@ -54,8 +54,8 @@ const VisitorSignUpForm = ({
           type="password"
           name="confirmPassword"
           onChange={onChange}
-          errorText={errors.password}
-          value={user.confirmPasswords}
+          errorText={errors.confirmPassword}
+          value={user.confirmPassword}
         />
       </div>
 

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import VisitorSignUpForm from '../components/VisitorSignUpForm.jsx';
-
+import axios from 'axios';
 
 class VisitorSignUpPage extends React.Component {
 
@@ -45,19 +45,25 @@ class VisitorSignUpPage extends React.Component {
    *
    * @param {object} event - the JavaScript event object
    */
-  processForm(event) {
+   processForm(event) {
     // prevent default action. in this case, action is the form submission event
+    var self = this;
     event.preventDefault();
 
     axios.post('/auth/visitorsignup', {
       user : this.state.user
     })
-    .then(function (response) {
-      console.log("response:", response);
-    })
-    .catch(function (error) {
-      console.log("error:", error);
-    });
+    .then(function (res) {
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        self.setState({
+         errors: res.data.errors
+       });
+      } else {
+      // success
+    }
+  })
+  }
   /**
    * Render the component.
    */
