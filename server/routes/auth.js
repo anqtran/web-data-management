@@ -122,16 +122,20 @@ router.post('/ownersignup', (req, res) => {
 
 router.post('/visitorsignup', (req, res) => {
   var user = req.body.user;
+  console.log(user);
   var hash = bcrypt.hashSync(user.password, salt);
   const validationResult = validateSignupForm(req.body.user);
   // if the input is valid
   if (validationResult.success) {
     //run query
+    console.log("validation success");
     var sql  = 'INSERT INTO user VALUES (?, ?, ?, ?)';
     //adding hash password
     var body = [user.name, user.email, hash, user.usertype];
     connection.query(sql, body, function(err){
        if(err){
+        console.log("ERRORRRRR");
+        console.log(err);
           return res.json({"Error": true, "Message": "SQL Error"});
        } else {
           return res.json({"Error": false, "Message": "Success"})
