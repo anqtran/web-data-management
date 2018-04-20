@@ -17,8 +17,7 @@ class VisitorSignUpPage extends React.Component {
         email: '',
         name: '',
         password: '',
-        confirmPassword: '',
-        usertype: 'VISITOR'
+        confirmPassword: ''
       }
     };
 

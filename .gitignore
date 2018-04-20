@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-server/routes/connected.js
 client/dist/js/app.js
 # testing
 /coverage

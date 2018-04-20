@@ -21,7 +21,10 @@ const OwnerSignUpForm = ({
   onChange,
   selectFieldOnChange,
   errors,
-  user
+  user,
+  disabled,
+  animals,
+  crops
 }) => (
 
   <Card className="container">
@@ -120,6 +123,7 @@ const OwnerSignUpForm = ({
           className = "selectfield"
           floatingLabelText="Animal"
           name="animal"
+          disabled={disabled}
           errorText={errors.animal}
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "animal")}
           value ={user.animal}
@@ -189,7 +193,9 @@ OwnerSignUpForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectFieldOnChange : PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  animals: PropTypes.object.isRequired,
+  crops: PropTypes.object.isRequired
 
 };
 

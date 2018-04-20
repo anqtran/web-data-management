@@ -22,10 +22,23 @@ class OwnerSignUpPage extends React.Component {
    */
   constructor(props) {
     super(props);
-
+    var animals = [];
+    var crops = [];
+    axios.post('/populate/animal', {})
+    .then(function (res) {
+      if (!res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        self.setState({
+         errors: res.data.errors
+       });
+      } else {
+        console.log(res);
+    }
+  })
     // set the initial component state
     this.state = {
       errors: {},
+      disabled: false,
       user: {
         email: '',
         name: '',
@@ -70,6 +83,11 @@ class OwnerSignUpPage extends React.Component {
     user[field] = value;
     console.log('user => ',user);
     console.log('user[field] => ',user[field]);
+      if(user['propType'] == 'Garden') {
+        this.state.disabled = true;
+      } else {
+        this.state.disabled = false;
+      }
     this.setState({
       user : user
     });
@@ -81,19 +99,23 @@ class OwnerSignUpPage extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   processForm(event) {
+    var self = this;
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
     axios.post('/auth/ownersignup', {
       user : this.state.user
     })
-    .then(function (response) {
-      console.log("response:", response);
-    })
-    .catch(function (error) {
-      console.log("error:", error);
-    });
-
+    .then(function (res)  {
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        self.setState({
+         errors: res.data.errors
+       });
+      } else {
+      // success
+    }
+  })
   }
 
   /**
@@ -108,6 +130,7 @@ class OwnerSignUpPage extends React.Component {
         selectFieldOnChange ={this.changeSelectField}
         errors={this.state.errors}
         user={this.state.user}
+        disabled = {this.state.disabled}
       />
     );
   }

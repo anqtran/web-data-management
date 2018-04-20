@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import LoginForm from '../components/LoginForm.jsx';
 import axios from 'axios';
-import { Redirect } from 'react-router';
-import { Router } from 'react-router';
+// import { Redirect } from 'react-router';
+// import { Router } from 'react-router';
 import { browserHistory } from 'history';
-import { Link } from 'react-router'; 
+// import { Link } from 'react-router'; 
 class LoginPage extends React.Component {
 
   /**
@@ -39,6 +39,7 @@ class LoginPage extends React.Component {
       user : this.state.user
     })
     .then(function (res) {
+      // window.location.href="/thankyou"
       if (res.data.Error) {
         console.log('res.data.errors => ',res.data.errors);
         self.setState({
@@ -52,10 +53,8 @@ class LoginPage extends React.Component {
         const username = user.Username;
         self.setState({redirect:true});
         console.log('self.props => ',self.props);
-        // if (type == "OWNER") {
-        //   return <Redirect to='/somewhere'/>;
-        // }        
-
+        if (type == "OWNER") {
+        }  
       }
     })
   }
