@@ -1,17 +1,26 @@
 import React, { PropTypes, Component } from 'react';
 import { Route, Link, NavLink } from 'react-router-dom';
-import LoginPage from '../containers/LoginPage.jsx';
-import VisitorSignUpPage from '../containers/VisitorSignUpPage.jsx';
-import OwnerSignUpPage from '../containers/OwnerSignUpPage.jsx';
-import AdminDashBoardPage from '../containers/AdminDashBoardPage.jsx';
-import AddPropertyPage from '../containers/AddPropertyPage.jsx';
-import ViewVisitorsList from '../containers/ViewVisitorsListPage.jsx';
-import ViewOwnersList from '../containers/ViewOwnersListPage.jsx';
-import ViewConfirmedProperties from '../containers/ViewConfirmedPropertiesPage.jsx';
-import ViewUnconfirmedProperties from '../containers/ViewUnconfirmedPropertiesPage.jsx';
-import ViewApprovedAnimalsandCrops from '../containers/ViewApprovedAnimalsandCropsPage.jsx';
-import ViewPendingAnimalsandCrops from '../containers/ViewPendingAnimalsandCropsPage.jsx';
+import Login from '../containers/LoginPage.jsx';
+import VisitorSignUp from '../containers/VisitorSignUpPage.jsx';
+import OwnerSignUp from '../containers/OwnerSignUpPage.jsx';
+
+import OwnerDashBoard from '../containers/OwnerDashBoardPage.jsx';
+import OwnerAllOtherValidProperties from '../containers/OwnerAllOtherValidPropertiesPage.jsx';
+import OwnerAddProperty from '../containers/AddPropertyPage.jsx';
+import OwnerPropertyDetails from '../containers/OwnerPropertyDetailsPage.jsx';
+import OwnerManageProperty from '../containers/OwnerManagePropertyPage.jsx';
+
+import AdminDashBoard from '../containers/AdminDashBoardPage.jsx';
+import AdminViewVisitorsList from '../containers/ViewVisitorsListPage.jsx';
+import AdminViewOwnersList from '../containers/ViewOwnersListPage.jsx';
+import AdminViewConfirmedProperties from '../containers/ViewConfirmedPropertiesPage.jsx';
+import AdminViewUnconfirmedProperties from '../containers/ViewUnconfirmedPropertiesPage.jsx';
+import AdminViewApprovedAnimalsandCrops from '../containers/ViewApprovedAnimalsandCropsPage.jsx';
+import AdminViewPendingAnimalsandCrops from '../containers/ViewPendingAnimalsandCropsPage.jsx';
+
+import VisitorDashBoard from '../containers/VisitorDashBoardPage.jsx';
 import VisitorPropertyDetails from '../containers/VisitorPropertyDetailsPage.jsx';
+import VisitorVisitHistory from '../containers/VisitorVisitHistoryPage.jsx';
 
 
 const Base = ({ children }) => (
@@ -30,19 +39,29 @@ const Base = ({ children }) => (
         <Link to="/signup/owner"> Owner Sign up</Link>
       </div>
     </div>
-    <Route exact path="/" component={LoginPage}/>
-    <Route path="/login" component={LoginPage}/>
-    <Route path="/signup/visitor" component={VisitorSignUpPage}/>
-    <Route path="/signup/owner" component={OwnerSignUpPage}/>
-    <Route path="/admin/dashboardpage" component={AdminDashBoardPage}/>
-    <Route path="/owner/addproperty" component={AddPropertyPage}/>
-    <Route path="/admin/viewvisitorslist" component={ViewVisitorsList}/>
-    <Route path="/admin/viewownerslist" component={ViewOwnersList}/>
-    <Route path="/admin/viewconfirmedproperties" component={ViewConfirmedProperties}/>
-    <Route path="/admin/viewunconfirmedproperties" component={ViewUnconfirmedProperties}/>
-    <Route path="/admin/viewapprovedanimalsandcrops" component={ViewApprovedAnimalsandCrops}/>
-    <Route path="/admin/viewpendinganimalsandcrops" component={ViewPendingAnimalsandCrops}/>
+    <Route exact path="/" component={Login}/>
+    <Route path="/login" component={Login}/>
+    <Route path="/signup/visitor" component={VisitorSignUp}/>
+    <Route path="/signup/owner" component={OwnerSignUp}/>
+
+    <Route path="/owner/dashboard" component={OwnerDashBoard}/>
+    <Route path="/owner/allothervalidproperties" component={OwnerAllOtherValidProperties}/>
+    <Route path="/owner/addproperty" component={OwnerAddProperty}/>
+    <Route path="/owner/propertydetails" component={OwnerPropertyDetails}/>
+    <Route path="/owner/manageproperty" component={OwnerManageProperty}/>
+
+
+    <Route path="/admin/dashboardpage" component={AdminDashBoard}/>
+    <Route path="/admin/viewvisitorslist" component={AdminViewVisitorsList}/>
+    <Route path="/admin/viewownerslist" component={AdminViewOwnersList}/>
+    <Route path="/admin/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
+    <Route path="/admin/viewunconfirmedproperties" component={AdminViewUnconfirmedProperties}/>
+    <Route path="/admin/viewapprovedanimalsandcrops" component={AdminViewApprovedAnimalsandCrops}/>
+    <Route path="/admin/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
+    
+    <Route path="/visitor/dashboard" component={VisitorDashBoard}/>
     <Route path="/visitor/propertydetails" component={VisitorPropertyDetails}/>
+    <Route path="/visitor/visithistory" component={VisitorVisitHistory}/>
   </div>
   
 );
