@@ -40,6 +40,7 @@ class LoginPage extends React.Component {
     })
     .then(function (res) {
       // window.location.href="/thankyou"
+      console.log('res => ',res);
       if (res.data.Error) {
         console.log('res.data.errors => ',res.data.errors);
         self.setState({

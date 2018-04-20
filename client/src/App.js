@@ -12,7 +12,7 @@ import AddPropertyPage from './containers/AddPropertyPage.jsx';
 var layoutAssignments = {
   '/': Base,
   '/signup': Base,
-  '/signup/owner': Base,
+  '/signup/*': Base,
   '/login': Base,
 }
 
@@ -23,7 +23,7 @@ var layoutPicker = function(props){
 
 const App = () => (
   	<div>
-  		<Route path="*" render={layoutPicker}/>
+  		<Route path="*" render={Base}/>
   	</div>
 );
 

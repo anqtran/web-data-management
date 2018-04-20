@@ -13,8 +13,6 @@ const styles = {
   },
 };
 
-var animals  = ["dog", "cat", "pig"];
-var crops  = ["apple", "banana", "peach"];
 
 const OwnerSignUpForm = ({
   onSubmit,
@@ -26,7 +24,6 @@ const OwnerSignUpForm = ({
   animals,
   crops
 }) => (
-
   <Card className="container">
     <form action="/" onSubmit={onSubmit}>
       <h2 className="card-heading">Sign Up</h2>
@@ -195,8 +192,8 @@ OwnerSignUpForm.propTypes = {
   selectFieldOnChange : PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  animals: PropTypes.object.isRequired,
-  crops: PropTypes.object.isRequired
+  animals: PropTypes.any.isRequired,
+  crops: PropTypes.any.isRequired
 
 };
 

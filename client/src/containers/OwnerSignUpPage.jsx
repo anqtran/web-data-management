@@ -22,23 +22,13 @@ class OwnerSignUpPage extends React.Component {
    */
   constructor(props) {
     super(props);
-    var animals = [];
-    var crops = [];
-    axios.post('/populate/animal', {})
-    .then(function (res) {
-      if (!res.data.Error) {
-        console.log('res.data.errors => ',res.data.errors);
-        self.setState({
-         errors: res.data.errors
-       });
-      } else {
-        console.log(res);
-    }
-  })
+    console.log("asudasidjaisd");
     // set the initial component state
     this.state = {
       errors: {},
       disabled: false,
+      animals: [],
+      crops: {},
       user: {
         email: '',
         name: '',
@@ -57,6 +47,18 @@ class OwnerSignUpPage extends React.Component {
         usertype: 'OWNER'
       }
     };
+    axios.post('/populate/animal', {
+      user: this.state.user})
+    .then(function (res) {
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        self.setState({
+         errors: res.data.errors
+       });
+      } else {
+        console.log(res);
+    }
+  })
 
     this.processForm = this.processForm.bind(this);
     this.changeUser = this.changeUser.bind(this);
@@ -103,7 +105,7 @@ class OwnerSignUpPage extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    axios.post('/auth/ownersignup', {
+    axios.get('/auth/ownersignup', {
       user : this.state.user
     })
     .then(function (res)  {
@@ -123,7 +125,8 @@ class OwnerSignUpPage extends React.Component {
    */
   render() {
     return (
-
+      <div> 
+      console.log('animals => ',animals);
       <OwnerSignUpForm
         onSubmit={this.processForm}
         onChange={this.changeUser}
@@ -131,7 +134,11 @@ class OwnerSignUpPage extends React.Component {
         errors={this.state.errors}
         user={this.state.user}
         disabled = {this.state.disabled}
+        animals ={this.state.animals}
+        crops = {this.state.crops}
       />
+
+      </div>
     );
   }
 

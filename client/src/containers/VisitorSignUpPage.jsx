@@ -61,6 +61,7 @@ class VisitorSignUpPage extends React.Component {
        });
       } else {
       // success
+      console.log("success");
     }
   })
   }
