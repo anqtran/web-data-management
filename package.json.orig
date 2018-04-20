@@ -28,9 +28,12 @@
     "mysql": "^2.15.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+<<<<<<< HEAD
+=======
     "react-router": "^3.0.0",
     "react-router-dom": "^4.2.2",
     "react-stars": "^2.2.5",
+>>>>>>> abbb8dc49f5523d6f1b087b9c0ace81cef08b4f9
     "react-tap-event-plugin": "^2.0.1",
     "save": "^2.3.2",
     "validator": "^6.2.0"
