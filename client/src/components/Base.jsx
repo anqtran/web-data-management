@@ -20,6 +20,7 @@ import AdminViewPendingAnimalsandCrops from '../containers/ViewPendingAnimalsand
 
 import VisitorDashBoard from '../containers/VisitorDashBoardPage.jsx';
 import VisitorPropertyDetails from '../containers/VisitorPropertyDetailsPage.jsx';
+// import Visitor
 import VisitorVisitHistory from '../containers/VisitorVisitHistoryPage.jsx';
 
 
@@ -51,7 +52,7 @@ const Base = ({ children }) => (
     <Route path="/owner/manageproperty" component={OwnerManageProperty}/>
 
 
-    <Route path="/admin/dashboardpage" component={AdminDashBoard}/>
+    <Route path="/admin/dashboard" component={AdminDashBoard}/>
     <Route path="/admin/viewvisitorslist" component={AdminViewVisitorsList}/>
     <Route path="/admin/viewownerslist" component={AdminViewOwnersList}/>
     <Route path="/admin/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
@@ -60,7 +61,8 @@ const Base = ({ children }) => (
     <Route path="/admin/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
     
     <Route path="/visitor/dashboard" component={VisitorDashBoard}/>
-    <Route path="/visitor/propertydetails" component={VisitorPropertyDetails}/>
+    <Route path="/visitor/confirmedpropertydetails" component={VisitorPropertyDetails}/>
+    {/*<Route path="/visitor/loggedpropertydetails" component={VisitorLoggedPropertyDetails}/>*/}
     <Route path="/visitor/visithistory" component={VisitorVisitHistory}/>
   </div>
   

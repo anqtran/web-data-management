@@ -12,7 +12,7 @@ const VisitorDashBoardForm = ({
 }) => (
   <Card className="container">
     <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">Welcome Admin1</h2>
+      <h2 className="card-heading">Welcome Visitor1</h2>
 
       {errors.summary && <p className="error-message">{errors.summary}</p>}
 

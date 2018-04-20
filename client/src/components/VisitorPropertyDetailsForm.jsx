@@ -36,11 +36,13 @@ const VisitorPropertyDetailsForm = ({
       {/*</div>*/}
 
       <div className="button-line">
-        <RaisedButton type="logvisit" label="Log Visit" primary />
+        <RaisedButton type="logvisit" label="Log Visit" primary 
+                      href="./dashboard"/>
       </div>
 
       <div className="button-line">
-        <RaisedButton type="back" label="Back" primary />
+        <RaisedButton type="back" label="Back" primary 
+                      href="./dashboard"/>
       </div>
 
     </form>
