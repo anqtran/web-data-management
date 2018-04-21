@@ -1,51 +1,63 @@
 import React from "react";
 import { BootstrapTable, TableHeaderColumn, InsertButton, DeleteButton  } from 'react-bootstrap-table';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { Link, Redirect } from 'react-router';
+import OwnerSignUpForm from '../components/OwnerSignUpForm.jsx';
 
+import {getOwnerProperties} from '../helpers/DataPopulation.js';
 import '../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import 'react-notifications/lib/notifications.css';
 
-function getItems() {
-    const products = [];
-    for (let i = 0; i < 12; i++) {
-      const id = "Property " + i;
-      products.push({
-        ID: i,
-        Name: id,
-        Address: id + ' co dia chi laaaaaaa',
-        City: 'Atlanta ' + i ,
-        Zip: 11110,
-        Size: i,
-        PropertyType: 'la dat ne ' + i,
-        IsPublic: i > 2,
-        IsCommercial: i < 2,
-        Owner: 'Nguyen Thi Buoi',
-        rating: i / 0.5,
-        visit: i
-      });
-    }
-    return products;
-  }
 
 export default class OwnerDashboardTableForm extends React.Component {
     constructor(props) {
       super(props);
-      this.items = getItems();
       this.state = {
-        data: this.items,
-        select: null
-      };
-    }
+        data: [],
+        select:null
+      }
+      // this.items = getOwnerProperties('orchardowner');
+      // console.log('this.items => ',this.items);
+      // this.state = {
+      //   select: null,
+      //   data:[]
+      // }
+      // console.log('this.state.data => ',this.state.data);
+    };
   
+    componentWillMount() {
+      var self = this;
+      console.log("Mouting")
+      getOwnerProperties('orchardowner')
+      .then(function(items) {
+        console.log("Items:" + JSON.stringify(items))
+        self.setState( {
+          select: null,
+          data: items
+        })
+      })
+      // // this.s = getOwnerProperties("orchardowner");
+      // // console.log('s => ', getOwnerProperties("orchardowner"));
+      // this.setState({
+      //   data: this.s
+      //   });
+      // console.log('tdrt: ',this.state.data);
+    }
+
+    // componentWillUnmount() {
+
+    // }
+
     onManageProperty = (row) => {
       if (this.state.select !== null) {
         alert("View Property is working!!!!")
-        
       }
-      
     }
 
     onAddProperty = (row) => {
+      console.log("Running");
+      // console.log('this.state.data => ',this.state.data);
+      // console.log("Props:", this.props)
       if (this.state.select !== null) {
         alert("View Visit History is working!!!")
         
@@ -66,6 +78,7 @@ export default class OwnerDashboardTableForm extends React.Component {
     }
 
     render() {
+      console.log('this.state => ',this.state);
       return (
         <OwnerTable
         //   onCellEdit={ this.onCellEdit }
@@ -74,7 +87,7 @@ export default class OwnerDashboardTableForm extends React.Component {
           onAddSelectedRow={ this.onAddSelectedRow }
           onManageProperty ={ this.onManageProperty }
           onAddProperty={ this.onAddProperty }
-        onViewVisitHistory ={ this.onViewVisitHistory }
+          onViewVisitHistory ={ this.onViewVisitHistory }
           { ...this.state } />
       );
     }
@@ -143,7 +156,7 @@ export default class OwnerDashboardTableForm extends React.Component {
         onSelect: this.props.onAddSelectedRow
 
       };
-
+      console.log("Renderinggg");
       return (
         <div>
           <BootstrapTable data={ this.props.data }
@@ -190,7 +203,7 @@ export default class OwnerDashboardTableForm extends React.Component {
           Name
           </TableHeaderColumn>
           <TableHeaderColumn 
-            dataField='Address' 
+            dataField='street' 
             dataSort={ true } 
             dataAlign='center'
             width='20%'
@@ -246,7 +259,7 @@ export default class OwnerDashboardTableForm extends React.Component {
           Type
           </TableHeaderColumn>
           <TableHeaderColumn 
-            dataField='IsPublic' 
+            dataField='isPublic' 
             dataSort={ true } 
             dataAlign='center'
             width='8%'
@@ -257,7 +270,7 @@ export default class OwnerDashboardTableForm extends React.Component {
           Public
           </TableHeaderColumn>
           <TableHeaderColumn 
-            dataField='IsCommercial' 
+            dataField='isCommercial' 
             dataSort={ true } 
             dataAlign='center'
             width='10%'
@@ -279,7 +292,7 @@ export default class OwnerDashboardTableForm extends React.Component {
           Owner
           </TableHeaderColumn> */}
           <TableHeaderColumn 
-            dataField='visit' 
+            dataField='numberofVisit' 
             dataSort={ true } 
             dataAlign='center'
             width='8%'
@@ -290,7 +303,7 @@ export default class OwnerDashboardTableForm extends React.Component {
           Visits
           </TableHeaderColumn>
           <TableHeaderColumn 
-            dataField='rating' 
+            dataField='avgRating' 
             dataSort={ true } 
             dataAlign='center'
             width='8%'

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'; import { Link } from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import OwnerDashBoardTableForm from '../AdminTableManagement/OwnerDashBoardTableForm'
 
 
 const OwnerDashBoardForm = ({
@@ -14,17 +15,9 @@ const OwnerDashBoardForm = ({
     <form action="/" onSubmit={onSubmit}>
       <h2 className="card-heading">Welcome Owner1</h2>
 
+      <OwnerDashBoardTableForm />
       {errors.summary && <p className="error-message">{errors.summary}</p>}
 
-      <div className="button-line">
-        <RaisedButton type="manage_property" label="Manage Property" primary 
-                      href="./manageproperty"/>
-      </div>
-
-      <div className="button-line">
-        <RaisedButton type="add_property" label="Add Property" primary 
-                      href="./addproperty"/>
-      </div>
 
       <div className="button-line">
         <RaisedButton type="view_other_properties" label="View Other Properties" primary 

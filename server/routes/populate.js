@@ -9,7 +9,6 @@ var connection = require('./connected');
  * @returns {object} The result of validation. Object contains a boolean validation result,
  *                   errors tips, and a global message for the whole form.
  */
-console.log('go to this file => ');
 router.post('/animal', (req, res) => {
 const errors = {};
     var currentState = req.body;
@@ -29,38 +28,67 @@ const errors = {};
     });
 });
 
-// router.post('/visitorsignup', (req, res) => {
-//   const errors = {};
-//   var user = req.body.user;
-//   console.log(user);
-//   var hash = bcrypt.hashSync(user.password, salt);
-//   const validationResult = validateSignupForm(req.body.user);
-//   // if the input is valid
-//   if (validationResult.success) {
-//     //run query
-//     console.log("validation success");
-//     var sql  = 'INSERT INTO user VALUES (?, ?, ?, ?)';
-//     //adding hash password
-//     var body = [user.name, user.email, hash, user.usertype];
-//     connection.query(sql, body, function(err){
-//        if(err){
-//         errors.email = 'Email is already taken.';
-//         console.log("user duplicated");
-//         return res.status(200).json({Error: true, success: false, errors: errors});
-//        } else {
-//           return res.json({"Error": false, "Message": "Success"})
-//        }
-//     });
-//   }
-//   else {
-//     console.log('validationResult => ',validationResult);
-//     return res.status(200).json({
-//       Error: true,
-//       success: false,
-//       message: validationResult.message,
-//       errors: validationResult.errors
-//     });
-//   }
-// });
+
+router.get(`/getOwnerProperties/:name`, (req, response) => {
+  console.log('req.param => ',req.param);
+  var username = req.params.name;
+const errors = {};
+console.log("sdfsfd", username);
+    var sql = ` SELECT    P.Name, P.street, P.City, P.Zip, P.Size, P.PropertyType, P.isPublic, P.isCommercial, P.ID, P.ApprovedBy, temp.numberofVisit, temp.avgRating ` +
+                 `   FROM     Property AS P LEFT JOIN ` +
+                ` (SELECT    COUNT(V.propertyID) AS numberOfVisit, ROUND(AVG(V.Rating),2) AS avgRating, P.ID ` +
+                 `FROM    property AS P INNER JOIN visit AS V ` +
+                 `ON        P.ID =  V.PropertyID AND P.owner = (?)` +
+                  ` GROUP BY P.ID ) AS temp ` +
+                         `ON         P.ID =  temp.ID ` +
+                 `WHERE P.ApprovedBy IS NOT NULL AND P.owner = (?)` +
+                 ` ORDER BY P.Name;`
+    var body = [username, username];
+    connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          // console.log('res => ',res);
+          var data = JSON.parse(JSON.stringify(res));
+          // console.log('data => ',data);
+          // data = [];
+          return response.json({"Error": false, "Message": "Success", "properties": data});
+       }
+    });
+});
+
+router.get(`/getFarmItem/`, (req, response) => {
+  console.log('req.param => ',req.param);
+  const errors = {};
+    var sql = `SELECT Name, Type FROM FarmItem WHERE IsApproved = 1; `
+    connection.query(sql, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log('res => ',res);
+          var rawData = JSON.parse(JSON.stringify(res));
+          console.log(rawData);
+          // console.log('data => ',data);
+          var animals = [];
+          var crops = [];
+          rawData.forEach((item) => {
+            if (item.Type === 'ANIMAL') {
+              animals.push(item.Name);
+            } else {
+              crops.push(item.Name);
+            }
+          })
+          var data = [animals, crops];
+          console.log(data);
+          return response.json({"Error": false, "Message": "Success", "properties": data});
+       }
+    });
+});
 
 module.exports = router;
+
+
