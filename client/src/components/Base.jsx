@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Route, Link, NavLink } from 'react-router-dom';
+import { Route, Link, NavLink, BrowserRouter } from 'react-router-dom';
 import Login from '../containers/LoginPage.jsx';
 import VisitorSignUp from '../containers/VisitorSignUpPage.jsx';
 import OwnerSignUp from '../containers/OwnerSignUpPage.jsx';
@@ -28,7 +28,6 @@ const Base = ({ children }) => (
   // console.log(children);
   <div>
     <div className="top-bar">
-
       <div className="top-bar-left">
         <NavLink to="/">Atlanta Gardens, Farms, and Orchards</NavLink>
       </div>
@@ -38,9 +37,9 @@ const Base = ({ children }) => (
         <Link to="/login">Log in</Link>
         <Link to="/signup/visitor"> Visitor Sign up</Link>
         <Link to="/signup/owner"> Owner Sign up</Link>
+
       </div>
     </div>
-    
     <Route exact path="/" component={Login}/>
     <Route path="/login" component={Login}/>
     <Route path="/signup/visitor" component={VisitorSignUp}/>

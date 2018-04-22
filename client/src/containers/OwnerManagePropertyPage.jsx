@@ -16,14 +16,29 @@ class OwnerManagePropertyPage extends React.Component {
     // set the initial component state
     this.state = {
       errors: {},
+      disabled: false,
       user: {
         email: '',
         password: ''
+      },
+      property: {
+        propertyName: '',
+        streetAddress: '',
+        city:'',
+        zip:'',
+        acres:'',
+        propType: "FARM",
+        animal:'',
+        crop:'',
+        public:'0',
+        commercial:'0',
+        owner: 'farmowner'
       }
     };
 
     this.processForm = this.processForm.bind(this);
-    this.changeUser = this.changeUser.bind(this);
+    this.changeproperty = this.changeproperty.bind(this);
+    this.changeSelectField  = this.changeSelectField.bind(this);
   }
 
   /**
@@ -65,16 +80,39 @@ class OwnerManagePropertyPage extends React.Component {
    *
    * @param {object} event - the JavaScript event object
    */
-  changeUser(event) {
+  changeproperty(event) {
     const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
+    const property = this.state.property;
+    property[field] = event.target.value;
+        this.setState({
+      property
     });
   }
 
+
+  changeSelectField(event, index, value, field) {
+    const property = this.state.property;
+    console.log('field => ',field);
+    property[field] = value;
+    console.log('property => ',property);
+    console.log('property[field] => ',property[field]);
+    const farmItems = this.state.data;
+    if(property['propType'] == 'FARM') {
+        this.state.disabled = false;
+        this.state.crops = farmItems[1].concat(farmItems[2]);
+    } else {
+        this.state.disabled = true;
+        property.animal = '';
+      if(property['propType'] == 'GARDEN') {
+        this.state.crops = farmItems[1];
+      } else {
+        this.state.crops = farmItems[2];
+      }
+    }
+    this.setState({
+        property : property
+      });
+  }
   /**
    * Render the component.
    */
@@ -82,9 +120,12 @@ class OwnerManagePropertyPage extends React.Component {
         return (
       <OwnerManagePropertyForm
         onSubmit={this.processForm}
-        onChange={this.changeUser}
+        selectFieldOnChange ={this.changeSelectField}
+        disabled = {this.state.disabled}
+        onChange={this.changeproperty}
         errors={this.state.errors}
         user={this.state.user}
+        property ={this.state.property}
       />
     );
   }
