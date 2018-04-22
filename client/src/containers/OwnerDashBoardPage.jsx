@@ -1,16 +1,18 @@
 import React, { PropTypes } from 'react';
 import OwnerDashBoardForm from '../components/OwnerDashBoardForm.jsx';
 import axios from 'axios';
+import { browserHistory } from 'history';
 // import { Redirect } from 'react-router';
 // import { Router } from 'react-router';
-import { browserHistory } from 'history';
 // import { Link } from 'react-router'; 
+
 class OwnerDashBoardPage extends React.Component {
 
   /**
    * Class constructor.
    */
   constructor(props) {
+
     super(props);
 
     // set the initial component state
@@ -35,29 +37,7 @@ class OwnerDashBoardPage extends React.Component {
     // prevent default action. in this case, action is the form submission event
     var self = this;
     event.preventDefault();
-    axios.post('/auth/OwnerDashBoard', {
-      user : this.state.user
-    })
-    .then(function (res) {
-      // window.location.href="/thankyou"
-      console.log('res => ',res);
-      if (res.data.Error) {
-        console.log('res.data.errors => ',res.data.errors);
-        self.setState({
-         errors: res.data.errors
-        });
-      } else {
-        //if success
-        // TO-DO need to check and route the role
-        const user = res.data.user;
-        const type = user.UserType;
-        const username = user.Username;
-        self.setState({redirect:true});
-        console.log('self.props => ',self.props);
-        if (type == "OWNER") {
-        }  
-      }
-    })
+
   }
 
   /**

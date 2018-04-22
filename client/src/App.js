@@ -6,6 +6,7 @@ import VisitorSignUpPage from './containers/VisitorSignUpPage.jsx';
 import OwnerSignUpPage from './containers/OwnerSignUpPage.jsx';
 import AdminDashBoardPage from './containers/AdminDashBoardPage.jsx'
 import AddPropertyPage from './containers/AddPropertyPage.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 

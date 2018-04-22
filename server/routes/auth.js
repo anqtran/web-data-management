@@ -110,6 +110,7 @@ const errors = {};
     //adding hash password
     var body = [user.name, user.email, hash, user.usertype];
     connection.query(sql, body, function(err){
+
        if(err){
         errors.email = 'Email is already taken.';
         console.log("user duplicated");
@@ -144,7 +145,10 @@ router.post('/visitorsignup', (req, res) => {
     //adding hash password
     var body = [user.name, user.email, hash, user.usertype];
     connection.query(sql, body, function(err){
+        console.log('sql => ',sql);
+        console.log('body => ',body);
        if(err){
+        console.log('err IMPORTANTTT=> ',err);
         errors.email = 'Email is already taken.';
         console.log("user duplicated");
         return res.status(200).json({Error: true, success: false, errors: errors});
