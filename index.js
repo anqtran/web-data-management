@@ -14,10 +14,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes
 const authRoutes = require('./server/routes/auth');
 app.use('/auth', authRoutes);
+//populate data before rendering page
 const populateRoutes = require('./server/routes/populate');
-console.log('populateRoutes => ',populateRoutes);
 app.use('/populate', populateRoutes);
-
+//add to database
+const addRoutes = require('./server/routes/add');
+app.use('/add', addRoutes);
 // start the server
 app.listen(3000, () => {
 	console.log('Server is running on http://localhost:3000 or http://127.0.0.1:3000');

@@ -22,10 +22,10 @@ const AddPropertyForm = ({
   property,
   errors,
   animals,
-  crops
+  crops,
 }) => (
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
+    <form action="/" onSubmit={onSubmit} >
       <h2 className="card-heading">ADD NEW PROPERTY</h2>
       {errors.summary && <p className="error-message">{errors.summary}</p>}
     
@@ -99,9 +99,9 @@ const AddPropertyForm = ({
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "propType")}
           value ={property.propType}
         >
-          <MenuItem  value={"Farm"} primaryText="Farm" />
-          <MenuItem  value={"Orchard"} primaryText="Orchard" />
-          <MenuItem  value={"Garden"} primaryText="Garden" />
+          <MenuItem  value={"FARM"} primaryText="Farm" />
+          <MenuItem  value={"ORCHARD"} primaryText="Orchard" />
+          <MenuItem  value={"GARDEN"} primaryText="Garden" />
         </SelectField>
       </div>
 
@@ -170,7 +170,6 @@ const AddPropertyForm = ({
           name= "add" 
           label="Add Property" primary />
         <RaisedButton 
-          type="submit" 
           name= "cancel" 
           label="Cancel" primary  />
       </div>

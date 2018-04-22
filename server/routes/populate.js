@@ -69,20 +69,25 @@ router.get(`/getFarmItem/`, (req, response) => {
         console.log('err => ',err);
         return errors;
        } else {
-          console.log('res => ',res);
+          // console.log('res => ',res);
           var rawData = JSON.parse(JSON.stringify(res));
-          console.log(rawData);
+          // console.log(rawData);
           // console.log('data => ',data);
           var animals = [];
-          var crops = [];
+          var gardenItems = [];
+          var orchardItems = [];
           rawData.forEach((item) => {
             if (item.Type === 'ANIMAL') {
               animals.push(item.Name);
             } else {
-              crops.push(item.Name);
+              if (item.Type === 'FRUIT' || item.Type === 'NUT') {
+                orchardItems.push(item.Name);
+              } else {
+                gardenItems.push(item.Name);
+              }
             }
           })
-          var data = [animals, crops];
+          var data = [animals, gardenItems, orchardItems];
           console.log(data);
           return response.json({"Error": false, "Message": "Success", "properties": data});
        }
