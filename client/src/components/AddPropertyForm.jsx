@@ -14,23 +14,21 @@ const styles = {
 
 };
 
-var animals  = ["dog", "cat", "pig"];
-var crops  = ["apple", "banana", "peach"];
-
 const AddPropertyForm = ({
   onSubmit,
   onChange,
   selectFieldOnChange,
+  disabled,
+  property,
   errors,
-  property
+  animals,
+  crops,
 }) => (
-
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
+    <form action="/" onSubmit={onSubmit} >
       <h2 className="card-heading">ADD NEW PROPERTY</h2>
-
       {errors.summary && <p className="error-message">{errors.summary}</p>}
-
+    
       <div className="field-line">
         <TextField
           className = "textfield"
@@ -101,9 +99,9 @@ const AddPropertyForm = ({
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "propType")}
           value ={property.propType}
         >
-          <MenuItem  value={"Farm"} primaryText="Farm" />
-          <MenuItem  value={"Orchard"} primaryText="Orchard" />
-          <MenuItem  value={"Garden"} primaryText="Garden" />
+          <MenuItem  value={"FARM"} primaryText="Farm" />
+          <MenuItem  value={"ORCHARD"} primaryText="Orchard" />
+          <MenuItem  value={"GARDEN"} primaryText="Garden" />
         </SelectField>
       </div>
 
@@ -112,6 +110,7 @@ const AddPropertyForm = ({
           className = "selectfield"
           floatingLabelText="Animal"
           name="animal"
+          disabled={disabled}
           errorText={errors.animal}
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "animal")}
           value ={property.animal}
@@ -167,10 +166,13 @@ const AddPropertyForm = ({
       </div>
 
  <div className="button-line">
-        <RaisedButton type="submit" label="Add Property" primary
-                      href="./DashBoard"/>
-        <RaisedButton type="submit" label="Cancel" primary
-                      href="./DashBoard"/>
+      ViewContentTable
+        <RaisedButton type="submit" 
+          name= "add" 
+          label="Add Property" primary />
+        <RaisedButton 
+          name= "cancel" 
+          label="Cancel" primary  />
       </div>
 
     </form>
@@ -182,9 +184,11 @@ AddPropertyForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   selectFieldOnChange : PropTypes.func.isRequired,
+  disabled: PropTypes.any.isRequired,
   errors: PropTypes.object.isRequired,
-  property: PropTypes.object.isRequired
-
+  property: PropTypes.object.isRequired,
+  animals: PropTypes.array.isRequired,
+  crops: PropTypes.array.isRequired,
 };
 
 export default AddPropertyForm;

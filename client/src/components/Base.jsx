@@ -40,6 +40,7 @@ const Base = ({ children }) => (
         <Link to="/signup/owner"> Owner Sign up</Link>
       </div>
     </div>
+    
     <Route exact path="/" component={Login}/>
     <Route path="/login" component={Login}/>
     <Route path="/signup/visitor" component={VisitorSignUp}/>
