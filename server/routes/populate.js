@@ -124,12 +124,12 @@ router.get(`/getDetailProperty/:name`, (req, response) => {
               ON P.ID = H.PropertyID
             LEFT JOIN user as U 
               ON U.Username = P.owner
-            LEFT JOIN (SELECT   COUNT(V.propertyID ) AS Visits, AVG(V.Rating) AS avgRating, P.ID
+            LEFT JOIN (SELECT   COUNT(V.PropertyID ) AS Visits, ROUND(AVG(V.Rating), 2) AS avgRating, P.ID
                   FROM 		property AS P INNER JOIN visit AS V
                   ON			P.ID =  V.PropertyID
                   GROUP BY P.ID )	AS temp1
                   ON 				P.ID =  temp1.ID                         
-            WHERE P.Name = (?) and P.ApprovedBy IS NOT NULL; `;
+            WHERE P.Name = (?) `;
   var body = req.param.name;  
   connection.query(sql, body, function(err,res){
       console.log('sql => ',sql);
@@ -144,6 +144,28 @@ router.get(`/getDetailProperty/:name`, (req, response) => {
        }
     });
 });
+
+router.get(`/getLogVisit/:username/:propName`, (req, response) => {
+  console.log('req.param.username => ',req.param.username);
+  console.log('req.param.propName => ',req.param.propName);
+
+  const errors = {};
+  var sql = `SELECT V.Username, V.PropertyID FROM Visit As V WHERE V.Username = (?) && V.PropertyID = (?);`;
+  var body = [req.param.name,req.param.propName];  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
 
 module.exports = router;
 

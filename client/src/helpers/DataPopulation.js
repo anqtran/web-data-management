@@ -67,9 +67,33 @@ export function getVisitHistory(Username) {
 
 export function getDetailProperty(name) {
   console.log('function getDetailProperty is running => ');
-  console.log('Property is ', Username);
+  console.log('Property is ', name);
   return new Promise(function(resolve, reject) {
     axios.get(`/populate/getDetailProperty/${name}`)
+    .then(function (res) {
+      console.log("Ahihihihihihiiiiiii");
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        // console.log(res);
+        // var data = JSON.parse(res.data.properties);
+        console.log(res.data.properties);
+        resolve(res.data.properties);
+      }
+    })
+  })
+}
+
+
+export function getLogVisit(Username, PropName) {
+  console.log('function getLogVisit is running => ');
+  console.log('Visitor is ', Username);
+  console.log('PropName is ', PropName);
+
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getLogVisit/${name}/${propName}`)
     .then(function (res) {
       console.log("Ahihihihihihiiiiiii");
 

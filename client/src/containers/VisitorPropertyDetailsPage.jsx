@@ -16,10 +16,7 @@ class VisitorPropertyDetailsPage extends React.Component {
     // set the initial component state
     this.state = {
       errors: {},
-      user: {
-        email: '',
-        password: ''
-      }
+      property: {}
     };
 
     this.processForm = this.processForm.bind(this);
@@ -74,6 +71,34 @@ class VisitorPropertyDetailsPage extends React.Component {
       user
     });
   }
+//////////////////////
+handleOpen = () => {
+  this.setState({open: true});
+};
+
+handleClose = () => {
+  this.setState({open: false});
+};
+
+actions = [
+  <FlatButton
+    label="Cancel"
+    primary={true}
+    onClick={this.handleClose}
+  />,
+  <FlatButton
+    label="Submit"
+    primary={true}
+    keyboardFocused={true}
+    onClick={this.handleClose}
+  />,
+];
+
+
+
+
+//////////////////
+
 
   /**
    * Render the component.
@@ -84,7 +109,7 @@ class VisitorPropertyDetailsPage extends React.Component {
         onSubmit={this.processForm}
         onChange={this.changeUser}
         errors={this.state.errors}
-        user={this.state.user}
+        property={this.state.property}
       />
     );
   }

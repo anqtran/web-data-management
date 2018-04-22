@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import VisitorVisitHistoryForm from '../components/VisitorVisitHistoryForm.jsx';
+// import VisitorVisitHistoryForm from '../components/VisitorVisitHistoryForm.jsx';
 import axios from 'axios';
 // import { getVisitHistory } from '../helpers/DataPopulation';s
 // import { Redirect } from 'react-router';

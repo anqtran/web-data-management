@@ -132,3 +132,115 @@ console.log('property.owner => ',property.owner);
   }
 });
 
+router.post('/addLogVisit/:username/:propName/:rating', (req, response) => {
+  const errors = {};
+  var sql = `INSERT INTO Visit (Username, PropertyID, VisitDate, Rating) VALUES (?, 
+    (SELECT Name FROM Property WHERE ID = (?)), ?, ?);`;
+  var d = new Data().toISOString().slice(0, 10);
+  var body = [req.param.username,req.param.propName, d, req.param.rating];  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
+router.post('/deleteLogVisit/:username/:propName/', (req, response) => {
+  const errors = {};
+  var sql = `DELETE FROM Visit WHERE Username = (?) AND PropertyID = (SELECT ID FROM Property WHERE Name = (?));`;
+  var body = [req.param.username,req.param.propName];  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
+router.post('/addApprovedItem/:name/:type/', (req, response) => {
+  const errors = {};
+  var sql = `INSERT INTO Has (Name, IsApproved, Type) VALUES (?, ?, ?);`;
+  var body = [req.param.name,'1', req.param.type];  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
+router.post('/updateApprovedItem/:name/:type/', (req, response) => {
+  const errors = {};
+  var sql = `UPDATE FarmItem (IsApproved) VALUES (?) WHERE Name = (?) && Type == (?);`;
+  var body = ['1', req.param.name, req.param.type];  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
+router.post('/deleteVisitor/:name/', (req, response) => {
+  const errors = {};
+  var sql = `DELETE FROM User WHERE Username = (?)`;
+  var body = [req.param.name];  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
+
+router.post('/deleteOwner/:name/', (req, response) => {
+  const errors = {};
+  var sql = `DELETE FROM User WHERE Username = (?)`;
+  var body = [req.param.name];  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
+
