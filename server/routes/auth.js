@@ -113,7 +113,6 @@ const errors = {};
 
        if(err){
         errors.email = 'Email is already taken.';
-        console.log("user duplicated");
         return res.status(200).json({Error: true, success: false, errors: errors});
        } else {
           return res.json({"Error": false, "Message": "Success"})
