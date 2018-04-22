@@ -116,15 +116,16 @@ class AddPropertyPage extends React.Component {
     event.preventDefault();
     console.log('this.state.property => ',this.state.property);
     addProperty(this.state.property)
-      .then(function(items) {
-        console.log("Items:" + JSON.stringify(items))
-        self.setState( {
-          select: null,
-          animals: items[0],
-          gardenItems: items[1]
-        })
-      console.log('items IMPORTANTTTT => ',self.state.data);
-
+      .then(function(res) {
+        console.log('res => ',res);
+        if(res.Error) {
+          console.log('res.data.errors => ',res.errors);
+          self.setState({
+          errors: res.errors
+       });
+        } else {
+          console.log('ADD SUCCESSSSSS');
+        }
       })
   }
 

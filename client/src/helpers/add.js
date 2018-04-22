@@ -13,8 +13,8 @@ export function addProperty(property) {
       console.log("HElloooo");
 
       if (res.data.Error) {
-        console.log('res.data.errors => ',res.data.errors);
-        reject(res.data.Error)
+        console.log('res.data.errors => ',res.data);
+        resolve(res.data)
       } else {
         // console.log(res);
         // var data = JSON.parse(res.data.properties);
