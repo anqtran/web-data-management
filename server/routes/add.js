@@ -12,7 +12,6 @@ function validatePropertyForm(payload){
   const errors = {};
   let isFormValid = true;
   
-  console.log('username => ', payload.name);
   
   if (!payload.propertyName || typeof payload.propertyName !== 'string') {
     isFormValid = false;
@@ -32,7 +31,6 @@ function validatePropertyForm(payload){
 
 
   if (!payload.zip || !isNumeric(payload.zip)) {
-    console.log('typeof(payload.zip) => ',typeof(payload.zip));
     isFormValid = false;
     errors.zip = 'Please provide a correct zip code.';
   } else {
@@ -45,11 +43,9 @@ function validatePropertyForm(payload){
 
   if (!payload.acres || !isNumeric(payload.acres)) {
     isFormValid = false;
-    console.log('hereeee => ');
     errors.acres = 'Please provide a correct acres.';
   } else {
     var num = parseInt(payload.acres);
-    console.log('num => ',num);
     if (num < 0) {
       isFormValid = false;
       errors.acres = 'Please provide a correct acres.';
@@ -85,7 +81,6 @@ function validateSignupForm(payload) {
   let isFormValid = true;
   let message = '';
   
-  console.log('username => ', payload.name);
   
   if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
     isFormValid = false;
@@ -122,17 +117,12 @@ function validateSignupForm(payload) {
 }
 
 router.post('/addOwner', (req, res) => {
-  console.log('req.body => ',req.body);
   var user = req.body.user;
   var property = req.body.property;
-  console.log(user);
   var hash = bcrypt.hashSync(user.password, salt);
   const validationUser = validateSignupForm(req.body.user);
   const validationProp = validatePropertyForm(req.body.property);
-  console.log('validationUser => ',validationUser.errors);
-  console.log('validationProp => ',validationProp.errors);
   var errors = Object.assign(validationUser.errors, validationProp.errors)
-  console.log(errors);
   // if the input is valid
   var self_res = res;
   if (Object.keys(errors).length == 0) {
@@ -141,8 +131,6 @@ router.post('/addOwner', (req, res) => {
     var checkPropertySql = "SELECT * FROM property WHERE Name = (?) "
     var checkPropertyBody = property.propertyName;
     connection.query(checkPropertySql, checkPropertyBody, function(checkPropErr,res){
-      console.log('checkUserErr => ',checkPropErr);
-      console.log('res => ',res);
       if (res.length != 0) {
         errors.propertyName = 'Property Name has already been taken.';
         return  self_res.status(200).json({Error: true, success: false, errors: errors});
@@ -151,7 +139,6 @@ router.post('/addOwner', (req, res) => {
         //adding hash password
         var body = [user.name, user.email, hash, user.usertype];
         connection.query(sql, body, function(err){
-          console.log('err => ',err);
           if(err){
             var sqlMessage = err.sqlMessage;
             if (sqlMessage.includes(user.email)) {
@@ -165,25 +152,20 @@ router.post('/addOwner', (req, res) => {
             var bodysql = [property.propertyName, property.acres, property.commercial,property.public, property.streetAddress, property.city, property.zip,property.propType, user.name];
             connection.query(propsql,bodysql, function(err,res){
               if(err){
-                console.log('err  of Property => ',err);
                 errors.propertyName = "The Property Name has been taken."
                 return self_res.status(200).json({Error: true, success: false, errors: errors});
               } else {
-                console.log('res => ',res);
                 var sql1 = `SELECT ID FROM Property WHERE Name = (?)`;
                 var body1 = property.propertyName;
                 connection.query(sql1, body1, function(err1, res1){
                   if (err1) {
-                    console.log('err1 => ', err1);
                   } else {
                     var id = res1[0].ID;
-                    console.log('id => ',id);
                     if (property.animal != '') {
                       var addAnimalSql = `INSERT INTO has VALUE(?,?)`;
                       var addAnimalBody = [id, property.animal];
                       connection.query(addAnimalSql, addAnimalBody, function(err2, res2){
                         if(err2)
-                          console.log('err1 => ',err2);
                       });
                       var addCropSql = `INSERT INTO has VALUE(?,?)`;
                       var addCropBody = [id, property.crop];
