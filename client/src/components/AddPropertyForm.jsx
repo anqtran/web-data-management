@@ -30,7 +30,7 @@ const AddPropertyForm = ({
       {errors.summary && <p className="error-message">{errors.summary}</p>}
     
       <div className="field-line">
-        <TextField 
+        <TextField
           className = "textfield"
           floatingLabelText="Property Name"
           type="text"
@@ -42,7 +42,7 @@ const AddPropertyForm = ({
       </div>
 
       <div className="field-line">
-        <TextField 
+        <TextField
           className = "textfield"
           floatingLabelText="Street Address"
           type="text"
@@ -54,7 +54,7 @@ const AddPropertyForm = ({
       </div>
 
       <div className="field-line">
-        <TextField 
+        <TextField
           className = "textfield"
           floatingLabelText="City"
           type="text"
@@ -67,7 +67,7 @@ const AddPropertyForm = ({
 
 
       <div className="field-line">
-        <TextField 
+        <TextField
           className = "textfield"
           floatingLabelText="Zip"
           type="text"
@@ -79,7 +79,7 @@ const AddPropertyForm = ({
       </div>
 
       <div className="field-line">
-        <TextField 
+        <TextField
           className = "acres"
           floatingLabelText="Acres"
           type="text"
@@ -160,12 +160,13 @@ const AddPropertyForm = ({
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "commercial")}
           value ={property.commercial}
         >
-          <MenuItem name="public" value={"1"} primaryText="Yes" />
+          <MenuItem name="public" value={"1"} primaryText="Yes"/>
           <MenuItem name="public" value={"0"} primaryText="No" />
         </SelectField>
       </div>
 
  <div className="button-line">
+      ViewContentTable
         <RaisedButton type="submit" 
           name= "add" 
           label="Add Property" primary />
