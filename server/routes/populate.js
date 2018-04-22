@@ -94,6 +94,57 @@ router.get(`/getFarmItem/`, (req, response) => {
     });
 });
 
+
+router.get(`/getVisitHistory/:name`, (req, response) => {
+  console.log('req.param.name => ',req.param.name);
+  const errors = {};
+  var sql = `SELECT P.Name, V.VisitDate, V.Rating FROM (Property AS P INNER JOIN Visit AS V ON P.ID = V.PropertyID) WHERE U.Username = (?) ORDER BY P.Name;`
+  var body = req.param.name;  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
+
+router.get(`/getDetailProperty/:name`, (req, response) => {
+  console.log('req.param.name => ',req.param.name);
+  const errors = {};
+  var sql = `SELECT 	P.Name,  U.Username, U.Email, P.street, P.City, P.Zip, P.Size, P.PropertyType, P.isPublic, P.isCommercial, P.ID, P.ApprovedBy, temp1.Visits, temp1.avgRating, H.ItemName		
+            FROM Property AS P 
+            LEFT JOIN has AS H
+              ON P.ID = H.PropertyID
+            LEFT JOIN user as U 
+              ON U.Username = P.owner
+            LEFT JOIN (SELECT   COUNT(V.propertyID ) AS Visits, AVG(V.Rating) AS avgRating, P.ID
+                  FROM 		property AS P INNER JOIN visit AS V
+                  ON			P.ID =  V.PropertyID
+                  GROUP BY P.ID )	AS temp1
+                  ON 				P.ID =  temp1.ID                         
+            WHERE P.Name = (?) and P.ApprovedBy IS NOT NULL; `;
+  var body = req.param.name;  
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          var rawData = JSON.parse(JSON.stringify(res));
+
+          return rawData;
+       }
+    });
+});
+
 module.exports = router;
 
 

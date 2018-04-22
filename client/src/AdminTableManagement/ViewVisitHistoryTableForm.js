@@ -173,24 +173,6 @@ export default class ViewVisitHistoryTableForm extends React.Component {
           >
           Rating
           </TableHeaderColumn>
-          {/* <TableHeaderColumn 
-            dataField='ApprovedBy' 
-            dataSort={ true } 
-            dataAlign='center'
-            width='10%'
-            tdStyle={ { whiteSpace: 'normal' } } 
-            thStyle={ { whiteSpace: 'normal' } }
-
-          >
-          Verried By
-          </TableHeaderColumn> */}
-          {/* <TableHeaderColumn 
-            dataField='numProp' 
-            dataSort={ true }
-            dataAlign='center'
-          >
-          Number of Properties
-          </TableHeaderColumn> */}
         </BootstrapTable>
         </div>
         
