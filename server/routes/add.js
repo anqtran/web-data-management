@@ -166,6 +166,7 @@ router.post('/addOwner', (req, res) => {
                       var addAnimalBody = [id, property.animal];
                       connection.query(addAnimalSql, addAnimalBody, function(err2, res2){
                         if(err2)
+                          console.log('err2 => ',err2);
                       });
                       var addCropSql = `INSERT INTO has VALUE(?,?)`;
                       var addCropBody = [id, property.crop];
@@ -175,7 +176,7 @@ router.post('/addOwner', (req, res) => {
                       });
                     }
                   }
-                })  
+                });
               }
             });
           }
