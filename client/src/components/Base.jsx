@@ -28,12 +28,12 @@ const Base = ({ children }) => (
   // console.log(children);
   <div>
     <div className="top-bar">
-      
+
       <div className="top-bar-left">
         <NavLink to="/">Atlanta Gardens, Farms, and Orchards</NavLink>
       </div>
 
-      
+
       <div className="top-bar-right">
         <Link to="/login">Log in</Link>
         <Link to="/signup/visitor"> Visitor Sign up</Link>
@@ -45,7 +45,7 @@ const Base = ({ children }) => (
     <Route path="/signup/visitor" component={VisitorSignUp}/>
     <Route path="/signup/owner" component={OwnerSignUp}/>
 
-    <Route path="/owner/dashboard" component={OwnerDashBoard}/>
+    <Route path="/owner/dashboard" component={OwnerAddProperty}/>
     <Route path="/owner/allothervalidproperties" component={OwnerAllOtherValidProperties}/>
     <Route path="/owner/addproperty" component={OwnerAddProperty}/>
     <Route path="/owner/propertydetails" component={OwnerPropertyDetails}/>
@@ -59,13 +59,13 @@ const Base = ({ children }) => (
     <Route path="/admin/viewunconfirmedproperties" component={AdminViewUnconfirmedProperties}/>
     <Route path="/admin/viewapprovedanimalsandcrops" component={AdminViewApprovedAnimalsandCrops}/>
     <Route path="/admin/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
-    
+
     <Route path="/visitor/dashboard" component={VisitorDashBoard}/>
     <Route path="/visitor/confirmedpropertydetails" component={VisitorPropertyDetails}/>
     {/*<Route path="/visitor/loggedpropertydetails" component={VisitorLoggedPropertyDetails}/>*/}
     <Route path="/visitor/visithistory" component={VisitorVisitHistory}/>
   </div>
-  
+
 );
 
 Base.propTypes = {
@@ -76,4 +76,4 @@ export default Base;
 
 
 
- // 
+ //
