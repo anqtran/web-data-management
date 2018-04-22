@@ -166,13 +166,20 @@ const AddPropertyForm = ({
       </div>
 
  <div className="button-line">
+<<<<<<< HEAD
+=======
+      ViewContentTable
+>>>>>>> b8da62ff19c529a70d3b7ab86c61725bda376a7c
         <RaisedButton type="submit" 
           name= "add" 
           label="Add Property" primary />
         <RaisedButton 
           name= "cancel" 
+<<<<<<< HEAD
           label="Cancels" primary  />
+=======
           label="Cancel" primary  />
+>>>>>>> b8da62ff19c529a70d3b7ab86c61725bda376a7c
       </div>
 
     </form>
