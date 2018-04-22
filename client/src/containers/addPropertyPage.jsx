@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -55,16 +54,12 @@ class AddPropertyPage extends React.Component {
       var self = this;
       getFarmItems()
       .then(function(items) {
-        console.log("Items:" + JSON.stringify(items))
         self.setState( {
           data: items,
           animals: items[0],
           crops: items[1].concat(items[2])
         })
-      console.log('items IMPORTANTTTT => ',self.state.data);
-
       })
-      // console.log("data mouted",self.state.data);
   }
 
   /**
@@ -114,12 +109,9 @@ class AddPropertyPage extends React.Component {
     var self = this;
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
-    console.log('this.state.property => ',this.state.property);
     addProperty(this.state.property)
       .then(function(res) {
-        console.log('res => ',res);
         if(res.Error) {
-          console.log('res.data.errors => ',res.errors);
           self.setState({
           errors: res.errors
        });
@@ -134,7 +126,6 @@ class AddPropertyPage extends React.Component {
    */
   render() {
     return (
-
       <AddPropertyForm
         onSubmit={this.processForm}
         onChange={this.changeproperty}

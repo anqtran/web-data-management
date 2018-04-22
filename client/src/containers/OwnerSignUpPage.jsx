@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import OwnerSignUpForm from '../components/OwnerSignUpForm.jsx';
-
+import { getFarmItems } from '../helpers/DataPopulation';
+import {addOwner} from '../helpers/add';
 const styles = {
   customWidth: {
     width: 150,
@@ -22,49 +23,52 @@ class OwnerSignUpPage extends React.Component {
    */
   constructor(props) {
     super(props);
-    console.log("asudasidjaisd");
-    // set the initial component state
+
+
     this.state = {
       errors: {},
       disabled: false,
-      animals: [],
-      crops: {},
+      animals:[],
+      crops: [],
+      data:[],
       user: {
         email: '',
         name: '',
         password: '',
         confirmPassword:'',
+        usertype: 'OWNER'
+      },
+      property: {
         propertyName: '',
         streetAddress: '',
         city:'',
         zip:'',
         acres:'',
-        propType: "Farm",
+        propType: "FARM",
         animal:'',
         crop:'',
         public:'0',
-        commercial:'0', 
-        usertype: 'OWNER'
+        commercial:'0'
       }
     };
-    axios.post('/populate/animal', {
-      user: this.state.user})
-    .then(function (res) {
-      if (res.data.Error) {
-        console.log('res.data.errors => ',res.data.errors);
-        self.setState({
-         errors: res.data.errors
-       });
-      } else {
-        console.log(res);
-    }
-  })
 
     this.processForm = this.processForm.bind(this);
     this.changeUser = this.changeUser.bind(this);
     this.changeSelectField  = this.changeSelectField.bind(this);
+    this.propertyOnChange = this.propertyOnChange.bind(this);
   }
 
+  componentWillMount() {
+      var self = this;
+      getFarmItems()
+      .then(function(items) {
+        self.setState( {
+          data: items,
+          animals: items[0],
+          crops: items[1].concat(items[2])
+        })
+      })
+  }
   /**
    * Change the user object.
    *
@@ -79,20 +83,38 @@ class OwnerSignUpPage extends React.Component {
     });
   }
 
-  changeSelectField(event, index, value, field) {
-    const user = this.state.user;
-    console.log('field => ',field);
-    user[field] = value;
-    console.log('user => ',user);
-    console.log('user[field] => ',user[field]);
-      if(user['propType'] == 'Garden') {
-        this.state.disabled = true;
-      } else {
-        this.state.disabled = false;
-      }
-    this.setState({
-      user : user
+  propertyOnChange(event) {
+    const field = event.target.name;
+    const property = this.state.property;
+    property[field] = event.target.value;
+        this.setState({
+      property
     });
+  }
+
+
+  changeSelectField(event, index, value, field) {
+    const property = this.state.property;
+    property[field] = value;
+    let isDisabled = false;
+    const farmItems = this.state.data;
+    if(property['propType'] == 'FARM') {
+        isDisabled = false;
+        this.state.crops = farmItems[1].concat(farmItems[2]);
+    } else {
+        isDisabled = true;
+        property.animal = '';
+      if(property['propType'] == 'GARDEN') {
+        this.state.crops = farmItems[1];
+      } else {
+        this.state.crops = farmItems[2];
+      }
+    }
+    this.setState({
+        disabled : isDisabled,
+        property : property
+      });
+    console.log("Disable status: ", this.state.disabled);
   }
 
   /**
@@ -104,20 +126,16 @@ class OwnerSignUpPage extends React.Component {
     var self = this;
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
-
-    axios.get('/auth/ownersignup', {
-      user : this.state.user
-    })
-    .then(function (res)  {
-      if (res.data.Error) {
-        console.log('res.data.errors => ',res.data.errors);
-        self.setState({
-         errors: res.data.errors
+    addOwner(this.state.property, this.state.user)
+      .then(function(res) {
+        if(res.Error) {
+          self.setState({
+          errors: res.errors
        });
-      } else {
-      // success
-    }
-  })
+        } else {
+          console.log('ADD SUCCESSSSSS');
+        }
+      })
   }
 
   /**
@@ -125,20 +143,18 @@ class OwnerSignUpPage extends React.Component {
    */
   render() {
     return (
-      <div> 
-      console.log('animals => ',animals);
       <OwnerSignUpForm
+        propertyOnChange = {this.propertyOnChange}
         onSubmit={this.processForm}
         onChange={this.changeUser}
         selectFieldOnChange ={this.changeSelectField}
         errors={this.state.errors}
         user={this.state.user}
         disabled = {this.state.disabled}
-        animals ={this.state.animals}
+        property={this.state.property}
+        animals = {this.state.animals}
         crops = {this.state.crops}
       />
-
-      </div>
     );
   }
 

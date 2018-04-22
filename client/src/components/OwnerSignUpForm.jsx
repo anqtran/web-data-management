@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -18,8 +18,10 @@ const OwnerSignUpForm = ({
   onSubmit,
   onChange,
   selectFieldOnChange,
+  propertyOnChange,
   errors,
   user,
+  property,
   disabled,
   animals,
   crops
@@ -82,9 +84,9 @@ const OwnerSignUpForm = ({
           floatingLabelText="Property Name"
           type="text"
           name="propertyName"
-          onChange={onChange}
+          onChange={propertyOnChange}
           errorText={errors.propertyName}
-          value={user.propertyName}
+          value={property.propertyName}
         />
       </div>
 
@@ -94,11 +96,50 @@ const OwnerSignUpForm = ({
           floatingLabelText="Street Address"
           type="text"
           name="streetAddress"
-          onChange={onChange}
+          onChange={propertyOnChange}
           errorText={errors.streetAddress}
-          value={user.streetAddress}
+          value={property.streetAddress}
         />
       </div>
+
+      <div className="field-line">
+        <TextField
+          className = "textfield"
+          floatingLabelText="City"
+          type="text"
+          name="city"
+          onChange={propertyOnChange}
+          errorText={errors.city}
+          value={property.city}
+        />
+      </div>
+
+
+      <div className="field-line">
+        <TextField
+          className = "textfield"
+          floatingLabelText="Zip"
+          type="text"
+          name="zip"
+          onChange={propertyOnChange}
+          errorText={errors.zip}
+          value={property.zip}
+        />
+      </div>
+
+      <div className="field-line">
+        <TextField
+          className = "acres"
+          floatingLabelText="Acres"
+          type="text"
+          name="acres"
+          onChange={propertyOnChange}
+          errorText={errors.acres}
+          value={property.acres}
+        />
+      </div>
+
+
 
       <div className="field-line">
         <SelectField
@@ -107,11 +148,11 @@ const OwnerSignUpForm = ({
           name="propType"
           errorText={errors.propType}
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "propType")}
-          value ={user.propType}
+          value ={property.propType}
         >
-          <MenuItem  value={"Farm"} primaryText="Farm" />
-          <MenuItem  value={"Orchard"} primaryText="Orchard" />
-          <MenuItem  value={"Garden"} primaryText="Garden" />
+          <MenuItem  value={"FARM"} primaryText="Farm" />
+          <MenuItem  value={"ORCHARD"} primaryText="Orchard" />
+          <MenuItem  value={"GARDEN"} primaryText="Garden" />
         </SelectField>
       </div>
 
@@ -123,7 +164,7 @@ const OwnerSignUpForm = ({
           disabled={disabled}
           errorText={errors.animal}
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "animal")}
-          value ={user.animal}
+          value ={property.animal}
         >
           {animals.map((animal, index) =>
             <MenuItem key={index} value={animal} primaryText={animal} />
@@ -139,7 +180,7 @@ const OwnerSignUpForm = ({
           name="crop"
           errorText={errors.crop}
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "crop")}
-          value ={user.crop}
+          value ={property.crop}
         >
           {crops.map((crop, index) =>
             <MenuItem key={index} value={crop} primaryText={crop} />
@@ -154,7 +195,7 @@ const OwnerSignUpForm = ({
           name="public"
           errorText={errors.public}
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "public")}
-          value ={user.public}
+          value ={property.public}
         >
           <MenuItem name="public" value={"1"} primaryText="Yes" />
           <MenuItem name="public" value={"0"} primaryText="No" />
@@ -168,7 +209,7 @@ const OwnerSignUpForm = ({
           name="commercial"
           errorText={errors.commercial}
           onChange={(e, index, value) => selectFieldOnChange(e, index, value, "commercial")}
-          value ={user.commercial}
+          value ={property.commercial}
         >
           <MenuItem name="public" value={"1"} primaryText="Yes" />
           <MenuItem name="public" value={"0"} primaryText="No" />
@@ -176,8 +217,9 @@ const OwnerSignUpForm = ({
       </div>
 
  <div className="button-line">
-        <RaisedButton type="submit" label="Create New Account" primary 
-                      href="/login"/>
+        <RaisedButton type="submit" 
+          name= "add" 
+          label="Create New Owner Account" primary />
       </div>
 
       <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
@@ -188,13 +230,15 @@ const OwnerSignUpForm = ({
 
 OwnerSignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  propertyOnChange: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   selectFieldOnChange : PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  animals: PropTypes.any.isRequired,
-  crops: PropTypes.any.isRequired
-
+  animals: PropTypes.array.isRequired,
+  crops: PropTypes.array.isRequired,
+  property: PropTypes.object.isRequired,
+  disabled: PropTypes.any.isRequired
 };
 
 export default OwnerSignUpForm;

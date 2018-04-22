@@ -34,8 +34,6 @@ export function getFarmItems() {
         console.log('res.data.errors => ',res.data.errors);
         reject(res.data.Error)
       } else {
-        // console.log(res);
-        // var data = JSON.parse(res.data.properties);
         console.log(res.data.properties);
         resolve(res.data.properties);
       }
