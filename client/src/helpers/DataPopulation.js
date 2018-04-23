@@ -41,6 +41,26 @@ export function getFarmItems() {
   })
 }
 
+export function getPropertyItems(propertyID) {
+  console.log('function is running => ');
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getProperty/${propertyID}`)
+    .then(function (res) {
+      console.log("HElloooo");
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        console.log(res.data.properties);
+        console.log('res.data.propInfo => ',res.data.propInfo);
+
+        resolve([res.data.properties, res.data.propInfo, res.data.farmItems]);
+      }
+    })
+  })
+}
+
+
 export function getVisitHistory(Username) {
   console.log('function getVisitHistory is running => ');
   console.log('Visitor is ', Username);
