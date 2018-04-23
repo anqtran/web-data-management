@@ -10,13 +10,44 @@ const ViewVisitorsListForm = ({
   errors,
   user
 }) => (
-  <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">ViewVisitorsList</h2>
+   <Card className="container">
 
-      {errors.summary && <p className="error-message">{errors.summary}</p>}
+        Welcome ${user}
 
-    </form>
+
+      <div className="button-line">
+          <RaisedButton label="View Visitor List" onClick={this.handleOpenViewVisiterList} />
+         <Dialog
+          title="All Visitors in System"
+          actions={actionsViewVisterList}
+          modal={false}
+          open={this.state.openViewVisiterList}
+          onRequestClose={this.handleCloseViewVisiterList}
+        >
+
+        </Dialog>
+
+      </div>
+
+      <div className="button-line">
+          <RaisedButton label="View History" onClick={this.handleOpenViewHistory} />
+
+         <Dialog
+          title="My Visit History"
+          actions={actionsViewHistory}
+          modal={false}
+          open={this.state.openViewHistory}
+          onRequestClose={this.handleCloseViewHistory}
+        >
+
+          <VisitorLogHistoryTable
+            onAddSelectedViewHistory={ this.onAddSelectedViewHistory }
+            data={ this.state.data}
+          />
+          </Dialog>
+
+      </div>
+
   </Card>
 );
 

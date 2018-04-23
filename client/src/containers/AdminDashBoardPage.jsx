@@ -16,83 +16,226 @@ class AdminDashBoard extends React.Component {
       user: {
         email: '',
         password: ''
-      }
+      },
+      select: null,
+      openViewUserList: false,
+      disableLog: false
     };
 
-    this.processForm = this.processForm.bind(this);
-    this.changeUser = this.changeUser.bind(this);
+    // this.processForm = this.processForm.bind(this);
+    // this.changeUser = this.changeUser.bind(this);
   }
 
-  /**
-   * Process the form.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  processForm(event) {
-    // prevent default action. in this case, action is the form submission event
-    event.preventDefault();
 
-    // create a string for an HTTP body message
-    const email = encodeURIComponent(this.state.user.email);
-    const password = encodeURIComponent(this.state.user.password);
-    const formData = `email=${email}&password=${password}`;
 
-    // create an AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/login');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
+  handleDeleteUser = () => {
+    if (select !== null) {
 
-        // change the component-container state
+
+      this.setState({select: null});
+    }
+  };
+
+  handleDeleteLogHistory = () => {
+    if (selete !== null) {
+
+
+      this.setState({select: null});
+    }
+  };
+
+  handleOpenViewUserList = () => {
+    this.setState({
+      select: null,
+      openViewUserList: true
+    });
+
+  };
+
+  handleCloseViewUserList = () => {
+    this.setState({
+      select: null,
+      openViewUserList: false
+    });
+
+  };
+
+
+onAddSelectedUser = (row) => {
+      console.log(this.state.select === row);
+      if (this.state.select === row) {
         this.setState({
-          errors: {}
+          select: null
         });
-
-        console.log('The form is valid');
       } else {
-        // failure
-
-        // change the component state
-        const errors = xhr.response.errors ? xhr.response.errors : {};
-        errors.summary = xhr.response.message;
-
         this.setState({
-          errors
+          select: row
         });
       }
-    });
-    xhr.send(formData);
-  }
-
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
-    });
-  }
-
+    }
   /**
    * Render the component.
    */
   render() {
-    return (
-      <AdminDashBoardForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
-        errors={this.state.errors}
-        user={this.state.user}
+    const actionsViewUserList = [
+      <FlatButton
+        label="Delete Visitor Account"
+        primary={true}
+        onClick={this.handleDeleteUser}
+
+      />,
+      <FlatButton
+        label="Delete Log History"
+        primary={true}
+        onClick={this.handleDeleteLogHistory}
+        disable={this.state.disableLog}
+      />,
+      <FlatButton
+        label="Back"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleCloseViewHistory}
       />
+
+    ];
+
+
+    return (
+      <Card className="container">
+
+        Welcome ${user}
+
+
+      <div className="button-line">
+          <RaisedButton
+            label="View Visitor List"
+            onClick={() => {
+              console.log('onClick');
+              this.setState({disableLog : true});
+              this.handleOpenViewUserList;
+            }}
+          />
+         <Dialog
+          title="All Visitors in System"
+          actions={actionsViewUserList}
+          modal={false}
+          open={this.state.openViewUserList}
+          onRequestClose={this.handleCloseViewUserList}
+        >
+          <BootstrapTable data={ this.state.data }
+                        selectRow={ {
+                          mode: 'radio',
+                          bgColor: 'pink',
+                          clickToSelect: true,
+                          hideSelectColumn: true,
+                          onSelect: this.onAddSelectedUser
+                        } }
+                        search pagination
+                        options={ {
+                          expandBy: 'column',
+                          clearSearch:true
+                        } }
+                        hover height='100%'
+
+                        version='4'
+        >
+          <TableHeaderColumn
+            dataField='username' isKey={ true }
+            dataSort={ true }
+            // editable={ false }
+            dataAlign='center'
+          >
+          Username
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField='email'
+            dataSort={ true }
+            // editable={ false }
+            dataAlign='center'
+          >
+          Email
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField='visit'
+            dataSort={ true }
+            dataAlign='center'
+          >
+          Logged Visit
+          </TableHeaderColumn>
+        </BootstrapTable>
+        </Dialog>
+
+      </div>
+
+
+
+      <div className="button-line">
+          <RaisedButton
+            label="View Owner List"
+            onClick={() => {
+              console.log('onClick');
+              this.setState({disableLog : false});
+              this.handleOpenViewUserList;
+               }}
+          />
+         <Dialog
+          title="All Visitors in System"
+          actions={actionsViewUserList}
+          modal={false}
+          open={this.state.openViewUserList}
+          onRequestClose={this.handleCloseViewUserList}
+        >
+          <BootstrapTable data={ this.state.data }
+                        selectRow={ {
+                          mode: 'radio',
+                          bgColor: 'pink',
+                          clickToSelect: true,
+                          hideSelectColumn: true,
+                          onSelect: this.onAddSelectedUser
+                        } }
+                        search pagination
+                        options={ {
+                          expandBy: 'column',
+                          clearSearch:true
+                        } }
+                        hover height='100%'
+
+                        version='4'
+        >
+          <TableHeaderColumn
+            dataField='username' isKey={ true }
+            dataSort={ true }
+            // editable={ false }
+            dataAlign='center'
+          >
+          Username
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField='email'
+            dataSort={ true }
+            // editable={ false }
+            dataAlign='center'
+          >
+          Email
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField='numProp'
+            dataSort={ true }
+            dataAlign='center'
+          >
+          Number of Properties
+          </TableHeaderColumn>
+        </BootstrapTable>
+        </Dialog>
+
+      </div>
+
+
+
+
+
+
+  </Card>
     );
   }
 

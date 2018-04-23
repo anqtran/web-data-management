@@ -75,7 +75,7 @@ export default class VisitorDashBoardPage extends React.Component {
 
   onViewProperty = (row) => {
       if (this.state.selectViewProperty !== null) {
-        alert("View Property is working!!!!")
+        console.log("View Property is working!!!!")
 
       }
 
@@ -83,7 +83,7 @@ export default class VisitorDashBoardPage extends React.Component {
 
     onViewVisitHistory = (row) => {
       if (this.state.selectViewHistory !== null) {
-        alert("View Visit History is working!!!")
+        console.log("View Visit History is working!!!")
 
       }
     }
@@ -196,7 +196,6 @@ export default class VisitorDashBoardPage extends React.Component {
           onRequestClose={this.handleCloseViewProperty}
         >
 
-          Property Detail
           </Dialog>
 
       </div>
