@@ -22,6 +22,25 @@ export function getOwnerProperties(Username) {
   })
 }
 
+export function getAllProperties() {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getAllProperties`)
+    .then(function (res) {
+      console.log("HElloooo");
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        // console.log(res);
+        // var data = JSON.parse(res.data.properties);
+        console.log(res.data.properties);
+        resolve(res.data.properties);
+      }
+    })
+  })
+}
+
 
 export function getFarmItems() {
   console.log('function is running => ');
