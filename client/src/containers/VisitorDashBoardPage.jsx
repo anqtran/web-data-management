@@ -11,28 +11,30 @@ import { browserHistory } from 'history';
 // import { Link } from 'react-router';
 import VisitorDashboardTable from '../AdminTableManagement/VisitorDashboardTable';
 import VisitorLogHistoryTable from '../AdminTableManagement/VisitorLogHistoryTable';
+import { getAllProperties } from '../helpers/DataPopulation';
 
-function getItems() {
-    const products = [];
-    for (let i = 0; i < 12; i++) {
-      const id = "Property " + i;
-      products.push({
-        ID: i,
-        Name: id,
-        Address: id + ' co dia chi laaaaaaa',
-        City: 'Atlanta ' + i ,
-        Zip: 11110,
-        Size: i,
-        PropertyType: 'la dat ne ' + i,
-        IsPublic: i > 2,
-        IsCommercial: i < 2,
-        Owner: 'Nguyen Thi Buoi',
-        rating: i / 0.5,
-        visit: i
-      });
-    }
-    return products;
-  }
+
+// function getItems() {
+//     const products = [];
+//     for (let i = 0; i < 12; i++) {
+//       const id = "Property " + i;
+//       products.push({
+//         ID: i,
+//         Name: id,
+//         Address: id + ' co dia chi laaaaaaa',
+//         City: 'Atlanta ' + i ,
+//         Zip: 11110,
+//         Size: i,
+//         PropertyType: 'la dat ne ' + i,
+//         IsPublic: i > 2,
+//         IsCommercial: i < 2,
+//         Owner: 'Nguyen Thi Buoi',
+//         rating: i / 0.5,
+//         visit: i
+//       });
+//     }
+//     return products;
+//   }
 
 
 export default class VisitorDashBoardPage extends React.Component {
@@ -42,12 +44,13 @@ export default class VisitorDashBoardPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.items = getItems();
-    console.log(this.items);
+    // this.items = getItems();
+    // console.log(this.items);
     // set the initial component state
     this.state = {
       errors: {},
-      data: this.items,
+      username:{},
+      data: {},
       openViewProperty: false,
       openViewHistory: false,
       selectViewProperty: null,
@@ -60,6 +63,15 @@ export default class VisitorDashBoardPage extends React.Component {
 
   }
 
+  componentWillMount() {
+      var self = this;
+      getAllProperties()
+      .then(function(items) {
+        self.setState( {
+          data: items
+        })
+      })
+  }
 
   onViewProperty = (row) => {
       if (this.state.selectViewProperty !== null) {
@@ -85,12 +97,9 @@ export default class VisitorDashBoardPage extends React.Component {
     };
 
     handleOpenViewHistory = () => {
-        if (this.state.selectViewHistory !== null) {
           this.setState({
             openViewHistory: true,
           });
-
-       }
     };
 
     handleCloseViewProperty = () => {
@@ -196,14 +205,13 @@ export default class VisitorDashBoardPage extends React.Component {
           <RaisedButton label="View History" onClick={this.handleOpenViewHistory} />
 
          <Dialog
-          title="View Visit History"
+          title="My Visit History"
           actions={actionsViewHistory}
           modal={false}
           open={this.state.openViewHistory}
           onRequestClose={this.handleCloseViewHistory}
         >
 
-          My VIsit History
           <VisitorLogHistoryTable
             onAddSelectedViewHistory={ this.onAddSelectedViewHistory }
             data={ this.state.data}
