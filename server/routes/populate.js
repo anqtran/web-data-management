@@ -30,7 +30,6 @@ const errors = {};
 
 
 router.get(`/getOwnerProperties/:name`, (req, response) => {
-  console.log('req.param => ',req.param);
   var username = req.params.name;
 const errors = {};
 console.log("sdfsfd", username);
@@ -60,7 +59,6 @@ console.log("sdfsfd", username);
 });
 
 router.get(`/getFarmItem/`, (req, response) => {
-  console.log('req.param => ',req.param);
   const errors = {};
     var sql = `SELECT Name, Type FROM FarmItem WHERE IsApproved = 1; `
     connection.query(sql, function(err,res){
@@ -95,8 +93,65 @@ router.get(`/getFarmItem/`, (req, response) => {
 });
 
 
+router.get(`/getProperty/:propID`, (req, response) => {
+  let id = req.params.propID;
+  console.log('ggeofrkaiejfia');
+  const errors = {};
+    var sql = `SELECT Name, Type FROM FarmItem WHERE IsApproved = 1;`
+    connection.query(sql, function(err,res){
+       if(err){
+        return errors;
+       } else {
+          var rawData = JSON.parse(JSON.stringify(res));
+          var animals = [];
+          var gardenItems = [];
+          var orchardItems = [];
+          var propInfo = {};
+          rawData.forEach((item) => {
+            if (item.Type === 'ANIMAL') {
+              animals.push(item.Name);
+            } else {
+              if (item.Type === 'FRUIT' || item.Type === 'NUT') {
+                orchardItems.push(item.Name);
+              } else {
+                gardenItems.push(item.Name);
+              }
+            }
+          })
+
+          var data = [animals, gardenItems, orchardItems];
+          var propSql = `SELECT * FROM property WHERE ID = (?);`
+          var propBody = id;
+          connection.query(propSql,propBody, function(err1,response1){
+                 if(err1){
+                  console.log('err1 => ',err1);
+                  return errors;
+                 } else {
+                    propInfo = response1[0];
+                    var farmSQl = `SELECT ItemName FROM has WHERE PropertyID = (?);`
+                    connection.query(farmSQl, id, function(err2,response2){
+                      console.log('err2 => ',err2);
+                      if (!err2) {
+                        console.log('response2 => ',response2);
+                        //  LATER 
+                        return response.json({"Error": false, "Message": "Success", "properties": data, "propInfo": response1[0], "farmItems": response2});
+                        //
+                      }
+                    })
+                 }
+              });
+         }
+    });
+
+
+
+
+});
+
+
+
 router.get(`/getVisitHistory/:name`, (req, response) => {
-  console.log('req.param.name => ',req.param.name);
+  console.log('req.param.name => ',req.params.name);
   const errors = {};
   var sql = `SELECT P.Name, V.VisitDate, V.Rating FROM (Property AS P INNER JOIN Visit AS V ON P.ID = V.PropertyID) WHERE U.Username = (?) ORDER BY P.Name;`
   var body = req.param.name;  
@@ -116,7 +171,7 @@ router.get(`/getVisitHistory/:name`, (req, response) => {
 
 
 router.get(`/getDetailProperty/:name`, (req, response) => {
-  console.log('req.param.name => ',req.param.name);
+  console.log('req.param.name => ',req.params.name);
   const errors = {};
   var sql = `SELECT 	P.Name,  U.Username, U.Email, P.street, P.City, P.Zip, P.Size, P.PropertyType, P.isPublic, P.isCommercial, P.ID, P.ApprovedBy, temp1.Visits, temp1.avgRating, H.ItemName		
             FROM Property AS P 
@@ -144,6 +199,22 @@ router.get(`/getDetailProperty/:name`, (req, response) => {
        }
     });
 });
+
+
+router.get(`/deleteProperty/:propertyId`, (req, response) => {
+  var id = req.params.propertyId;
+  var sql = `DELETE FROM Property WHERE ID = (?)`
+  connection.query(sql, id, function(err,res){
+    
+     if(err){
+      console.log('delete err => ',err);   
+     } else {
+      console.log('delete success');  
+     }
+     return null;
+  });
+})
+
 
 module.exports = router;
 
