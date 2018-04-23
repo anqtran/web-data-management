@@ -49,8 +49,11 @@ export default class OwnerDashboardTableForm extends React.Component {
     // }
 
     onManageProperty = (row) => {
+      var id = this.state.data[0].ID
+      console.log(id);
+      window.location.replace("http://localhost:3000/owner/manageproperty/" + id);
       if (this.state.select !== null) {
-        alert("View Property is working!!!!")
+        
       }
     }
 
@@ -58,10 +61,7 @@ export default class OwnerDashboardTableForm extends React.Component {
       console.log("Running");
       // console.log('this.state.data => ',this.state.data);
       // console.log("Props:", this.props)
-      if (this.state.select !== null) {
-        alert("View Visit History is working!!!")
-        
-      }
+      window.location.replace("http://localhost:3000/owner/addproperty");
     }
 
     onAddSelectedRow = (row) => {
@@ -126,10 +126,7 @@ export default class OwnerDashboardTableForm extends React.Component {
     }
 
     handleManagePropertyButtonClick = (onClick) => {
-      // Custom your onClick event here,
-      // it's not necessary to implement this function if you have no any process before onClick
-      // console.log('This is my custom function for InserButton click event');
-      // console.log(this.props.selectArr);
+
       this.props.onManageProperty();
     //   onClick();
     }
@@ -140,7 +137,8 @@ export default class OwnerDashboardTableForm extends React.Component {
           btnContextual='btn-warning'
           className='my-custom-class'
           btnGlyphicon='glyphicon-edit'
-          onClick={ () => this.handleManagePropertyButtonClick(onClick) }/>
+          onClick={ () => this.handleManagePropertyButtonClick(onClick) }
+          />
       );
     }
 

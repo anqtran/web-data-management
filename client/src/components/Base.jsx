@@ -45,7 +45,7 @@ const Base = ({ children }) => (
     <Route path="/signup/visitor" component={VisitorSignUp}/>
     <Route path="/signup/owner" component={OwnerSignUp}/>
 
-    <Route path="/owner/dashboard" component={OwnerAddProperty}/>
+    <Route path="/owner/dashboard" component={OwnerDashBoard}/>
     <Route path="/owner/allothervalidproperties" component={OwnerAllOtherValidProperties}/>
     <Route path="/owner/addproperty" component={OwnerAddProperty}/>
     <Route path="/owner/propertydetails" component={OwnerPropertyDetails}/>
