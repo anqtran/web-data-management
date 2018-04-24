@@ -9,6 +9,7 @@ import { browserHistory } from 'history';
 import { BootstrapTable, TableHeaderColumn, InsertButton, DeleteButton  } from 'react-bootstrap-table';
 import VisitorDashboardTable from '../AdminTableManagement/VisitorDashboardTable';
 import VisitorLogHistoryTable from '../AdminTableManagement/VisitorLogHistoryTable';
+import ViewDetailPropertyForm from '../AdminTableManagement/ViewDetailPropertyForm.jsx';
 import { getAllProperties, getVisitHistory } from '../helpers/DataPopulation';
 
 
@@ -25,6 +26,7 @@ export default class VisitorDashBoardPage extends React.Component {
       Username: '',
       data: [],
       visitHistory: [],
+      detailProperty: {},
       openViewProperty: false,
       openViewHistory: false,
       selectViewProperty: null,
@@ -86,8 +88,18 @@ export default class VisitorDashBoardPage extends React.Component {
 
     handleOpenViewProperty = () => {
        if (this.state.selectViewProperty !== null) {
+        var self = this;
+        getDetailProperty(this.state.selectViewProperty.Name)
+        .then(function(items) {
+          self.setState({
+            detailProperty: items
+          });
+          console.log('this.state.data => ',self.state.detailProperty);
+
+        });
         this.setState({
-          openViewProperty: true,
+          openViewProperty: true
+
         });
        }
     };
@@ -99,11 +111,12 @@ export default class VisitorDashBoardPage extends React.Component {
         self.setState({
           visitHistory: items
         });
-              console.log('this.state.data => ',self.state.visitHistory);
+        console.log('this.state.data => ',self.state.visitHistory);
 
       });
           this.setState({
             openViewHistory: true,
+            selectViewProperty: null
           });
     };
 
@@ -200,7 +213,9 @@ export default class VisitorDashBoardPage extends React.Component {
           open={this.state.openViewProperty}
           onRequestClose={this.handleCloseViewProperty}
         >
-
+          <ViewDetailPropertyForm
+            data={ this.state.detailProperty}
+          />
           </Dialog>
 
       </div>

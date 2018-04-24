@@ -98,13 +98,13 @@ export function getVisitHistory(Username) {
 }
 
 
-export function getDetailProperty(name) {
+export function getDetailProperty(id) {
   console.log('function getDetailProperty is running => ');
-  console.log('Property is ', Username);
+  console.log('Property is ', id);
   return new Promise(function(resolve, reject) {
-    axios.get(`/populate/getDetailProperty/${name}`)
+    axios.get(`/populate/getDetailProperty/${id}`)
     .then(function (res) {
-      console.log("KietthichNina");
+      console.log("asdkadfbs");
 
       if (res.data.Error) {
         console.log('res.data.errors => ',res.data.errors);
@@ -112,8 +112,8 @@ export function getDetailProperty(name) {
       } else {
         // console.log(res);
         // var data = JSON.parse(res.data.properties);
-        console.log(res.data.properties);
-        resolve(res.data.properties);
+        console.log(res.data.detailProperty);
+        resolve(res.data.detailProperty);
       }
     })
   })
