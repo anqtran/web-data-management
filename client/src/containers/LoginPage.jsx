@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react';
 import LoginForm from '../components/LoginForm.jsx';
 import axios from 'axios';
-// import { Redirect } from 'react-router';
-// import { Router } from 'react-router';
-import { browserHistory } from 'history';
-// import { Link } from 'react-router'; 
+import { browserHistory } from 'react-router-dom';
 class LoginPage extends React.Component {
 
   /**
@@ -18,7 +15,8 @@ class LoginPage extends React.Component {
       errors: {},
       user: {
         email: '',
-        password: ''
+        password: '',
+        UserType:''
       }
     };
 
@@ -34,6 +32,7 @@ class LoginPage extends React.Component {
   processForm(event) {
     // prevent default action. in this case, action is the form submission event
     var self = this;
+    console.log('user => ',this.state.user);
     event.preventDefault();
     axios.post('/auth/login', {
       user : this.state.user
@@ -52,10 +51,13 @@ class LoginPage extends React.Component {
         const user = res.data.user;
         const type = user.UserType;
         const username = user.Username;
-        self.setState({redirect:true});
-        console.log('self.props => ',self.props);
-        if (type == "OWNER") {
-        }  
+        user.UserType = type.toLowerCase();
+        console.log('user.UserType => ',user.UserType);
+        self.setState(
+            user
+        );
+        console.log('user => ',user);
+        window.location.href = '/dashboard/' + user.UserType + '/' + user.Email;
       }
     })
   }

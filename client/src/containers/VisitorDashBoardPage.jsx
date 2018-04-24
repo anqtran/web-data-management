@@ -5,41 +5,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-// import { Redirect } from 'react-router';
-// import { Router } from 'react-router';
 import { browserHistory } from 'history';
-// import { Link } from 'react-router';
+import { BootstrapTable, TableHeaderColumn, InsertButton, DeleteButton  } from 'react-bootstrap-table';
 import VisitorDashboardTable from '../AdminTableManagement/VisitorDashboardTable';
 import VisitorLogHistoryTable from '../AdminTableManagement/VisitorLogHistoryTable';
 import { getAllProperties } from '../helpers/DataPopulation';
 
 
-// function getItems() {
-//     const products = [];
-//     for (let i = 0; i < 12; i++) {
-//       const id = "Property " + i;
-//       products.push({
-//         ID: i,
-//         Name: id,
-//         Address: id + ' co dia chi laaaaaaa',
-//         City: 'Atlanta ' + i ,
-//         Zip: 11110,
-//         Size: i,
-//         PropertyType: 'la dat ne ' + i,
-//         IsPublic: i > 2,
-//         IsCommercial: i < 2,
-//         Owner: 'Nguyen Thi Buoi',
-//         rating: i / 0.5,
-//         visit: i
-//       });
-//     }
-//     return products;
-//   }
-
-
 export default class VisitorDashBoardPage extends React.Component {
-
-
 
 
   constructor(props) {
@@ -59,12 +32,16 @@ export default class VisitorDashBoardPage extends React.Component {
     };
 
     this.handleCloseViewProperty = this.handleCloseViewProperty.bind(this);
-    this.handleCloseViewProperty = this.handleCloseViewProperty.bind(this);
+    this.handleCloseViewHistory = this.handleCloseViewHistory.bind(this);
 
   }
 
   componentWillMount() {
       var self = this;
+      var location = window.location.href;
+      var index = location.lastIndexOf('/')
+      var email = location.substring(index + 1); 
+      console.log('email => ',email);
       getAllProperties()
       .then(function(items) {
         self.setState( {
@@ -86,7 +63,7 @@ export default class VisitorDashBoardPage extends React.Component {
         console.log("View Visit History is working!!!")
 
       }
-    }
+    };
 
     handleOpenViewProperty = () => {
        if (this.state.selectViewProperty !== null) {
@@ -153,7 +130,7 @@ export default class VisitorDashBoardPage extends React.Component {
         primary={true}
         keyboardFocused={true}
         onClick={this.handleCloseViewProperty}
-      />,
+      />
 
     ];
 
@@ -168,7 +145,7 @@ export default class VisitorDashBoardPage extends React.Component {
         primary={true}
         keyboardFocused={true}
         onClick={this.handleCloseViewHistory}
-      />,
+      />
 
     ];
 
@@ -221,7 +198,6 @@ export default class VisitorDashBoardPage extends React.Component {
 
   </Card>
     );
+  
   }
-
 }
-

@@ -45,14 +45,14 @@ const Base = ({ children }) => (
     <Route path="/signup/visitor" component={VisitorSignUp}/>
     <Route path="/signup/owner" component={OwnerSignUp}/>
 
-    <Route path="/owner/dashboard" component={OwnerDashBoard}/>
+    <Route path="/dashboard/owner" component={OwnerDashBoard}/>
     <Route path="/owner/allothervalidproperties" component={OwnerAllOtherValidProperties}/>
     <Route path="/owner/addproperty" component={OwnerAddProperty}/>
     <Route path="/owner/propertydetails" component={OwnerPropertyDetails}/>
     <Route path="/owner/manageproperty" component={OwnerManageProperty}/>
 
 
-    <Route path="/admin/dashboard" component={AdminDashBoard}/>
+    <Route path="/dashboard/admin" component={AdminDashBoard}/>
     <Route path="/admin/viewvisitorslist" component={AdminViewVisitorsList}/>
     <Route path="/admin/viewownerslist" component={AdminViewOwnersList}/>
     <Route path="/admin/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
@@ -60,7 +60,7 @@ const Base = ({ children }) => (
     <Route path="/admin/viewapprovedanimalsandcrops" component={AdminViewApprovedAnimalsandCrops}/>
     <Route path="/admin/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
 
-    <Route path="/visitor/dashboard" component={VisitorDashBoard}/>
+    <Route path="/dashboard/visitor" component={VisitorDashBoard}/>
     <Route path="/visitor/confirmedpropertydetails" component={VisitorPropertyDetails}/>
     {/*<Route path="/visitor/loggedpropertydetails" component={VisitorLoggedPropertyDetails}/>*/}
     <Route path="/visitor/visithistory" component={VisitorVisitHistory}/>
