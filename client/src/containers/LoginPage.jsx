@@ -58,7 +58,8 @@ class LoginPage extends React.Component {
             user
         );
         console.log('user => ',user);
-        window.location.href = '/dashboard/' + user.UserType + '/' + user.Name;
+
+        window.location.href = '/dashboard/' + user.UserType + '/' + user.Username;
       }
     })
   }
