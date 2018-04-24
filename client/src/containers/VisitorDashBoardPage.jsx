@@ -23,7 +23,7 @@ export default class VisitorDashBoardPage extends React.Component {
     this.state = {
       errors: {},
       username:{},
-      data: {},
+      data: [],
       openViewProperty: false,
       openViewHistory: false,
       selectViewProperty: null,
@@ -39,15 +39,18 @@ export default class VisitorDashBoardPage extends React.Component {
   componentWillMount() {
       var self = this;
       var location = window.location.href;
-      var index = location.lastIndexOf('/')
-      var email = location.substring(index + 1); 
-      console.log('email => ',email);
+      var index = location.lastIndexOf('/');
+      var email = location.substring(index + 1);
       getAllProperties()
       .then(function(items) {
-        self.setState( {
+        console.log('items => ',items);
+        self.setState({
           data: items
-        })
+        });
+              console.log('this.state.data => ',this.state.data);
+
       })
+      console.log('this.state.data => ',this.state.data);
   }
 
   onViewProperty = (row) => {

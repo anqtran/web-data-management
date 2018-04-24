@@ -59,18 +59,8 @@ console.log("sdfsfd", username);
 });
 
 router.get(`/getAllProperties/`, (req, response) => {
-  console.log('req.param => ',req.param);
-  var username = req.params.name;
 const errors = {};
-    var sql = ` SELECT    P.Name, P.street, P.City, P.Zip, P.Size, P.PropertyType, P.isPublic, P.isCommercial, P.ID, temp.numberofVisit, temp.avgRating ` +
-                 `   FROM     Property AS P LEFT JOIN ` +
-                ` (SELECT    COUNT(V.propertyID) AS numberOfVisit, ROUND(AVG(V.Rating),2) AS avgRating, P.ID ` +
-                 `FROM    property AS P INNER JOIN visit AS V ` +
-                 `ON        P.ID =  V.PropertyID AND P.owner = (?)` +
-                  ` GROUP BY P.ID ) AS temp ` +
-                         `ON         P.ID =  temp.ID ` +
-                 `WHERE P.ApprovedBy IS NOT NULL ` +
-                 ` ORDER BY P.Name;`
+    var sql = ` SELECT * FROM Property;`;
     connection.query(sql, function(err,res){
       console.log('sql => ',sql);
        if(err){

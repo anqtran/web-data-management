@@ -52,7 +52,7 @@ const VisitorDashBoardTable = ({
           Name
           </TableHeaderColumn>
           <TableHeaderColumn
-            dataField='Address'
+            dataField='Street'
             dataSort={ true }
             dataAlign='center'
             width='20%'
