@@ -35,6 +35,7 @@ const VisitorDashBoardTable = ({
             width='8%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
+            filter={ { type: 'TextFilter' }}
           >
           ID
           </TableHeaderColumn>
@@ -47,7 +48,7 @@ const VisitorDashBoardTable = ({
             width='15%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
-
+            filter={ { type: 'TextFilter' }}
           >
           Name
           </TableHeaderColumn>
@@ -69,7 +70,7 @@ const VisitorDashBoardTable = ({
             width='10%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
-
+            filter={ { type: 'TextFilter' }}
           >
           City
           </TableHeaderColumn>
@@ -80,7 +81,7 @@ const VisitorDashBoardTable = ({
             width='8%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
-
+            filter={ { type: 'TextFilter' }}
           >
           Zipcode
           </TableHeaderColumn>
@@ -91,7 +92,7 @@ const VisitorDashBoardTable = ({
             width='8%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
-
+            filter={ { type: 'TextFilter' }}
           >
           Size
           </TableHeaderColumn>
@@ -136,7 +137,11 @@ const VisitorDashBoardTable = ({
             width='8%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
-
+            filter={ { 
+            type: 'NumberFilter', 
+            delay: 1000, 
+            numberComparators: [ '=', '>', '<=' ] 
+          } }
           >
           Visits
           </TableHeaderColumn>
@@ -148,7 +153,11 @@ const VisitorDashBoardTable = ({
             width='8%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
-
+            filter={ { 
+            type: 'NumberFilter', 
+            delay: 1000, 
+            numberComparators: [ '=', '>', '<=' ] 
+          } }
           >
           Average Rating
           </TableHeaderColumn>
