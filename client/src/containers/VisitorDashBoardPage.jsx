@@ -30,7 +30,10 @@ export default class VisitorDashBoardPage extends React.Component {
       openViewProperty: false,
       openViewHistory: false,
       selectViewProperty: null,
-      selectViewHistory: null
+      selectViewHistory: null,
+
+      isAnimal: false,
+      isCrop: false
 
     };
 
@@ -84,10 +87,23 @@ export default class VisitorDashBoardPage extends React.Component {
         getDetailProperty(this.state.selectViewProperty.ID)
         .then(function(items) {
           console.log('items => ',items);
+          self.isTrueAnimal = false;
+          self.isTrueCrop = false;
+          if (items[1].length != 0) {
+            self.isTrueAnimal = true;
+          }
+          if (items[2].length != 0) {
+            self.isTrueCrop = true;
+          }
           self.setState({
-            detailProperty: items
+            detailProperty: items,
+            isAnimal: self.isTrueAnimal,
+            isCrop: self.isTrueCrop
           });
         console.log('self.state.detailProperty => ',self.state.detailProperty);
+        console.log('self.state.isAnimal => ',self.state.isAnimal);
+       console.log('self.state.isCrop => ',self.state.isCrop);
+
 
         });
 
@@ -208,6 +224,8 @@ export default class VisitorDashBoardPage extends React.Component {
           onRequestClose={this.handleCloseViewProperty}
         >
           <ViewDetailPropertyForm
+            isAnimal={ this.state.isAnimal }
+            isCrop={ this.state.isCrop }
             data={ this.state.detailProperty}
           />
           </Dialog>

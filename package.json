@@ -38,6 +38,7 @@
     "react-router-dom": "4.0.0",
     "react-stars": "^2.2.5",
     "react-tap-event-plugin": "^2.0.1",
+    "react-toggle-display": "^2.2.0",
     "save": "^2.3.2",
     "style-loader": "^0.21.0",
     "validator": "^6.2.0"
