@@ -185,6 +185,7 @@ class OwnerTable extends React.Component {
                           clearSearch:true
                         } } 
                         hover height='100%'
+                        hover width='100%'
                         printable
                         version='4'
         >
@@ -192,7 +193,7 @@ class OwnerTable extends React.Component {
             dataField='ID' 
             dataSort={ true } 
             dataAlign='center'
-            width='8%'
+            width='6%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
           >
@@ -206,6 +207,7 @@ class OwnerTable extends React.Component {
             width='15%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
+            filter={ { type: 'TextFilter' }}
 
           >
           Name
@@ -228,6 +230,7 @@ class OwnerTable extends React.Component {
             width='10%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
+            filter={ { type: 'TextFilter' }}
 
           >
           City
@@ -239,6 +242,7 @@ class OwnerTable extends React.Component {
             width='8%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
+
 
           >
           Zipcode
@@ -261,6 +265,7 @@ class OwnerTable extends React.Component {
             width='10%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
+            filter={ { type: 'TextFilter' }}
 
           >
           Type
@@ -304,9 +309,14 @@ class OwnerTable extends React.Component {
             dataField='numberofVisit' 
             dataSort={ true } 
             dataAlign='center'
-            width='8%'
+            width='15%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
+            filter={ { 
+            type: 'NumberFilter', 
+            delay: 1000, 
+            numberComparators: [ '=', '>', '<=' ] 
+          } }
 
           >
           Visits
@@ -315,9 +325,14 @@ class OwnerTable extends React.Component {
             dataField='avgRating' 
             dataSort={ true } 
             dataAlign='center'
-            width='8%'
+            width='15%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
+            filter={ { 
+            type: 'NumberFilter', 
+            delay: 1000, 
+            numberComparators: [ '=', '>', '<=' ] 
+          } }
 
           >
           Average Rating

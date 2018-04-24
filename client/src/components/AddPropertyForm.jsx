@@ -171,8 +171,11 @@ const AddPropertyForm = ({
           label="Add Property" primary />
         <RaisedButton 
           name= "cancel" 
-          label="Cancel" primary  />
+          label="Cancel" 
+          primary  />
       </div>
+
+
 
     </form>
   </Card>
