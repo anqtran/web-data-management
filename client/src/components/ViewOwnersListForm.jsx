@@ -2,29 +2,33 @@ import React, { PropTypes } from 'react'; import { Link } from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import OwnerTableStore from '../AdminTableManagement/OwnerTableStore'
 
 
 const ViewOwnersListForm = ({
-  onSubmit,
-  onChange,
   errors,
-  user
+  name
 }) => (
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">ViewOwnersList</h2>
-
+    <form>
+      <h2 className="card-heading">Welcome Admin</h2>
+      <h2 className="card-heading">All Owners In System</h2>
+      <OwnerTableStore />
       {errors.summary && <p className="error-message">{errors.summary}</p>}
+
+
+
+      <div className="button-line">
+        <RaisedButton type="logout" label="Back" primary         
+                      href="http://localhost:3000/"/>
+      </div>
 
     </form>
   </Card>
 );
 
 ViewOwnersListForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
 };
 
 export default ViewOwnersListForm;

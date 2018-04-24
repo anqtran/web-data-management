@@ -53,12 +53,12 @@ const Base = ({ children }) => (
 
 
     <Route exact path="/dashboard/admin/:username" component={AdminDashBoard}/>
-    <Route path="/dashboard/admin/:username/viewvisitorslist" component={AdminViewVisitorsList}/>
-    <Route path="/admin/:username/viewownerslist" component={AdminViewOwnersList}/>
-    <Route path="/admin/:username/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
-    <Route path="/admin/:username/viewunconfirmedproperties" component={AdminViewUnconfirmedProperties}/>
-    <Route path="/admin/:username/viewapprovedanimalsandcrops" component={AdminViewApprovedAnimalsandCrops}/>
-    <Route path="/admin/:username/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
+    <Route  path="/dashboard/admin/:username/viewvisitorslist" component={AdminViewVisitorsList}/>
+    <Route  path="/dashboard/admin/:username/viewownerslist" component={AdminViewOwnersList}/>
+    <Route  path="/dashboard/admin/:username/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
+    <Route  path="/dashboard/admin/:username/viewunconfirmedproperties" component={AdminViewUnconfirmedProperties}/>
+    <Route  path="/dashboard/admin/:username/viewapprovedanimalsandcrops" component={AdminViewApprovedAnimalsandCrops}/>
+    <Route  path="/dashboard/admin/:username/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
 
     <Route path="/dashboard/visitor" component={VisitorDashBoard}/>
     <Route path="/visitor/confirmedpropertydetails" component={VisitorPropertyDetails}/>

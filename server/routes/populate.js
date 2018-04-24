@@ -135,6 +135,58 @@ const errors = {};
 
 
 
+router.get(`/getConfirmedProperties/`, (req, response) => {
+const errors = {};
+    var sql =  `  SELECT        U.Username, U.Email, temp.NumProps
+ FROM         user AS U
+              LEFT JOIN (SELECT P.Owner, COUNT(P.Owner) AS NumProps
+                  FROM property AS P INNER JOIN user AS U
+                                     ON U.Username = P.Owner
+                                     GROUP BY P.Owner) AS temp
+              ON U.Username = temp.Owner
+ WHERE        UserType = 'OWNER';`;
+    connection.query(sql, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          var data = JSON.parse(JSON.stringify(res));
+          console.log('data => ',data);
+          return response.json({"Error": false, "Message": "Success", "visitors": data});
+       }
+    });
+});
+
+
+router.get(`/getAllOwner/`, (req, response) => {
+const errors = {};
+    var sql =  `  SELECT        U.Username, U.Email, temp.NumProps
+ FROM         user AS U
+              LEFT JOIN (SELECT P.Owner, COUNT(P.Owner) AS NumProps
+                  FROM property AS P INNER JOIN user AS U
+                                     ON U.Username = P.Owner
+                                     GROUP BY P.Owner) AS temp
+              ON U.Username = temp.Owner
+ WHERE        UserType = 'OWNER';`;
+    connection.query(sql, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          var data = JSON.parse(JSON.stringify(res));
+          console.log('data => ',data);
+          return response.json({"Error": false, "Message": "Success", "visitors": data});
+       }
+    });
+});
+
+
+
+
+
+
 
 
 

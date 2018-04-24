@@ -264,6 +264,40 @@ router.post('/unLogVisitHistory/:username/:propid', (req, response) => {
   })
 });
 
+
+router.post('/unLogAllVisitHistory/:username', (req, response) => {
+  const errors = {};
+  console.log(req.params.username);
+  var sql = `DELETE FROM    visit
+  WHERE         visit.Username = (?);`;
+  var body = [req.params.username];
+  connection.query(sql, body, function(err, res) {
+    if (err) {
+      return res.status(200).json({Error: true, success: false, errors: errors});
+    } else {
+      
+    }
+  })
+});
+
+router.post('/deletevisitor/:username', (req, response) => {
+  const errors = {};
+  console.log(req.params.username);
+  var sql =  `DELETE FROM  user
+  WHERE       user.Username = (?)`;
+  var body = [req.params.username];
+  connection.query(sql, body, function(err, res) {
+    if (err) {
+      return res.status(200).json({Error: true, success: false, errors: errors});
+    } else {
+      
+    }
+  })
+});
+
+
+
+
 router.post('/logVisitHistory/:username/:propid/:rating', (req, response) => {
   console.log('connecting to log Visit History');
   const errors = {};

@@ -42,8 +42,7 @@ componentWillMount() {
         errors={this.state.errors}
         name={this.state.name}
       />
-    );
-  }
+    );  }
 
 }
 

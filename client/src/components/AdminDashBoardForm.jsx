@@ -14,7 +14,7 @@ const AdminDashBoardForm = ({
 
       <div className="button-line">
         <RaisedButton type="view_visitors_list" label="View Visitors List" primary 
-                      href="./ViewVisitorsList/a"/>
+                      href="./ViewVisitorsList"/>
       </div>
 
       <div className="button-line">

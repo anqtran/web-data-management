@@ -11,19 +11,16 @@ const ViewVisitorListForm = ({
 }) => (
   <Card className="container">
     <form>
-      <h2 className="card-heading">Welcome Owner</h2>
-
+      <h2 className="card-heading">Welcome Admin</h2>
+      <h2 className="card-heading">All Visitors In System</h2>
       <VisitorTableStore />
       {errors.summary && <p className="error-message">{errors.summary}</p>}
 
 
-      <div className="button-line">
-        <RaisedButton type="view_other_properties" label="View Other Properties" primary 
-                      href={"./allothervalidproperties/" + name}/>
-      </div>
+
 
       <div className="button-line">
-        <RaisedButton type="logout" label="Logout" primary         
+        <RaisedButton type="logout" label="Back" primary         
                       href="http://localhost:3000/"/>
       </div>
 

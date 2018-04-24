@@ -66,6 +66,24 @@ export function getAllVisitor() {
 
 
 
+export function getAllOwner() {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getAllOwner`)
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        resolve(res.data.visitors);
+      }
+    })
+  })
+}
+
+
+
+
 
 export function getFarmItems() {
   console.log('function is running => ');
@@ -84,6 +102,43 @@ export function getFarmItems() {
     })
   })
 }
+
+
+
+export function getConfirmedProperties() {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getConfirmedProperties/`)
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        console.log(res.data.properties);
+        resolve(res.data.properties);
+      }
+    })
+  })
+}
+
+
+
+export function getUnconfirmedProperties() {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getUnconfirmedProperties/`)
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        console.log(res.data.properties);
+        resolve(res.data.properties);
+      }
+    })
+  })
+}
+
 
 export function getPropertyItems(propertyID) {
   console.log('function is running => ');

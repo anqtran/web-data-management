@@ -71,6 +71,46 @@ export function unLogVisitHistory(username, propid) {
     .then(function (res) {
 
       if (res.data.Error) {
+        resolve(res.data)
+      } else {
+        // console.log(res);
+        // var data = JSON.parse(res.data.properties);
+        console.log('addOwner is here => ');
+        resolve(res.data);
+      }
+    })
+  })
+}
+
+
+export function unLogAllVisitHistory(username) {
+  return new Promise(function(resolve, reject) {
+    console.log(username);
+    axios.post(`/add/unLogAllVisitHistory/${username}`) 
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('resonve => ');
+        resolve(res.data)
+      } else {
+        // console.log(res);
+        // var data = JSON.parse(res.data.properties);
+        console.log('addOwner is here => ');
+        resolve(res);
+      }
+    })
+  })
+}
+
+
+
+export function deleteVisitor(username) {
+  return new Promise(function(resolve, reject) {
+    console.log(username);
+    axios.post(`/add/deletevisitor/${username}`) 
+    .then(function (res) {
+
+      if (res.data.Error) {
         console.log('resonve => ');
         resolve(res.data)
       } else {
@@ -83,3 +123,24 @@ export function unLogVisitHistory(username, propid) {
   })
 }
 
+
+
+
+export function deleteOwner(username) {
+  return new Promise(function(resolve, reject) {
+    console.log(username);
+    axios.post(`/add/deletevisitor/${username}`) 
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('resonve => ');
+        resolve(res.data)
+      } else {
+        // console.log(res);
+        // var data = JSON.parse(res.data.properties);
+        console.log('addOwner is here => ');
+        resolve(res.data);
+      }
+    })
+  })
+}

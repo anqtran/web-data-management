@@ -2,7 +2,7 @@ import React from "react";
 import { BootstrapTable, TableHeaderColumn, InsertButton, DeleteButton } from 'react-bootstrap-table';
 import '../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import {getAllVisitor} from '../helpers/DataPopulation';
-
+import {unLogAllVisitHistory, deleteVisitor} from '../helpers/add';
 
 export default class VisitorTableStore extends React.Component {
     constructor(props) {
@@ -66,6 +66,7 @@ export default class VisitorTableStore extends React.Component {
           select: null
         });
       }
+      console.log(this.state.select);
     }
 
     render() {
@@ -94,8 +95,12 @@ export default class VisitorTableStore extends React.Component {
     }
     
     handleDeleteVisitorButtonClick = (onClick) => {
-      
-
+      console.log(this.props.select.Username);
+      console.log("go hereee");
+        deleteVisitor(this.props.select.Username)
+      .then(function(items) {
+      })
+      window.location.href = './' + 'ViewVisitorsList';
     }
     DeleteVistorButton = (onClick) => {
       return (
@@ -109,6 +114,15 @@ export default class VisitorTableStore extends React.Component {
     }
 
     handleDeleteLogVisitorButtonClick = (onClick) => {
+      console.log(this.props.select.Username);
+      console.log("go hereee");
+        unLogAllVisitHistory(this.props.select.Username)
+      .then(function(items) {
+
+
+      })
+         window.location.href = './' + 'ViewVisitorsList';
+
 
     }
     DeleteLogVistorButton = (onClick) => {
