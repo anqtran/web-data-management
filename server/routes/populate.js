@@ -197,32 +197,60 @@ router.get(`/getVisitHistory/:username`, (req, response) => {
 });
 
 
-router.get(`/getDetailProperty/:name`, (req, response) => {
-  console.log('req.param.name => ',req.params.name);
+router.get(`/getDetailProperty/:id`, (req, response) => {
+  console.log('req.param.id => ',req.params.id);
   const errors = {};
-  var sql = `SELECT 	P.Name,  U.Username, U.Email, P.street, P.City, P.Zip, P.Size, P.PropertyType, P.isPublic, P.isCommercial, P.ID, P.ApprovedBy, temp1.Visits, temp1.avgRating, H.ItemName
-            FROM Property AS P
-            LEFT JOIN has AS H
-              ON P.ID = H.PropertyID
-            LEFT JOIN user as U
-              ON U.Username = P.owner
-            LEFT JOIN (SELECT   COUNT(V.propertyID ) AS Visits, AVG(V.Rating) AS avgRating, P.ID
-                  FROM 		property AS P INNER JOIN visit AS V
-                  ON			P.ID =  V.PropertyID
-                  GROUP BY P.ID )	AS temp1
-                  ON 				P.ID =  temp1.ID
-            WHERE P.Name = (?) and P.ApprovedBy IS NOT NULL; `;
-  var body = req.param.name;
-  connection.query(sql, body, function(err,res){
+    var sql =  `SELECT   P.Name, P.Street, P.City, P.Zip, P.Size, P.PropertyType, P.IsPublic, P.IsCommercial, P.ID, temp.numberofVisit, temp.avgRating 
+ FROM     Property AS P LEFT JOIN
+        ( SELECT    COUNT(V.propertyID) AS numberOfVisit, AVG(V.Rating) AS avgRating, P.ID
+          FROM    property AS P INNER JOIN visit AS V
+          ON        P.ID =  V.PropertyID 
+          GROUP BY P.ID ) AS temp
+                      ON        P.ID =  temp.ID 
+ WHERE P.ID = (?);`;
+ const body = [req.params.id];
+    connection.query(sql, body, function(err,res){
       console.log('sql => ',sql);
        if(err){
         console.log('err => ',err);
         return errors;
        } else {
-          console.log(res);
-          var rawData = JSON.parse(JSON.stringify(res));
+          // console.log('res => ',res);
+          // var data = JSON.parse(JSON.stringify(res));
+          // console.log('data => ',data);
+          // data = [];
+          var spl1 = `SELECT  H.PropertyID, H.ItemName, FarmItem.Type  
+              FROM    Has AS H LEFT JOIN FarmItem
+              ON    H.ItemName = FarmItem.Name
+              WHERE FarmItem.IsApproved = '1'; `;
+          console.log('data => ',res);
 
-          return rawData;
+
+
+          connection.query(sql1, body, function(err1,res1){
+            console.log('sql => ',sql1);
+            if(err1){
+              console.log('err => ',err1);
+              return errors;
+            } else {
+          // console.log('res => ',res);
+          // var data = JSON.parse(JSON.stringify(res));
+          // console.log('data => ',data);
+          // data = [];
+              var rawData = JSON.parse(JSON.stringify(res1));
+              console.log('data => ',rawData);
+              const animals = [];
+              const crops = [];
+              rawData.forEach((item) => {
+                if (item.Type === 'ANIMALS') {
+                  animals.push(item.Name);
+                } else {
+                  crops.push(item.Name);
+                }
+              })
+              return response.json({"Error": false, "Message": "Success", "detailProperty": res, animals, crops});
+            }
+        });
        }
     });
 });
