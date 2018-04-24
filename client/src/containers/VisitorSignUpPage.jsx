@@ -63,8 +63,9 @@ class VisitorSignUpPage extends React.Component {
       } else {
       // success
       console.log("success");
+      window.location.replace("http://localhost:3000/");
     }
-  })
+  });
   }
   /**
    * Render the component.

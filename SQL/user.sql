@@ -1,4 +1,3 @@
-INSERT INTO User (Username, Email, Password, UserType) VALUES ("", "", "", "");
 
 INSERT INTO User (Username, Email, Password, UserType) VALUES ("admin1", "zuckerburg@fb.com", "4bc7210680fbbd3645551fe7e471ba4c", "ADMIN");
 

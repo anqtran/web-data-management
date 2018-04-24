@@ -115,7 +115,11 @@ router.post('/visitorsignup', (req, res) => {
         console.log('body => ',body);
        if(err){
         console.log('err IMPORTANTTT=> ',err);
+        if(err.sqlMessage.includes(user.name)) {
+          errors.name = 'Username is already taken';
+        } else {
         errors.email = 'Email is already taken.';
+        }
         console.log("user duplicated");
         return res.status(200).json({Error: true, success: false, errors: errors});
        } else {
