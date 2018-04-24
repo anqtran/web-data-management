@@ -26,7 +26,21 @@ INSERT INTO User (Username, Email, Password, UserType) VALUES ("kellis", "kateel
 
 INSERT INTO User (Username, Email, Password, UserType) VALUES ("ashton.woods", "awoods30@gatech.edu", "27465020c9ea11fc41fac2af1daeba5f", "VISITOR");
 
-INSERT INTO User (Username, Email, Password, UserType) VALUES ("adinozzo", "anthony.dinozzo@ncis.mil.gov", "c67e443eaa780debf5ee2d71a2a7dc39", "VISITOR");
+INSERT INTO User (Username, Email, Password, UserType) VALUES ("tienxinhdep", "tiennguyen@gatech.edu", "c67e443hedojo4526debf5ee2d71a2a7dc39", "OWNER");
+
+INSERT INTO User (Username, Email, Password, UserType) VALUES ("broolee", "brucelee@hotmail.com", "c67e443bcc810debf5ee2d71a2a7dc39", "OWNER");
+
+INSERT INTO User (Username, Email, Password, UserType) VALUES ("thesenuts", "robertparker@gsu.edu", "c67e443eaa780debf5ee2d71a2a8bs12", "VISITOR");
+
+INSERT INTO User (Username, Email, Password, UserType) VALUES ("roseymisey", "roseshop@yahoo.com", "c67e443eaa780debf5ee2d71a2a7dc39", "VISITOR");
+
+INSERT INTO User (Username, Email, Password, UserType) VALUES ("floridaorange", "orangefarmville@yahoo.com", "c67e443eaa780deae1ee2d71a2a7dc39", "VISITOR");
+
+INSERT INTO User (Username, Email, Password, UserType) VALUES ("cecephan", "cece.phan@ncis.mil.gov", "c67e556eaa780debf5ee2d71a2a7dc39", "VISITOR");
+
+INSERT INTO User (Username, Email, Password, UserType) VALUES ("anqtran", "anqtran@gatech.edu", "c67e443eaa780debf6aa2e71a2a7dc39", "VISITOR");
+
+
 
 
 
