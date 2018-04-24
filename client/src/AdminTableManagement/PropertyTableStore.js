@@ -13,7 +13,7 @@ export default class PropertyTableStore extends React.Component {
       this.state = {
         data: [],
         select:null,
-        IsConfirmed: false
+        isUnconfirmed: false
       }
     };
   
@@ -23,31 +23,16 @@ export default class PropertyTableStore extends React.Component {
       var isUnconfirmed = location.includes('unconfirmed');
       console.log("IMPORTANT " + isUnconfirmed);
       var index = location.lastIndexOf('/');
-      // var Username = location.substring(index + 1);
-      // var pathArray = window.location.pathname.split( '/' );
-      // console.log('pathArray.length',pathArray.length);
-      // var isOther = true;
       if (isUnconfirmed) {
       getUnconfirmedProperties()
       .then(function(items) {
       items.forEach((item) => {
-        if(!item.numberofVisit) {
-          item.numberofVisit = 0;
-        }
-        if(!item.avgRating) {
-          item.avgRating = 'N/A';
-        }
-        if(item.ApprovedBy) {
-          item.ApprovedBy = 1;
-        } else {
-          item.ApprovedBy = 0;
-        }
+
       })
         self.setState({
           select: null,
           data: items,
-          Username : Username,
-          IsConfirmed: isUnconfirmed
+          isUnconfirmed: isUnconfirmed
         });
 
       })
@@ -55,20 +40,15 @@ export default class PropertyTableStore extends React.Component {
       getConfirmedProperties()
       .then(function(items) {
       items.forEach((item) => {
-        if(!item.numberofVisit) {
-          item.numberofVisit = 0;
-        }
-        if(!item.avgRating) {
-          item.avgRating = 'N/A';
-        }
       })
+      console.log('items => ',items);
         self.setState({
           select: null,
           data: items,
-          Username : Username,
-          IsConfirmed: isUnconfirmed
+          isUnconfirmed: isUnconfirmed
         });
-      })        
+      }) 
+      console.log('data => ',self.state.data);
       }
     }
 
@@ -132,7 +112,7 @@ class OwnerTable extends React.Component {
     AddPropertyButton = (onClick) => {
       return (
         <InsertButton
-          hidden = {!this.props.IsOther}
+          hidden = {!this.props.IsConfirmed}
           btnText='Add Property'
           btnContextual='btn-success'
           className='my-custom-class'
@@ -149,7 +129,6 @@ class OwnerTable extends React.Component {
     ManagePropertyButton = (onClick) => {
       return (
         <DeleteButton
-         hidden = {!this.props.IsOther}
           btnText='Manage Property'
           btnContextual='btn-warning'
           className='my-custom-class'
@@ -199,7 +178,7 @@ class OwnerTable extends React.Component {
           </TableHeaderColumn>
           <TableHeaderColumn 
             isKey={ true }
-            dataField='Name' 
+            dataField='name' 
             dataSort={ true } 
             dataAlign='center'
             width='15%'
@@ -207,7 +186,7 @@ class OwnerTable extends React.Component {
             thStyle={ { whiteSpace: 'normal' } }
 
           >
-          Name
+          Property
           </TableHeaderColumn>
           <TableHeaderColumn 
             dataField='street' 
@@ -266,8 +245,8 @@ class OwnerTable extends React.Component {
           </TableHeaderColumn>
 
           <TableHeaderColumn 
-          hidden = {!this.props.IsOther}
-            dataField='ApprovedBy' 
+            hidden = {this.props.isUnconfirmed}
+            dataField='Approvedby' 
             dataSort={ true } 
             dataAlign='center'
             width='10%'
@@ -275,7 +254,7 @@ class OwnerTable extends React.Component {
             thStyle={ { whiteSpace: 'normal' } }
 
           >
-          Is Valid
+          Verified By
           </TableHeaderColumn>
 
           <TableHeaderColumn 
@@ -298,19 +277,10 @@ class OwnerTable extends React.Component {
 
           >
           Commercial
-          </TableHeaderColumn>
-          <TableHeaderColumn 
-            dataField='numberofVisit' 
-            dataSort={ true } 
-            dataAlign='center'
-            width='8%'
-            tdStyle={ { whiteSpace: 'normal' } } 
-            thStyle={ { whiteSpace: 'normal' } }
 
-          >
-          Visits
           </TableHeaderColumn>
           <TableHeaderColumn 
+            hidden = {this.props.isUnconfirmed}
             dataField='avgRating' 
             dataSort={ true } 
             dataAlign='center'
@@ -321,6 +291,21 @@ class OwnerTable extends React.Component {
           >
           Average Rating
           </TableHeaderColumn>
+
+          <TableHeaderColumn 
+            dataField='owner' 
+            dataSort={ true } 
+            dataAlign='center'
+            width='8%'
+            tdStyle={ { whiteSpace: 'normal' } } 
+            thStyle={ { whiteSpace: 'normal' } }
+
+          >
+          Owner name
+          </TableHeaderColumn>
+
+
+
         </BootstrapTable>
         <NotificationContainer/>
         </div>

@@ -1,48 +1,63 @@
 import React from "react";
 import { BootstrapTable, TableHeaderColumn, InsertButton } from 'react-bootstrap-table';
-// import {NotificationContainer, NotificationManager} from 'react-notifications';
-
+import { getFarmItems } from '../helpers/DataPopulation';
+import {getApprovedItems, getPendingItems} from '../helpers/DataPopulation.js';
 import '../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import 'react-notifications/lib/notifications.css';
 
-function getItems() {
-    const products = [];
-    for (let i = 0; i < 12; i++) {
-      const id = "startId" + i;
-      products.push({
-        name: id,
-        type: id + '@yahoo.com',
-      });
-    }
-    return products;
-  }
+
 
 export default class PendingApprovedItemsTableStore extends React.Component {
     constructor(props) {
       super(props);
-      this.items = getItems();
       this.state = {
-        data: this.items,
-        selectArr: []
-      };
-    }
+        data: [],
+        select:null,
+        isApproved: false,
+        farmItems: []
+      }
+    };
   
-    // onCellEdit = (row, fieldName, value) => {
-    //   const { data } = this.state;
-    //   let rowIdx;
-    //   const targetRow = data.find((owner, i) => {
-    //     if (owner.username === row.username) {
-    //       rowIdx = i;
-    //       return true;
-    //     }
-    //     return false;
-    //   });
-    //   if (targetRow) {
-    //     targetRow[fieldName] = value;
-    //     data[rowIdx] = targetRow;
-    //     this.setState({ data });
-    //   }
-    // }
+  
+    componentWillMount() {
+      var self = this;
+      var location = window.location.href;
+      var isApproved = location.includes('approved');
+      console.log("IMPORTANT " + isApproved);
+      var index = location.lastIndexOf('/');
+      getFarmItems()
+      .then(function(items) {
+        self.setState( {
+          farmItems: items[1].concat(items[2]).concat(items[0])
+        })
+      })
+      if (isApproved) {
+      getApprovedItems()
+      .then(function(items) {
+      items.forEach((item) => {
+
+      })
+        self.setState({
+          data: items
+        });
+
+      })
+      } else {
+      getPendingItems()
+      .then(function(items) {
+        console.log(' pendinggg=> ');
+      items.forEach((item) => {
+      })
+      console.log('items => ',items);
+        self.setState({
+          select: null,
+          data: items,
+          isApproved: isApproved
+        });
+      }) 
+      console.log('data => ',self.state.data);
+      }
+    }
   
       onAddRow = (row) => {
         this.items = this.items.filter((item) => {
@@ -163,7 +178,7 @@ export default class PendingApprovedItemsTableStore extends React.Component {
           >
           <TableHeaderColumn 
             isKey={ true }
-            dataField='name' 
+            dataField='Name' 
             dataSort={ true } 
             dataAlign='center'
             // editable={ { type: 'text', validator: this.itemNameValidator } }
@@ -171,7 +186,7 @@ export default class PendingApprovedItemsTableStore extends React.Component {
           Name
           </TableHeaderColumn>
           <TableHeaderColumn 
-            dataField='type' 
+            dataField='Type' 
             dataSort={ true } 
             dataAlign='center'
             // editable={ { type: 'select', options: { values: itemType } } }

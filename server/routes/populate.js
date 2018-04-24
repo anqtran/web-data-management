@@ -137,14 +137,15 @@ const errors = {};
 
 router.get(`/getConfirmedProperties/`, (req, response) => {
 const errors = {};
-    var sql =  `  SELECT        U.Username, U.Email, temp.NumProps
- FROM         user AS U
-              LEFT JOIN (SELECT P.Owner, COUNT(P.Owner) AS NumProps
-                  FROM property AS P INNER JOIN user AS U
-                                     ON U.Username = P.Owner
-                                     GROUP BY P.Owner) AS temp
-              ON U.Username = temp.Owner
- WHERE        UserType = 'OWNER';`;
+    var sql =  `  SELECT    P.name, P.street, P.City, P.Zip, P.Size, P.PropertyType, P.isPublic, P.isCommercial, P.ID, P.Approvedby, temp.avgRating  
+      FROM    Property AS P LEFT JOIN
+          ( SELECT      AVG(V.Rating) AS avgRating, P.ID
+            FROM    property AS P INNER JOIN visit AS V
+              ON        P.ID =  V.PropertyID 
+            GROUP BY P.ID ) AS temp
+            ON        P.ID =  temp.ID
+WHERE P.ApprovedBy is not NULL 
+      ORDER BY P.Name;`;
     connection.query(sql, function(err,res){
       console.log('sql => ',sql);
        if(err){
@@ -153,7 +154,31 @@ const errors = {};
        } else {
           var data = JSON.parse(JSON.stringify(res));
           console.log('data => ',data);
-          return response.json({"Error": false, "Message": "Success", "visitors": data});
+          return response.json({"Error": false, "Message": "Success", "property": data});
+       }
+    });
+});
+
+
+
+router.get(`/getUnconfirmedProperties/`, (req, response) => {
+const errors = {};
+console.log( 'RUNNNUNGGG QUERIEESSS' );
+console.log('req => ',req);
+    var sql =  `SELECT      P.name, P.street, P.City, P.Zip, P.Size, P.PropertyType,
+            P.isPublic, P.isCommercial, P.ID, P.owner
+FROM        Property as P
+WHERE P.ApprovedBy IS NULL
+ORDER BY P.Name;`;
+    connection.query(sql, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          var data = JSON.parse(JSON.stringify(res));
+          console.log('data => ',data);
+          return response.json({"Error": false, "Message": "Success", "property": data});
        }
     });
 });
@@ -182,6 +207,57 @@ const errors = {};
     });
 });
 
+
+
+
+
+router.get(`/getApprovedItems/`, (req, response) => {
+const errors = {};
+    var sql =  `  SELECT  F.Name, F.Type
+
+FROM  FarmItem AS F
+
+WHERE   F.IsApproved = '1'; 
+
+`;
+    connection.query(sql, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          var data = JSON.parse(JSON.stringify(res));
+          console.log('data => ',data);
+          return response.json({"Error": false, "Message": "Success", "visitors": data});
+       }
+    });
+});
+
+
+
+
+
+router.get(`/getPendingItems/`, (req, response) => {
+const errors = {};
+    var sql =  `  SELECT  F.Name, F.Type
+
+FROM  FarmItem AS F
+
+WHERE   F.IsApproved = '0'; 
+
+`;
+    connection.query(sql, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          var data = JSON.parse(JSON.stringify(res));
+          console.log('data => ',data);
+          return response.json({"Error": false, "Message": "Success", "visitors": data});
+       }
+    });
+});
 
 
 

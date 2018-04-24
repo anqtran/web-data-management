@@ -82,6 +82,41 @@ export function getAllOwner() {
 }
 
 
+export function getApprovedItems() {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getApprovedItems`)
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        resolve(res.data.visitors);
+      }
+    })
+  })
+}
+
+
+
+
+export function getPendingItems() {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getPendingItems`)
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        resolve(res.data.visitors);
+      }
+    })
+  })
+}
+
+
+
 
 
 
@@ -107,6 +142,8 @@ export function getFarmItems() {
 
 export function getConfirmedProperties() {
   return new Promise(function(resolve, reject) {
+    console.log(' runnung getUnconfirmedProperties');
+
     axios.get(`/populate/getConfirmedProperties/`)
     .then(function (res) {
 
@@ -114,8 +151,9 @@ export function getConfirmedProperties() {
         console.log('res.data.errors => ',res.data.errors);
         reject(res.data.Error)
       } else {
-        console.log(res.data.properties);
-        resolve(res.data.properties);
+        console.log('res of get cf prop => ',res);
+        console.log(res.data.property);
+        resolve(res.data.property);
       }
     })
   })
@@ -125,6 +163,7 @@ export function getConfirmedProperties() {
 
 export function getUnconfirmedProperties() {
   return new Promise(function(resolve, reject) {
+    console.log(' runnung unconfirmedddd ');
     axios.get(`/populate/getUnconfirmedProperties/`)
     .then(function (res) {
 
@@ -132,8 +171,8 @@ export function getUnconfirmedProperties() {
         console.log('res.data.errors => ',res.data.errors);
         reject(res.data.Error)
       } else {
-        console.log(res.data.properties);
-        resolve(res.data.properties);
+        console.log(res.data.property);
+        resolve(res.data.property);
       }
     })
   })

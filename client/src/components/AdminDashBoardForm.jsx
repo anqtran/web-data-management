@@ -14,22 +14,22 @@ const AdminDashBoardForm = ({
 
       <div className="button-line">
         <RaisedButton type="view_visitors_list" label="View Visitors List" primary 
-                      href="./ViewVisitorsList"/>
+                      href="http://localhost:3000/dashboard/admin/a/ViewVisitorsList"/>
       </div>
 
       <div className="button-line">
         <RaisedButton type="view_owners_list" label="View Owners List" primary 
-                      href="./ViewOwnersList"/>
+                      href="http://localhost:3000/dashboard/admin/a/viewownerslist"/>
       </div>
 
       <div className="button-line">
         <RaisedButton type="view_confirmed_properties" label="View Confirmed Properties" primary 
-                      href="./ViewConfirmedProperties"/>
+                      href="http://localhost:3000/dashboard/admin/a/ViewConfirmedProperties"/>
       </div>
 
       <div className="button-line">
         <RaisedButton type="view_unconfirmed_properties" label="View Unconfirmed Properties" primary 
-                      href="./ViewUnconfirmedProperties"/>
+                      href="http://localhost:3000/dashboard/admin/a/ViewUnconfirmedProperties"/>
       </div>
 
       <div className="button-line">
