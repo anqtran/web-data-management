@@ -126,14 +126,17 @@ class OwnerSignUpPage extends React.Component {
     var self = this;
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
+    console.log(' processForm go here ');
     addOwner(this.state.property, this.state.user)
       .then(function(res) {
+        console.log('res => ',res);
         if(res.Error) {
           self.setState({
           errors: res.errors
        });
         } else {
           console.log('ADD SUCCESSSSSS');
+          window.location.replace("http://localhost:3000/");
         }
       })
   }

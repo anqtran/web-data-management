@@ -18,42 +18,20 @@ class OwnerDashBoardPage extends React.Component {
     // set the initial component state
     this.state = {
       errors: {},
-      user: {
-        email: '',
-        password: ''
+      name:'',
       }
     };
 
-    this.processForm = this.processForm.bind(this);
-    this.changeUser = this.changeUser.bind(this);
-  }
 
-  /**
-   * Process the form.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  processForm(event) {
-    // prevent default action. in this case, action is the form submission event
-    var self = this;
-    event.preventDefault();
+componentWillMount() {
+      var location = window.location.href;
+      var index = location.lastIndexOf('/');
+      var name = location.substring(index + 1);
 
-  }
-
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
-    });
-  }
+      this.setState({
+        name : name
+      });
+}
 
   /**
    * Render the component.
@@ -61,10 +39,8 @@ class OwnerDashBoardPage extends React.Component {
   render() {
         return (
       <OwnerDashBoardForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
         errors={this.state.errors}
-        user={this.state.user}
+        name={this.state.name}
       />
     );
   }

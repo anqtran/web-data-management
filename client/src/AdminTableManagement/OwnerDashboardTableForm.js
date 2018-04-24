@@ -4,7 +4,7 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Link, Redirect } from 'react-router';
 import OwnerSignUpForm from '../components/OwnerSignUpForm.jsx';
 
-import {getOwnerProperties} from '../helpers/DataPopulation.js';
+import {getOwnerProperties, getOwnerOtherProperties} from '../helpers/DataPopulation.js';
 import '../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import 'react-notifications/lib/notifications.css';
 
@@ -14,7 +14,8 @@ export default class OwnerDashboardTableForm extends React.Component {
       super(props);
       this.state = {
         data: [],
-        select:null
+        select:null,
+        IsOther: false
       }
     };
   
@@ -23,6 +24,10 @@ export default class OwnerDashboardTableForm extends React.Component {
       var location = window.location.href;
       var index = location.lastIndexOf('/');
       var Username = location.substring(index + 1);
+      var pathArray = window.location.pathname.split( '/' );
+      console.log('pathArray.length',pathArray.length);
+      var isOther = true;
+      if (pathArray.length == 4) {
       getOwnerProperties(Username)
       .then(function(items) {
       items.forEach((item) => {
@@ -41,16 +46,41 @@ export default class OwnerDashboardTableForm extends React.Component {
         self.setState({
           select: null,
           data: items,
-          Username : Username
+          Username : Username,
+          IsOther: true
         });
+
       })
+      } else {
+      isOther = false;
+      getOwnerOtherProperties(Username)
+      .then(function(items) {
+      items.forEach((item) => {
+        if(!item.numberofVisit) {
+          item.numberofVisit = 0;
+        }
+        if(!item.avgRating) {
+          item.avgRating = 'N/A';
+        }
+      })
+        self.setState({
+          select: null,
+          data: items,
+          Username : Username,
+          isOther: isOther
+        });
+      })        
+      }
     }
 
     onManageProperty = (row) => {
       var id = this.state.select;
       console.log(id);
       if (this.state.select !== null) {
-        window.location.replace("http://localhost:3000/owner/manageproperty/" + id);
+          var location = window.location.href;
+           var index = location.lastIndexOf('/');
+        var name = location.substring(index + 1);
+        window.location.replace("http://localhost:3000/dashboard/owner/manageproperty/" + name + "/" + id);
       } else {
         NotificationManager.warning('You have not selected a property');
       }
@@ -88,7 +118,7 @@ export default class OwnerDashboardTableForm extends React.Component {
     }
   }
   
-  class OwnerTable extends React.Component {
+class OwnerTable extends React.Component {
   
     remote(remoteObj) {
       remoteObj.insertRow = true;
@@ -103,6 +133,7 @@ export default class OwnerDashboardTableForm extends React.Component {
     AddPropertyButton = (onClick) => {
       return (
         <InsertButton
+          hidden = {!this.props.IsOther}
           btnText='Add Property'
           btnContextual='btn-success'
           className='my-custom-class'
@@ -119,6 +150,7 @@ export default class OwnerDashboardTableForm extends React.Component {
     ManagePropertyButton = (onClick) => {
       return (
         <DeleteButton
+         hidden = {!this.props.IsOther}
           btnText='Manage Property'
           btnContextual='btn-warning'
           className='my-custom-class'
@@ -235,6 +267,7 @@ export default class OwnerDashboardTableForm extends React.Component {
           </TableHeaderColumn>
 
           <TableHeaderColumn 
+          hidden = {!this.props.IsOther}
             dataField='ApprovedBy' 
             dataSort={ true } 
             dataAlign='center'

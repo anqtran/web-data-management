@@ -26,9 +26,9 @@ class OwnerManagePropertyPage extends React.Component {
         password: ''
       },
     cropsChipData: [],
-
+    animalsChipData: [],
       property: {
-        ID: '00003',
+        ID: '',
         Name: '',
         Street: '',
         City:'',
@@ -184,11 +184,13 @@ componentWillMount() {
     }
   }
 
-
  
  deleteProperty(e, index, value) {
-    console.log('hello')
+    e.preventDefault();
     axios.get(`/populate/deleteProperty/${this.state.property.ID}`);
+      var pathArray = window.location.pathname.split( '/' );
+      var name = decodeURIComponent(pathArray[4]);
+      window.location.replace("http://localhost:3000/dashboard/owner/" +  name);
   }
 
 
@@ -259,6 +261,7 @@ renderCropsChip(data) {
       <OwnerManagePropertyForm
         animalsChipData = {this.state.animalsChipData}
         cropsChipData = {this.state.cropsChipData}
+        animalsChipData = {this.state.animalsChipData}
         onSubmit={this.processForm}
         selectFieldOnChange ={this.selectFieldOnChange}
         disabled = {this.state.disabled}

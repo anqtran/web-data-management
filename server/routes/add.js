@@ -168,13 +168,14 @@ router.post('/addOwner', (req, res) => {
                         if(err2)
                           console.log('err2 => ',err2);
                       });
+                    }
                       var addCropSql = `INSERT INTO has VALUE(?,?)`;
                       var addCropBody = [id, property.crop];
                       connection.query(addCropSql, addCropBody, function(err3, res3){
-                        if(err3)
+                        if(err3) 
                           console.log('err1 => ',err3);
                       });
-                    }
+                    return self_res.status(200).json({Error: false, success: true, errors: errors}); 
                   }
                 });
               }

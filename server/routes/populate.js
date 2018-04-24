@@ -56,6 +56,35 @@ const errors = {};
     });
 });
 
+router.get(`/getOwnerOtherProperties/:name`, (req, response) => {
+  var username = req.params.name;
+  console.log('username in server => ',username);
+const errors = {};
+    var sql = `   SELECT    P.Name, P.street, P.City, P.Zip, P.Size, P.PropertyType, P.isPublic, P.isCommercial, P.ID, P.ApprovedBy, temp.numberofVisit, temp.avgRating  
+                  FROM    Property AS P LEFT JOIN
+                            ( SELECT    COUNT(V.propertyID) AS numberOfVisit, AVG(V.Rating) AS avgRating, P.ID
+                              FROM    property AS P INNER JOIN visit AS V
+                              ON        P.ID =  V.PropertyID AND P.owner = (?)
+                              GROUP BY P.ID ) AS temp
+                                          ON        P.ID =  temp.ID
+                  WHERE P.owner != (?) AND P.ApprovedBy IS NOT NULL
+                  ORDER BY P.Name;`
+    var body = [username, username];
+    connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          var data = JSON.parse(JSON.stringify(res));
+          console.log('data is => ',data);
+          return response.json({"Error": false, "Message": "Success", "properties": data});
+       }
+    });
+});
+
+
+
 router.get(`/getAllProperties/`, (req, response) => {
 const errors = {};
     var sql =  `SELECT   P.Name, P.Street, P.City, P.Zip, P.Size, P.PropertyType, P.IsPublic, P.IsCommercial, P.ID, temp.numberofVisit, temp.avgRating 

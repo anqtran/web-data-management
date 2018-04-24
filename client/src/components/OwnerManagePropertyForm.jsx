@@ -143,10 +143,16 @@ const OwnerManagePropertyForm = ({
         </SelectField>
       </div>
 
-
-      <div style={styles.wrapper}>
+      <h6> Animals </h6>
+      <div style={styles.wrapper} style={{display: 'flex', justifyContent: 'center'}}>
         {cropsChipData.map(renderCropsChip, this)}
       </div>
+
+      <h6> Crops </h6>
+      <div style={styles.wrapper} style={{display: 'flex', justifyContent: 'center'}}>
+        {animalsChipData.map(renderCropsChip, this)}
+      </div>
+
 
       <div className="field-line">
         <SelectField
@@ -194,7 +200,7 @@ const OwnerManagePropertyForm = ({
   <div className="button-line">
         <RaisedButton type="save_changes" label="Delete Property" primary 
                 onClick = {(e, index, value) => deleteProperty(e, index, value)}
-                      href="http://localhost:3000/owner/dashboard"/>
+                      />
       </div>
       <div className="button-line">
         <RaisedButton type="save_changes" label="Save Changes" primary 
@@ -218,6 +224,7 @@ OwnerManagePropertyForm.propTypes = {
   property: PropTypes.object.isRequired,
   selectFieldOnChange : PropTypes.func.isRequired,
   cropsChipData: PropTypes.array.isRequired,
+  animalsChipData: PropTypes.array.isRequired,
   styles: PropTypes.object.isRequired,
   renderCropsChip:PropTypes.func.isRequired,
   disabled: PropTypes.any.isRequired,

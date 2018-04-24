@@ -15,6 +15,20 @@ export function getOwnerProperties(Username) {
   })
 }
 
+export function getOwnerOtherProperties(Username) {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getOwnerOtherProperties/${Username}`)
+    .then(function (res) {
+      if (res.data.Error) {
+        reject(res.data.Error)
+      } else {
+        resolve(res.data.properties);
+      }
+    })
+  })
+}
+
+
 export function getAllProperties() {
   return new Promise(function(resolve, reject) {
     axios.get(`/populate/getAllProperties`)

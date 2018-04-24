@@ -45,15 +45,15 @@ const Base = ({ children }) => (
     <Route path="/signup/visitor" component={VisitorSignUp}/>
     <Route path="/signup/owner" component={OwnerSignUp}/>
 
-    <Route path="/dashboard/owner" component={OwnerDashBoard}/>
-    <Route path="/owner/allothervalidproperties" component={OwnerAllOtherValidProperties}/>
+    <Route exact path="/dashboard/owner/:username" component={OwnerDashBoard}/>
+    <Route path="/dashboard/owner/allothervalidproperties/:name" component={OwnerAllOtherValidProperties}/>
     <Route path="/owner/addproperty" component={OwnerAddProperty}/>
     <Route path="/owner/propertydetails" component={OwnerPropertyDetails}/>
-    <Route path="/owner/manageproperty" component={OwnerManageProperty}/>
+    <Route exact path="/dashboard/owner/manageproperty/:username/:id" component={OwnerManageProperty}/>
 
 
-    <Route path="/dashboard/admin" component={AdminDashBoard}/>
-    <Route path="/admin/viewvisitorslist" component={AdminViewVisitorsList}/>
+    <Route exact path="/dashboard/admin/:username" component={AdminDashBoard}/>
+    <Route path="/dashboard/admin/viewvisitorslist" component={AdminViewVisitorsList}/>
     <Route path="/admin/viewownerslist" component={AdminViewOwnersList}/>
     <Route path="/admin/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
     <Route path="/admin/viewunconfirmedproperties" component={AdminViewUnconfirmedProperties}/>

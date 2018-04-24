@@ -6,14 +6,12 @@ import OwnerDashBoardTableForm from '../AdminTableManagement/OwnerDashBoardTable
 
 
 const OwnerDashBoardForm = ({
-  onSubmit,
-  onChange,
   errors,
-  user
+  name
 }) => (
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">Welcome Owner1</h2>
+    <form>
+      <h2 className="card-heading">Welcome Owner</h2>
 
       <OwnerDashBoardTableForm />
       {errors.summary && <p className="error-message">{errors.summary}</p>}
@@ -21,12 +19,12 @@ const OwnerDashBoardForm = ({
 
       <div className="button-line">
         <RaisedButton type="view_other_properties" label="View Other Properties" primary 
-                      href="./allothervalidproperties"/>
+                      href={"./allothervalidproperties/" + name}/>
       </div>
 
       <div className="button-line">
         <RaisedButton type="logout" label="Logout" primary         
-                      href="../login"/>
+                      href="http://localhost:3000/"/>
       </div>
 
     </form>
@@ -34,10 +32,8 @@ const OwnerDashBoardForm = ({
 );
 
 OwnerDashBoardForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default OwnerDashBoardForm;

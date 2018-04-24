@@ -5,16 +5,11 @@ import TextField from 'material-ui/TextField';
 
 
 const AdminDashBoardForm = ({
-  onSubmit,
-  onChange,
-  errors,
-  user
 }) => (
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">Welcome Admin1</h2>
+    <form>
+      <h2 className="card-heading">Welcome Admin</h2>
 
-      {errors.summary && <p className="error-message">{errors.summary}</p>}
 
       <div className="button-line">
         <RaisedButton type="view_visitors_list" label="View Visitors List" primary 
@@ -56,10 +51,6 @@ const AdminDashBoardForm = ({
 );
 
 AdminDashBoardForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
 };
 
 export default AdminDashBoardForm;
