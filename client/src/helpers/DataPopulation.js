@@ -105,7 +105,7 @@ export function getDetailProperty(id) {
         // console.log(res);
         // var data = JSON.parse(res.data.properties);
         console.log(res.data.detailProperty);
-        resolve(res.data.detailProperty);
+        resolve([res.data.detailProperty, res.data.animals, res.data.crops]);
       }
     })
   })

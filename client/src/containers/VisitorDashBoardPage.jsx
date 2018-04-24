@@ -10,7 +10,7 @@ import { BootstrapTable, TableHeaderColumn, InsertButton, DeleteButton  } from '
 import VisitorDashboardTable from '../AdminTableManagement/VisitorDashboardTable';
 import VisitorLogHistoryTable from '../AdminTableManagement/VisitorLogHistoryTable';
 import ViewDetailPropertyForm from '../AdminTableManagement/ViewDetailPropertyForm.jsx';
-import { getAllProperties, getVisitHistory } from '../helpers/DataPopulation';
+import {getDetailProperty, getAllProperties, getVisitHistory } from '../helpers/DataPopulation';
 
 
 export default class VisitorDashBoardPage extends React.Component {
@@ -26,7 +26,7 @@ export default class VisitorDashBoardPage extends React.Component {
       Username: '',
       data: [],
       visitHistory: [],
-      detailProperty: {},
+      detailProperty: [],
       openViewProperty: false,
       openViewHistory: false,
       selectViewProperty: null,
@@ -81,14 +81,16 @@ export default class VisitorDashBoardPage extends React.Component {
     handleOpenViewProperty = () => {
        if (this.state.selectViewProperty !== null) {
         var self = this;
-        getDetailProperty(this.state.selectViewProperty.Name)
+        getDetailProperty(this.state.selectViewProperty.ID)
         .then(function(items) {
+          console.log('items => ',items);
           self.setState({
             detailProperty: items
           });
-          console.log('this.state.data => ',self.state.detailProperty);
+        console.log('self.state.detailProperty => ',self.state.detailProperty);
 
         });
+
         this.setState({
           openViewProperty: true
 

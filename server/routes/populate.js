@@ -209,6 +209,7 @@ router.get(`/getDetailProperty/:id`, (req, response) => {
                       ON        P.ID =  temp.ID 
  WHERE P.ID = (?);`;
  const body = [req.params.id];
+ console.log('ID => ',body);
     connection.query(sql, body, function(err,res){
       console.log('sql => ',sql);
        if(err){
@@ -219,36 +220,32 @@ router.get(`/getDetailProperty/:id`, (req, response) => {
           // var data = JSON.parse(JSON.stringify(res));
           // console.log('data => ',data);
           // data = [];
-          var spl1 = `SELECT  H.PropertyID, H.ItemName, FarmItem.Type  
+          var sql1 = `SELECT  H.ItemName, FarmItem.Type  
               FROM    Has AS H LEFT JOIN FarmItem
               ON    H.ItemName = FarmItem.Name
-              WHERE FarmItem.IsApproved = '1'; `;
-          console.log('data => ',res);
-
-
-
+              WHERE FarmItem.IsApproved = '1' AND H.PropertyID = (?); `;
           connection.query(sql1, body, function(err1,res1){
             console.log('sql => ',sql1);
             if(err1){
               console.log('err => ',err1);
               return errors;
             } else {
-          // console.log('res => ',res);
-          // var data = JSON.parse(JSON.stringify(res));
-          // console.log('data => ',data);
-          // data = [];
               var rawData = JSON.parse(JSON.stringify(res1));
+              console.log('res1 => ',res1);
               console.log('data => ',rawData);
               const animals = [];
               const crops = [];
               rawData.forEach((item) => {
-                if (item.Type === 'ANIMALS') {
-                  animals.push(item.Name);
+                if (item.Type === 'ANIMAL') {
+                  animals.push(item.ItemName);
                 } else {
-                  crops.push(item.Name);
+                  crops.push(item.ItemName);
                 }
               })
-              return response.json({"Error": false, "Message": "Success", "detailProperty": res, animals, crops});
+              console.log('detailProperty => ',res);
+              console.log('crops => ',crops);
+              console.log('animals => ',animals);
+              return response.json({"Error": false, "Message": "Success", "detailProperty": res[0],"animals": animals, "crops": crops});
             }
         });
        }
