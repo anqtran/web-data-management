@@ -130,7 +130,7 @@ const VisitorDashBoardTable = ({
           </TableHeaderColumn>
 
           <TableHeaderColumn
-            dataField='visit'
+            dataField='numberofVisit'
             dataSort={ true }
             dataAlign='center'
             width='8%'
@@ -142,7 +142,7 @@ const VisitorDashBoardTable = ({
           </TableHeaderColumn>
 
           <TableHeaderColumn
-            dataField='rating'
+            dataField='avgRating'
             dataSort={ true }
             dataAlign='center'
             width='8%'
@@ -160,6 +160,6 @@ const VisitorDashBoardTable = ({
 
 VisitorDashBoardTable.propTypes = {
   onAddSelectedViewProperty: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.array.isRequired
 };
 export default VisitorDashBoardTable;

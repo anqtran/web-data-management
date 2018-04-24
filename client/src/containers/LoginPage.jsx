@@ -16,7 +16,8 @@ class LoginPage extends React.Component {
       user: {
         email: '',
         password: '',
-        UserType:''
+        UserType:'',
+        Name: ''
       }
     };
 
@@ -57,7 +58,7 @@ class LoginPage extends React.Component {
             user
         );
         console.log('user => ',user);
-        window.location.href = '/dashboard/' + user.UserType + '/' + user.Email;
+        window.location.href = '/dashboard/' + user.UserType + '/' + user.Name;
       }
     })
   }

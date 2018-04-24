@@ -9,7 +9,7 @@ import { browserHistory } from 'history';
 import { BootstrapTable, TableHeaderColumn, InsertButton, DeleteButton  } from 'react-bootstrap-table';
 import VisitorDashboardTable from '../AdminTableManagement/VisitorDashboardTable';
 import VisitorLogHistoryTable from '../AdminTableManagement/VisitorLogHistoryTable';
-import { getAllProperties } from '../helpers/DataPopulation';
+import { getAllProperties, getVisitHistory } from '../helpers/DataPopulation';
 
 
 export default class VisitorDashBoardPage extends React.Component {
@@ -22,8 +22,9 @@ export default class VisitorDashBoardPage extends React.Component {
     // set the initial component state
     this.state = {
       errors: {},
-      username:{},
+      Username: '',
       data: [],
+      visitHistory: [],
       openViewProperty: false,
       openViewHistory: false,
       selectViewProperty: null,
@@ -40,15 +41,30 @@ export default class VisitorDashBoardPage extends React.Component {
       var self = this;
       var location = window.location.href;
       var index = location.lastIndexOf('/');
-      var email = location.substring(index + 1);
+      var Username = location.substring(index + 1);
       getAllProperties()
       .then(function(items) {
         console.log('items => ',items);
+      //   for (var item : items ) {
+      //   if(!item.numberofVisit) {
+      //     item.numberofVisit = 'N/A';
+      //   }
+      //   if(!item.avgRating) {
+      //     item.avgRating = 'N/A';
+      //   }
+      // }
+      items.forEach((item) => {
+        if(!item.numberofVisit) {
+          item.numberofVisit = 'N/A';
+        }
+        if(!item.avgRating) {
+          item.avgRating = 'N/A';
+        }
+      })
         self.setState({
-          data: items
+          data: items,
+          Username : Username
         });
-              console.log('this.state.data => ',this.state.data);
-
       })
       console.log('this.state.data => ',this.state.data);
   }
@@ -77,6 +93,15 @@ export default class VisitorDashBoardPage extends React.Component {
     };
 
     handleOpenViewHistory = () => {
+      var self = this;
+      getVisitHistory(this.state.Username)
+      .then(function(items) {
+        self.setState({
+          visitHistory: items
+        });
+              console.log('this.state.data => ',self.state.visitHistory);
+
+      });
           this.setState({
             openViewHistory: true,
           });
@@ -193,7 +218,7 @@ export default class VisitorDashBoardPage extends React.Component {
 
           <VisitorLogHistoryTable
             onAddSelectedViewHistory={ this.onAddSelectedViewHistory }
-            data={ this.state.data}
+            data={ this.state.visitHistory}
           />
           </Dialog>
 

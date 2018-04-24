@@ -60,7 +60,14 @@ console.log("sdfsfd", username);
 
 router.get(`/getAllProperties/`, (req, response) => {
 const errors = {};
-    var sql = ` SELECT * FROM Property;`;
+    var sql =  `SELECT   P.Name, P.Street, P.City, P.Zip, P.Size, P.PropertyType, P.IsPublic, P.IsCommercial, P.ID, temp.numberofVisit, temp.avgRating 
+ FROM     Property AS P LEFT JOIN
+        ( SELECT    COUNT(V.propertyID) AS numberOfVisit, AVG(V.Rating) AS avgRating, P.ID
+          FROM    property AS P INNER JOIN visit AS V
+          ON        P.ID =  V.PropertyID 
+          GROUP BY P.ID ) AS temp
+                      ON        P.ID =  temp.ID
+ WHERE P.ApprovedBy IS NOT NULL;`;
     connection.query(sql, function(err,res){
       console.log('sql => ',sql);
        if(err){
@@ -71,10 +78,16 @@ const errors = {};
           var data = JSON.parse(JSON.stringify(res));
           // console.log('data => ',data);
           // data = [];
+          console.log('data => ',data);
           return response.json({"Error": false, "Message": "Success", "properties": data});
        }
     });
 });
+
+
+
+
+
 
 router.get(`/getFarmItem/`, (req, response) => {
   const errors = {};
@@ -168,11 +181,11 @@ router.get(`/getProperty/:propID`, (req, response) => {
 
 
 
-router.get(`/getVisitHistory/:name`, (req, response) => {
-  console.log('req.param.name => ',req.params.name);
+router.get(`/getVisitHistory/:username`, (req, response) => {
+  console.log('req.param.username => ',req.params.username);
   const errors = {};
-  var sql = `SELECT P.Name, V.VisitDate, V.Rating FROM (Property AS P INNER JOIN Visit AS V ON P.ID = V.PropertyID) WHERE U.Username = (?) ORDER BY P.Name;`
-  var body = req.param.name;
+  var sql = `SELECT P.Name, V.VisitDate, V.Rating FROM (Property AS P INNER JOIN Visit AS V ON P.ID = V.PropertyID) WHERE V.Username = (?) ORDER BY P.Name;`
+  var body = req.params.username;
   connection.query(sql, body, function(err,res){
       console.log('sql => ',sql);
        if(err){
@@ -180,9 +193,7 @@ router.get(`/getVisitHistory/:name`, (req, response) => {
         return errors;
        } else {
           console.log(res);
-          var rawData = JSON.parse(JSON.stringify(res));
-
-          return rawData;
+          return response.json({"visitHistory": res});
        }
     });
 });

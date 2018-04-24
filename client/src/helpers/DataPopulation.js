@@ -81,7 +81,6 @@ export function getPropertyItems(propertyID) {
 
 
 export function getVisitHistory(Username) {
-  console.log('function getVisitHistory is running => ');
   console.log('Visitor is ', Username);
   return new Promise(function(resolve, reject) {
     axios.get(`/populate/getVisitHistory/${Username}`)
@@ -92,10 +91,7 @@ export function getVisitHistory(Username) {
         console.log('res.data.errors => ',res.data.errors);
         reject(res.data.Error)
       } else {
-        // console.log(res);
-        // var data = JSON.parse(res.data.properties);
-        console.log(res.data.properties);
-        resolve(res.data.properties);
+        resolve(res.data.visitHistory);
       }
     })
   })

@@ -71,7 +71,7 @@ const VisitorLogHistoryTable = ({
 
 VisitorLogHistoryTable.propTypes = {
   onAddSelectedViewHistory: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.array.isRequired
 };
 
 
