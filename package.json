@@ -36,6 +36,7 @@
     "react-notifications": "^1.4.3",
     "react-router": "4.0.0",
     "react-router-dom": "4.0.0",
+    "react-star-rating-component": "^1.4.1",
     "react-stars": "^2.2.5",
     "react-tap-event-plugin": "^2.0.1",
     "react-toggle-display": "^2.2.0",

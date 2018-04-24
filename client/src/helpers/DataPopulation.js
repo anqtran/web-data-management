@@ -92,7 +92,7 @@ export function getVisitHistory(Username) {
     axios.get(`/populate/getVisitHistory/${Username}`)
     .then(function (res) {
       console.log("Ahihihihihihiiiiiii");
-
+      console.log(res);
       if (res.data.Error) {
         console.log('res.data.errors => ',res.data.errors);
         reject(res.data.Error)
