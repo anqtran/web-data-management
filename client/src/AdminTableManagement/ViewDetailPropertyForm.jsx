@@ -125,7 +125,7 @@ const ViewDetailPropertyForm = ({
 ViewDetailPropertyForm.propTypes = {
   isAnimal: PropTypes.bool.isRequired,
   isCrop: PropTypes.bool.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
   animals: PropTypes.array.isRequired,
   crops: PropTypes.array.isRequired
 };

@@ -226,6 +226,24 @@ router.get(`/getVisitHistory/:username`, (req, response) => {
 });
 
 
+router.get(`/getLogHistory/:username/:propid`, (req, response) => {
+  console.log('req.param.username => ',req.params.username);
+  const errors = {};
+  var sql = `SELECT  V.Rating FROM (Property AS P INNER JOIN Visit AS V ON P.ID = V.PropertyID) WHERE V.Username = (?) AND P.ID = (?) ;`
+  var body = [req.params.username, req.params.propid];
+  connection.query(sql, body, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          console.log(res);
+          return response.json({"visitLog": res});
+       }
+    });
+});
+
+
 router.get(`/getDetailProperty/:name`, (req, response) => {
   console.log('req.param.name => ',req.params.name);
   const errors = {};
