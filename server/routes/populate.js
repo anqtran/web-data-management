@@ -87,7 +87,7 @@ const errors = {};
 
 router.get(`/getAllProperties/`, (req, response) => {
 const errors = {};
-    var sql =  `SELECT   P.Name, P.Street, P.City, P.Zip, P.Size, P.PropertyType, P.IsPublic, P.IsCommercial, P.ID, temp.numberofVisit, temp.avgRating 
+    var sql =  `SELECT  P.Owner, P.Name, P.Street, P.City, P.Zip, P.Size, P.PropertyType, P.IsPublic, P.IsCommercial, P.ID, temp.numberofVisit, temp.avgRating 
  FROM     Property AS P LEFT JOIN
         ( SELECT    COUNT(V.propertyID) AS numberOfVisit, AVG(V.Rating) AS avgRating, P.ID
           FROM    property AS P INNER JOIN visit AS V
@@ -211,7 +211,7 @@ router.get(`/getProperty/:propID`, (req, response) => {
 router.get(`/getVisitHistory/:username`, (req, response) => {
   console.log('req.param.username => ',req.params.username);
   const errors = {};
-  var sql = `SELECT P.Name, V.VisitDate, V.Rating FROM (Property AS P INNER JOIN Visit AS V ON P.ID = V.PropertyID) WHERE V.Username = (?) ORDER BY P.Name;`
+  var sql = `SELECT P.ID, P.Name, V.VisitDate, V.Rating FROM (Property AS P INNER JOIN Visit AS V ON P.ID = V.PropertyID) WHERE V.Username = (?) ORDER BY P.Name;`
   var body = req.params.username;
   connection.query(sql, body, function(err,res){
       console.log('sql => ',sql);
@@ -226,18 +226,18 @@ router.get(`/getVisitHistory/:username`, (req, response) => {
 });
 
 
-router.get(`/getDetailProperty/:id`, (req, response) => {
-  console.log('req.param.id => ',req.params.id);
+router.get(`/getDetailProperty/:name`, (req, response) => {
+  console.log('req.param.name => ',req.params.name);
   const errors = {};
-    var sql =  `SELECT   P.Name, P.Street, P.City, P.Zip, P.Size, P.PropertyType, P.IsPublic, P.IsCommercial, P.ID, temp.numberofVisit, temp.avgRating 
- FROM     Property AS P LEFT JOIN
+    var sql =  `SELECT   P.Owner, P.Name, P.Street, P.City, P.Zip, P.Size, P.PropertyType, P.IsPublic, P.IsCommercial, P.ID, temp.numberofVisit, temp.avgRating 
+ FROM     Property AS P LEFT JOIN 
         ( SELECT    COUNT(V.propertyID) AS numberOfVisit, AVG(V.Rating) AS avgRating, P.ID
           FROM    property AS P INNER JOIN visit AS V
           ON        P.ID =  V.PropertyID 
           GROUP BY P.ID ) AS temp
                       ON        P.ID =  temp.ID 
- WHERE P.ID = (?);`;
- const body = [req.params.id];
+ WHERE P.Name= (?) ORDER BY P.ID;`;
+ var body = [req.params.name];
  console.log('ID => ',body);
     connection.query(sql, body, function(err,res){
       console.log('sql => ',sql);
@@ -249,6 +249,11 @@ router.get(`/getDetailProperty/:id`, (req, response) => {
           // var data = JSON.parse(JSON.stringify(res));
           // console.log('data => ',data);
           // data = [];
+          console.log('res => ',res);
+          var temp = JSON.parse(JSON.stringify(res));
+          console.log('temp => ',temp[0]);
+          console.log("temp.ID -> ", temp[0].ID);
+          body = [JSON.stringify(temp[0].ID)];
           var sql1 = `SELECT  H.ItemName, FarmItem.Type  
               FROM    Has AS H LEFT JOIN FarmItem
               ON    H.ItemName = FarmItem.Name

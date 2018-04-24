@@ -93,6 +93,8 @@ export function getVisitHistory(Username) {
     .then(function (res) {
       console.log("Ahihihihihihiiiiiii");
       console.log(res);
+      console.log('res.data => ',res.data);
+      console.log('res.data.Error => ',res.data.Error);
       if (res.data.Error) {
         console.log('res.data.errors => ',res.data.errors);
         reject(res.data.Error)
@@ -104,11 +106,11 @@ export function getVisitHistory(Username) {
 }
 
 
-export function getDetailProperty(id) {
+export function getDetailProperty(name) {
   console.log('function getDetailProperty is running => ');
-  console.log('Property is ', id);
+  console.log('Property is ', name);
   return new Promise(function(resolve, reject) {
-    axios.get(`/populate/getDetailProperty/${id}`)
+    axios.get(`/populate/getDetailProperty/${name}`)
     .then(function (res) {
       console.log("asdkadfbs");
 

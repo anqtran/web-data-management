@@ -44,3 +44,42 @@ export function addOwner(property, user) {
     })
   })
 }
+
+
+export function logVisitHistory(username, propid, rating) {
+  return new Promise(function(resolve, reject) {
+    axios.post(`/add/logVisitHistory/${username}/${propid}/${rating}`) 
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('resonve => ');
+        resolve(res.data)
+      } else {
+        // console.log(res);
+        // var data = JSON.parse(res.data.properties);
+        console.log('addOwner is here => ');
+        resolve(res.data);
+      }
+    })
+  })
+}
+
+
+export function unLogVisitHistory(username, propid) {
+  return new Promise(function(resolve, reject) {
+    axios.post(`/add/unLogVisitHistory/${username}/${propid}`) 
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('resonve => ');
+        resolve(res.data)
+      } else {
+        // console.log(res);
+        // var data = JSON.parse(res.data.properties);
+        console.log('addOwner is here => ');
+        resolve(res.data);
+      }
+    })
+  })
+}
+

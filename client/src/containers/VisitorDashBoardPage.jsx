@@ -35,6 +35,7 @@ export default class VisitorDashBoardPage extends React.Component {
       openViewProperty: false,
       openViewHistory: false,
       selectViewProperty: null,
+      selectViewDetailProperty: null,
       selectViewHistory: null,
       isAnimal: false,
       isCrop: false,
@@ -50,7 +51,7 @@ export default class VisitorDashBoardPage extends React.Component {
 
 
     this.handleLogVisit = this.handleLogVisit.bind(this);
-    // this.handleViewProperty = this.handleViewProperty.bind(this);
+    this.handleViewDetailProperty = this.handleViewDetailProperty.bind(this);
   }
 
   componentWillMount() {
@@ -92,10 +93,11 @@ export default class VisitorDashBoardPage extends React.Component {
       }
     };
 
-    handleOpenViewProperty = () => {
-       if (this.state.selectViewProperty !== null) {
+    handleViewDetailProperty = () => {
+      if (!this.state.selectViewDetailProperty) {
+        if (this.state.selectViewDetailProperty !== null) {
         var self = this;
-        getDetailProperty(this.state.selectViewProperty.ID)
+        getDetailProperty(this.state.selectViewDetailProperty.Name)
         .then(function(items) {
           console.log('items => ',items);
           self.isTrueAnimal = false;
@@ -133,6 +135,56 @@ export default class VisitorDashBoardPage extends React.Component {
             logged: self.isLog,
             logLabel: self.newLogLabel
           });
+      })
+    }
+  }
+}
+
+
+
+
+    handleOpenViewProperty = () => {
+       if (this.state.selectViewProperty !== null) {
+        var self = this;
+        getDetailProperty(this.state.selectViewProperty.Name)
+        .then(function(items) {
+          console.log('items => ',items);
+          self.isTrueAnimal = false;
+          self.isTrueCrop = false;
+
+
+           self.newAnimals = items[1].slice();
+
+          if (items[1].length != 0) {
+            self.isTrueAnimal = true;
+            
+          }
+
+           self.newCrops = items[2].slice();
+
+          if (items[2].length != 0) {
+            self.isTrueCrop = true;
+            
+          }
+
+          self.isLog = false;
+          self.newLogLabel = "Log Visit"
+          if (items[0].avgRating) {
+            items[0].avgRating = "N/A";
+          } else {
+            self.isLog = true;
+            self.newLogLabel = "Un-Log Visit"
+          }
+          self.setState({
+            detailProperty: items[0],
+            isAnimal: self.isTrueAnimal,
+            isCrop: self.isTrueCrop,
+            animals: self.newAnimals,
+            crops: self.newCrops,
+            logged: self.isLog,
+            logLabel: self.newLogLabel,
+            openViewProperty: true
+          });
         console.log('self.state.detailProperty => ',self.state.detailProperty);
         console.log('self.state.isAnimal => ',self.state.isAnimal);
        console.log('self.state.isCrop => ',self.state.isCrop);
@@ -140,10 +192,10 @@ export default class VisitorDashBoardPage extends React.Component {
 
         });
 
-        this.setState({
-          openViewProperty: true
+        // this.setState({
+        //   openViewProperty: true
 
-        });
+        // });
        }
     };
 
@@ -151,15 +203,17 @@ export default class VisitorDashBoardPage extends React.Component {
       var self = this;
       getVisitHistory(this.state.Username)
       .then(function(items) {
+        console.log('this.state.Username => ',self.state.Username);
         self.setState({
-          visitHistory: items
+          visitHistory: items,
+          openViewHistory: true
         });
         console.log('this.state.data => ',self.state.visitHistory);
 
       });
           this.setState({
             openViewHistory: true,
-            selectViewProperty: null
+            // selectViewProperty: null
           });
     };
 
@@ -174,10 +228,32 @@ export default class VisitorDashBoardPage extends React.Component {
     handleLogVisit =() => {
       if (this.state.logged) {
         // deleteLogHistory();
-        this.setState({
+        unLogVisitHistory(this.state.Username, this.state.detailProperty.ID)
+      .then(function(items) {
+        console.log('this.state.Username => ',self.state.Username);
+        self.setState({
           logged: false,
           logLabel: "Log Visit"
-        })
+
+        });
+        if (!this.state.selectViewDetailProperty ) {
+          self.setState({
+            selectViewDetailProperty: null,
+            openViewProperty: false
+          })
+        } else {
+          self.setState({
+            selectViewProperty: null,
+            openViewProperty: false
+          })
+        }
+        }
+      });
+          this.setState({
+            openViewHistory: true,
+            // selectViewProperty: null
+          });
+        
       } else {
         // addLogHistory();
         this.setState({
@@ -185,6 +261,7 @@ export default class VisitorDashBoardPage extends React.Component {
           logLabel: "Un-Log Visit"
         })
       }
+
       this.setState({
         openViewProperty: false
       })
@@ -199,6 +276,19 @@ export default class VisitorDashBoardPage extends React.Component {
       } else {
         this.setState({
           selectViewProperty: row
+        });
+      }
+    }
+
+    onAddSelectedViewDetailProperty = (row) => {
+      console.log(this.state.selectViewDetailProperty === row);
+      if (this.state.selectViewDetailProperty === row) {
+        this.setState({
+          selectViewDetailProperty: null
+        });
+      } else {
+        this.setState({
+          selectViewDetailProperty: row
         });
       }
     }
@@ -250,7 +340,7 @@ export default class VisitorDashBoardPage extends React.Component {
       <FlatButton
         label="View Property Details"
         primary={true}
-        onClick={this.handleOpenViewProperty}
+        onClick={this.handleViewDetailProperty}
       />,
       <FlatButton
         label="Back"
@@ -279,7 +369,6 @@ export default class VisitorDashBoardPage extends React.Component {
          <Dialog
           title="Property Detail"
           actions={actionsViewProperty}
-          modal={false}
           open={this.state.openViewProperty}
           onRequestClose={this.handleCloseViewProperty}
         >
@@ -301,7 +390,6 @@ export default class VisitorDashBoardPage extends React.Component {
          <Dialog
           title="My Visit History"
           actions={actionsViewHistory}
-          modal={false}
           open={this.state.openViewHistory}
           onRequestClose={this.handleCloseViewHistory}
         >

@@ -24,67 +24,67 @@ const ViewDetailPropertyForm = ({
       <tr>
         <td>Name:  </td>
 
-        <td>   {data[0].Name}  </td>
+        <td>   {data.Name}  </td>
       </tr>
       <tr>
         <td>Owner:  </td>
 
-        <td>   {data[0].Name}  </td>
+        <td>   {data.Owner}  </td>
       </tr>
       <tr>
         <td>Owner Email:  </td>
 
-        <td>   {data[0].Name}  </td>
+        <td>   {data.Name}  </td>
       </tr>
       <tr>
         <td>Visits:  </td>
 
-        <td>   {data[0].numberofVisit}  </td>
+        <td>   {data.numberofVisit}  </td>
       </tr>
       <tr>
         <td>Address:  </td>
 
-        <td>   {data[0].Street}  </td>
+        <td>   {data.Street}  </td>
       </tr>
       <tr>
         <td>City:  </td>
 
-        <td>   {data[0].City}  </td>
+        <td>   {data.City}  </td>
       </tr>
       <tr>
         <td>Zip:  </td>
 
-        <td>   {data[0].Zip}  </td>
+        <td>   {data.Zip}  </td>
       </tr>
       <tr>
         <td>Size:  </td>
 
-        <td>   {data[0].Size}  </td>
+        <td>   {data.Size}  </td>
       </tr>
       <tr>
         <td>Avg. Rating:  </td>
 
-        <td>   {data[0].avgRating}  </td>
+        <td>   {data.avgRating}  </td>
       </tr>
       <tr>
         <td>Type:  </td>
 
-        <td>   {data[0].PropertyType}  </td>
+        <td>   {data.PropertyType}  </td>
       </tr>
       <tr>
         <td>Public:  </td>
 
-        <td>   {data[0].IsPublic}  </td>
+        <td>   {data.IsPublic}  </td>
       </tr>
       <tr>
         <td>Commercial:  </td>
 
-        <td>   {data[0].IsCommercial}  </td>
+        <td>   {data.IsCommercial}  </td>
       </tr>
       <tr>
         <td>ID:  </td>
 
-        <td>   {data[0].ID}  </td>
+        <td>   {data.ID}  </td>
       </tr>
 
 
