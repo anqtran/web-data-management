@@ -253,11 +253,11 @@ connection.query(sql,body, function(err,res){
 
 router.post('/unLogVisitHistory/:username/:propid', (req, response) => {
   const errors = {};
-  var sql = "DELETE FROM Visits WHERE Username = (?) AND PropertyID = (?) ";
+  var sql = "DELETE FROM Visit WHERE Username = (?) AND PropertyID = (?) ";
   var body = [req.params.username, req.params.propid];
   connection.query(sql, body, function(err, res) {
     if (err) {
-      return res.status(200).json({Error: true, success: false, errors: errors});
+      return response.status(200).json({Error: true, success: false, errors: errors});
     } else {
       
     }
@@ -273,7 +273,7 @@ router.post('/unLogAllVisitHistory/:username', (req, response) => {
   var body = [req.params.username];
   connection.query(sql, body, function(err, res) {
     if (err) {
-      return res.status(200).json({Error: true, success: false, errors: errors});
+      return response.status(200).json({Error: true, success: false, errors: errors});
     } else {
       
     }
@@ -310,7 +310,7 @@ router.post('/logVisitHistory/:username/:propid/:rating', (req, response) => {
   connection.query(sql, body, function(err, res) {
     if (err) {
       console.log('err => ',err);
-      return res.status(200).json({Error: true, success: false, errors: errors});
+      return response--.status(200).json({Error: true, success: false, errors: errors});
     } else {
       
     }

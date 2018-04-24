@@ -188,18 +188,16 @@ export default class VisitorDashBoardPage extends React.Component {
 
           self.isLog = false;
           self.newLogLabel = "Log Visit"
-          if (items[0].avgRating) {
+          if (!items[0].avgRating) {
             items[0].avgRating = "N/A";
-          } else {
-            self.isLog = true;
-            self.newLogLabel = "Un-Log Visit"
-          }
+          } 
           getLogHistory(self.state.Username)
-      .then(function(items) {
+      .then(function(items1) {
         console.log('this.state.Username => ',self.state.Username);
-        if (items) {
+        console.log('items1 => ',items1);
+        if (items1[0].length > 0 ) {
           self.setState({
-            rating: items
+            rating: items1
           })
         } else {
           self.setState({

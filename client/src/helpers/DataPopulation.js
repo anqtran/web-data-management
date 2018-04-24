@@ -181,7 +181,7 @@ export function getVisitHistory(Username) {
 export function getLogHistory(Username, PropID) {
   console.log('Visitor is ', Username);
   return new Promise(function(resolve, reject) {
-    axios.get(`/populate/getVisitHistory/${Username}/${PropID}`)
+    axios.get(`/populate/getLogHistory/${Username}/${PropID}`)
     .then(function (res) {
       console.log("Ahihihihihihiiiiiii");
       console.log(res);
@@ -191,6 +191,7 @@ export function getLogHistory(Username, PropID) {
         console.log('res.data.errors => ',res.data.errors);
         reject(res.data.Error)
       } else {
+        console.log('res => ',res);
         resolve(res.data.visitLog);
       }
     })
