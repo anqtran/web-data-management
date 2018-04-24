@@ -5,14 +5,19 @@ import { Card, CardText } from 'material-ui/Card';
 import '../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import 'react-notifications/lib/notifications.css';
 import ToggleDisplay from 'react-toggle-display';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 
 const ViewDetailPropertyForm = ({
   isAnimal,
   isCrop,
-  data
+  data,
+  animals,
+  crops
 }) => (
+  
+
   <Card className="container">
     <form>
     <table>
@@ -82,25 +87,33 @@ const ViewDetailPropertyForm = ({
         <td>   {data[0].ID}  </td>
       </tr>
 
+
+      <tr>
       <ToggleDisplay show={isCrop}>
         <tr>
           <td> Crops:    </td>
 
-          <td>   {data[0].ID}  </td>
+          <td>   {JSON.stringify(crops)}  </td>
         </tr>
 
       </ToggleDisplay>
-      
+      </tr>
+
+      <tr>
       <ToggleDisplay show={isAnimal}>
         <tr>
           <td> Animals:    </td>
 
-          <td>   {data[0].ID}  </td>
+          <td>   {JSON.stringify(animals)}  </td>
         </tr>
 
       </ToggleDisplay>
+      </tr>
 
 
+
+
+      
     </table>
 
 
@@ -112,7 +125,9 @@ const ViewDetailPropertyForm = ({
 ViewDetailPropertyForm.propTypes = {
   isAnimal: PropTypes.bool.isRequired,
   isCrop: PropTypes.bool.isRequired,
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  animals: PropTypes.array.isRequired,
+  crops: PropTypes.array.isRequired
 };
 
 export default ViewDetailPropertyForm;
