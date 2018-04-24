@@ -36,7 +36,7 @@ const VisitorLogHistoryTable = ({
             width='15%'
             tdStyle={ { whiteSpace: 'normal' } }
             thStyle={ { whiteSpace: 'normal' } }
-
+            filter={ { type: 'TextFilter' }}
           >
           Name
           </TableHeaderColumn>

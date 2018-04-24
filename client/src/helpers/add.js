@@ -5,12 +5,13 @@ import axios from 'axios';
 export function addProperty(property) {
   console.log('property => ',property);
   return new Promise(function(resolve, reject) {
+    console.log("property is =>  ", property);
     axios.post(`/add/addProperty/`,
     {
       property : property
     }) 
     .then(function (res) {
-
+      console.log("res is  => ", res);
       if (res.data.Error) {
         resolve(res.data)
       } else {

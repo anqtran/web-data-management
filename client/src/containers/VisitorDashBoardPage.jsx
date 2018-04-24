@@ -160,8 +160,6 @@ export default class VisitorDashBoardPage extends React.Component {
 }
 
 
-
-
     handleOpenViewProperty = () => {
        if (this.state.selectViewProperty !== null ) {
         var self = this;
@@ -186,26 +184,30 @@ export default class VisitorDashBoardPage extends React.Component {
             
           }
 
-          self.isLog = false;
-          self.newLogLabel = "Log Visit"
+     
           if (!items[0].avgRating) {
             items[0].avgRating = "N/A";
           } 
-          getLogHistory(self.state.Username)
+          console.log("self.items.PropID => ",items[0].ID);
+          getLogHistory(self.state.Username, items[0].ID)
       .then(function(items1) {
         console.log('this.state.Username => ',self.state.Username);
         console.log('items1 => ',items1);
-        if (items1[0].length > 0 ) {
+        if (items1.length > 0 || items1[0].length > 0 ) {
           self.setState({
-            rating: items1
+            rating: items1[0].Rating,
+            logged: true,
+            logLabel: "Un-Log Visit"
           })
         } else {
           self.setState({
           rating: 0,
+          logged: false,
+          logLabel: "Log Visit"
         });
         }
         
-        console.log('this.state.data => ',self.state.rating);
+        console.log('self.state.rating => ',self.state.rating);
 
       });
           self.setState({
@@ -214,8 +216,6 @@ export default class VisitorDashBoardPage extends React.Component {
             isCrop: self.isTrueCrop,
             animals: items[2],
             crops: items[1],
-            logged: self.isLog,
-            logLabel: self.newLogLabel,
             openViewProperty: true
           });
         console.log('self.state.detailProperty => ',self.state.detailProperty);
@@ -259,15 +259,17 @@ export default class VisitorDashBoardPage extends React.Component {
     handleLogVisit = () => {
       if (this.state.logged ) {
         // deleteLogHistory();
-        unLogVisitHistory(this.state.Username, this.state.detailProperty.ID)
+        var self = this;
+        unLogVisitHistory(self.state.Username, self.state.detailProperty.ID)
       .then(function(items) {
         console.log('this.state.Username => ',self.state.Username);
         self.setState({
           logged: false,
-          logLabel: "Log Visit"
+          logLabel: "Log Visit",
+          rating: 0
 
         });
-        if (!this.state.selectViewDetailProperty ) {
+        if (!self.state.selectViewDetailProperty ) {
           self.setState({
             selectViewDetailProperty: null,
             openViewProperty: false
@@ -283,6 +285,7 @@ export default class VisitorDashBoardPage extends React.Component {
       });
         
       } else if ( this.state.rating != 0) {
+        var self = this;
         logVisitHistory(this.state.Username, this.state.detailProperty.ID, this.state.rating)
       .then(function(items) {
         console.log('this.state.Username => ',self.state.Username);
@@ -291,7 +294,7 @@ export default class VisitorDashBoardPage extends React.Component {
           logLabel: "Un-Log Visit"
 
         });
-        if (!this.state.selectViewDetailProperty ) {
+        if (!self.state.selectViewDetailProperty ) {
           self.setState({
             selectViewDetailProperty: null,
             openViewProperty: false

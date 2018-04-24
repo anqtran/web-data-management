@@ -222,6 +222,11 @@ const OwnerSignUpForm = ({
           label="Create New Owner Account" primary />
       </div>
 
+      <div className="button-line">
+      <RaisedButton type="Cancel" label="Cancel" 
+                    href="../login" primary/>
+      </div>
+
       <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
     </form>
   </Card>
