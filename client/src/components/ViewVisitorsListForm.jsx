@@ -2,60 +2,37 @@ import React, { PropTypes } from 'react'; import { Link } from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import VisitorTableStore from '../AdminTableManagement/VisitorTableStore'
 
 
-const ViewVisitorsListForm = ({
-  onSubmit,
-  onChange,
+const ViewVisitorListForm = ({
   errors,
-  user
+  name
 }) => (
-   <Card className="container">
+  <Card className="container">
+    <form>
+      <h2 className="card-heading">Welcome Owner</h2>
 
-        Welcome ${user}
+      <VisitorTableStore />
+      {errors.summary && <p className="error-message">{errors.summary}</p>}
 
 
       <div className="button-line">
-          <RaisedButton label="View Visitor List" onClick={this.handleOpenViewVisiterList} />
-         <Dialog
-          title="All Visitors in System"
-          actions={actionsViewVisterList}
-          modal={false}
-          open={this.state.openViewVisiterList}
-          onRequestClose={this.handleCloseViewVisiterList}
-        >
-
-        </Dialog>
-
+        <RaisedButton type="view_other_properties" label="View Other Properties" primary 
+                      href={"./allothervalidproperties/" + name}/>
       </div>
 
       <div className="button-line">
-          <RaisedButton label="View History" onClick={this.handleOpenViewHistory} />
-
-         <Dialog
-          title="My Visit History"
-          actions={actionsViewHistory}
-          modal={false}
-          open={this.state.openViewHistory}
-          onRequestClose={this.handleCloseViewHistory}
-        >
-
-          <VisitorLogHistoryTable
-            onAddSelectedViewHistory={ this.onAddSelectedViewHistory }
-            data={ this.state.data}
-          />
-          </Dialog>
-
+        <RaisedButton type="logout" label="Logout" primary         
+                      href="http://localhost:3000/"/>
       </div>
 
+    </form>
   </Card>
 );
 
-ViewVisitorsListForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+ViewVisitorListForm.propTypes = {
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
 };
 
-export default ViewVisitorsListForm;
+export default ViewVisitorListForm;

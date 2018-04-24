@@ -101,15 +101,38 @@ const errors = {};
         console.log('err => ',err);
         return errors;
        } else {
-          // console.log('res => ',res);
           var data = JSON.parse(JSON.stringify(res));
-          // console.log('data => ',data);
-          // data = [];
           console.log('data => ',data);
           return response.json({"Error": false, "Message": "Success", "properties": data});
        }
     });
 });
+
+
+router.get(`/getVisitors/`, (req, response) => {
+const errors = {};
+    var sql =  `  SELECT        U.Username, U.Email, tempV.LoggedVisits
+  FROM        user AS U
+                LEFT JOIN (SELECT V.Username, COUNT(V.Username) AS LoggedVisits
+                    FROM visit AS V INNER JOIN user AS U
+                                      ON U.Username = V.Username
+                                      GROUP BY V.Username) AS tempV
+                ON U.Username = tempV.Username
+  WHERE         UserType = 'VISITOR';`;
+    connection.query(sql, function(err,res){
+      console.log('sql => ',sql);
+       if(err){
+        console.log('err => ',err);
+        return errors;
+       } else {
+          var data = JSON.parse(JSON.stringify(res));
+          console.log('data => ',data);
+          return response.json({"Error": false, "Message": "Success", "visitors": data});
+       }
+    });
+});
+
+
 
 
 

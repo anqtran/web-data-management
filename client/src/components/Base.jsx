@@ -53,12 +53,12 @@ const Base = ({ children }) => (
 
 
     <Route exact path="/dashboard/admin/:username" component={AdminDashBoard}/>
-    <Route path="/dashboard/admin/viewvisitorslist" component={AdminViewVisitorsList}/>
-    <Route path="/admin/viewownerslist" component={AdminViewOwnersList}/>
-    <Route path="/admin/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
-    <Route path="/admin/viewunconfirmedproperties" component={AdminViewUnconfirmedProperties}/>
-    <Route path="/admin/viewapprovedanimalsandcrops" component={AdminViewApprovedAnimalsandCrops}/>
-    <Route path="/admin/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
+    <Route path="/dashboard/admin/:username/viewvisitorslist" component={AdminViewVisitorsList}/>
+    <Route path="/admin/:username/viewownerslist" component={AdminViewOwnersList}/>
+    <Route path="/admin/:username/viewconfirmedproperties" component={AdminViewConfirmedProperties}/>
+    <Route path="/admin/:username/viewunconfirmedproperties" component={AdminViewUnconfirmedProperties}/>
+    <Route path="/admin/:username/viewapprovedanimalsandcrops" component={AdminViewApprovedAnimalsandCrops}/>
+    <Route path="/admin/:username/viewpendinganimalsandcrops" component={AdminViewPendingAnimalsandCrops}/>
 
     <Route path="/dashboard/visitor" component={VisitorDashBoard}/>
     <Route path="/visitor/confirmedpropertydetails" component={VisitorPropertyDetails}/>

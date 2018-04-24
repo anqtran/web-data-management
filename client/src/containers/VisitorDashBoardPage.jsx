@@ -240,19 +240,14 @@ export default class VisitorDashBoardPage extends React.Component {
           self.setState({
             selectViewDetailProperty: null,
             openViewProperty: false
-          })
+          });
         } else {
           self.setState({
             selectViewProperty: null,
             openViewProperty: false
-          })
-        }
+          });
         }
       });
-          this.setState({
-            openViewHistory: true,
-            // selectViewProperty: null
-          });
         
       } else {
         // addLogHistory();

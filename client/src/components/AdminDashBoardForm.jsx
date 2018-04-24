@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 
 
 const AdminDashBoardForm = ({
+  name
 }) => (
   <Card className="container">
     <form>
@@ -13,7 +14,7 @@ const AdminDashBoardForm = ({
 
       <div className="button-line">
         <RaisedButton type="view_visitors_list" label="View Visitors List" primary 
-                      href="./ViewVisitorsList"/>
+                      href="./ViewVisitorsList/a"/>
       </div>
 
       <div className="button-line">
@@ -51,6 +52,7 @@ const AdminDashBoardForm = ({
 );
 
 AdminDashBoardForm.propTypes = {
+  name: PropTypes.string.isRequired
 };
 
 export default AdminDashBoardForm;

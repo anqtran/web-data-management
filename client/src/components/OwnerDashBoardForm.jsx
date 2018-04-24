@@ -7,7 +7,6 @@ import OwnerDashBoardTableForm from '../AdminTableManagement/OwnerDashBoardTable
 
 const OwnerDashBoardForm = ({
   errors,
-  name
 }) => (
   <Card className="container">
     <form>
@@ -32,8 +31,7 @@ const OwnerDashBoardForm = ({
 );
 
 OwnerDashBoardForm.propTypes = {
-  errors: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired
+  errors: PropTypes.object.isRequired
 };
 
 export default OwnerDashBoardForm;

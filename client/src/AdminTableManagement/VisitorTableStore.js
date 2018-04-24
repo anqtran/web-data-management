@@ -1,67 +1,48 @@
 import React from "react";
 import { BootstrapTable, TableHeaderColumn, InsertButton, DeleteButton } from 'react-bootstrap-table';
 import '../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+import {getAllVisitor} from '../helpers/DataPopulation';
 
-
-
-function getVisitors() {
-    const products = [];
-    for (let i = 0; i < 12; i++) {
-      const id = "startId" + i;
-      products.push({
-        username: id,
-        email: id + '@yahoo.com',
-        visit: Math.floor((Math.random() * 2000) + 1)
-      });
-    }
-    return products;
-  }
 
 export default class VisitorTableStore extends React.Component {
     constructor(props) {
       super(props);
-      this.visitors = getVisitors();
       this.state = {
-        data: this.visitors,
-        selectArr: []
-
-      };
-    }
-  
-    // onCellEdit = (row, fieldName, value) => {
-    //     console.log(row);
-    //   const { data } = this.state;
-    //   let rowIdx;
-    //   const targetRow = data.find((vis, i) => {
-    //     if (vis.username === row.username) {
-    //       rowIdx = i;
-    //       return true;
-    //     }
-    //     return false;
-    //   });
-    //   if (targetRow) {
-    //     targetRow[fieldName] = value;
-    //     data[rowIdx] = targetRow;
-    //     this.setState({ data });
-    //   }
-    // }
-  
-    // onAddRow = (row) => {
-    //   this.visitors.push(row);
-    //   this.setState({
-    //     data: this.visitors
-    //   });
-    // }
-    
-    onCellEdit = (row) => {
-      this.visitors.forEach((visitor) => {
-        if (this.state.selectArr.includes(visitor) && visitor.visit !== 0) {
-          visitor.visit = 0;
-          console.log(visitor.bgColor);
+        data: [],
+        select : null
+      }
+    };
+      componentWillMount() {
+      var self = this;
+      getAllVisitor()
+      .then(function(items) {
+      items.forEach((item) => {
+        if(!item.LoggedVisits) {
+          item.LoggedVisits = 0;
         }
-      }); 
+      })
+        console.log(items);
+        self.setState({
+          select: null,
+          data: items
+        });
+      });
+      console.log(this.state.data);
+    }
+
+
+
+
+    onCellEdit = (row) => {
+      console.log(row);
+      // this.visitors.forEach((visitor) => {
+      //   if (this.state.selectArr.includes(visitor) && visitor.visit !== 0) {
+      //     visitor.visit = 0;
+      //     console.log(visitor.bgColor);
+      //   }
+      // }); 
       this.setState({
-        data: this.visitors,
+        data: this.visitors
       });
     }
 
@@ -76,17 +57,13 @@ export default class VisitorTableStore extends React.Component {
     }
   
     onAddSelectedRow = (row) => {
-      if (this.state.selectArr.includes(row)) {
-        let newArr = this.state.selectArr.filter((product) => {
-          return product !== row;
-        });
+      if (this.state.select != row) {
         this.setState({
-          selectArr: newArr
-        });
+          select: row
+        })
       } else {
-        this.state.selectArr.push(row);
         this.setState({
-          selectArr: this.state.selectArr
+          select: null
         });
       }
     }
@@ -117,12 +94,8 @@ export default class VisitorTableStore extends React.Component {
     }
     
     handleDeleteVisitorButtonClick = (onClick) => {
-      // Custom your onClick event here,
-      // it's not necessary to implement this function if you have no any process before onClick
-      // console.log('This is my custom function for InserButton click event');
-      // console.log(this.props.selectArr);
-      this.props.onDeleteRow(this.props.selectArr);
-      // onClick();
+      
+
     }
     DeleteVistorButton = (onClick) => {
       return (
@@ -136,12 +109,7 @@ export default class VisitorTableStore extends React.Component {
     }
 
     handleDeleteLogVisitorButtonClick = (onClick) => {
-      // Custom your onClick event here,
-      // it's not necessary to implement this function if you have no any process before onClick
-      // console.log('This is my custom function for InserButton click event');
-      // console.log(this.props.selectArr);
-      this.props.onCellEdit(this.props.selectArr);
-      // onClick();
+
     }
     DeleteLogVistorButton = (onClick) => {
       return (
@@ -159,7 +127,7 @@ export default class VisitorTableStore extends React.Component {
       //   mode: 'dbclick'
       // };
       const selectRow = {
-        mode: 'checkbox',
+        mode: 'radio',
         bgColor: '#4285F4',
         hideSelectColumn: true,
         clickToSelectAndEditCell: true,
@@ -182,25 +150,27 @@ export default class VisitorTableStore extends React.Component {
                         version='4'
         >
           <TableHeaderColumn 
-            dataField='username' isKey={ true } 
+            dataField='Username' isKey={ true } 
             dataSort={ true } 
             // editable={ false }
             dataAlign='center'
           >
           Username
           </TableHeaderColumn>
+
           <TableHeaderColumn 
-            dataField='email' 
+            dataField='Email' 
             dataSort={ true } 
-            // editable={ false }
             dataAlign='center'
           >
           Email
           </TableHeaderColumn>
           <TableHeaderColumn 
-            dataField='visit' 
+            dataField='LoggedVisits' 
             dataSort={ true }
             dataAlign='center'
+            editable={ true }
+
           >
           Log Visit
           </TableHeaderColumn>

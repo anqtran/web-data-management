@@ -49,6 +49,24 @@ export function getAllProperties() {
 }
 
 
+export function getAllVisitor() {
+  return new Promise(function(resolve, reject) {
+    axios.get(`/populate/getVisitors`)
+    .then(function (res) {
+
+      if (res.data.Error) {
+        console.log('res.data.errors => ',res.data.errors);
+        reject(res.data.Error)
+      } else {
+        resolve(res.data.visitors);
+      }
+    })
+  })
+}
+
+
+
+
 export function getFarmItems() {
   console.log('function is running => ');
   return new Promise(function(resolve, reject) {
