@@ -60,7 +60,7 @@ const VisitorSignUpForm = ({
       </div>
 
       <div className="button-line">
-        <Link to="/"><RaisedButton type="submit" label="Create New Account" primary/></Link>
+      <RaisedButton type="submit" label="Create New Account" primary/>
       </div>
 
       <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>

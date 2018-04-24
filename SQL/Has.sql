@@ -1,5 +1,3 @@
-INSERT INTO Has (PropertyID, ItemName)
-VALUES  ('00000', 'Broccoli');
 
 INSERT INTO Has (PropertyID, ItemName)
 VALUES  ('00001', 'Corn');
@@ -32,7 +30,7 @@ INSERT INTO Has (PropertyID, ItemName)
 VALUES  ('00002', 'Peruvian Lily');
 
 INSERT INTO Has (PropertyID, ItemName)
-VALUES  ('00000', 'Corn');
+VALUES  ('00004', 'Corn');
 
 INSERT INTO Has (PropertyID, ItemName)
 VALUES  ('00001', 'Cow');
@@ -41,10 +39,10 @@ INSERT INTO Has (PropertyID, ItemName)
 VALUES  ('00001', 'Chicken');
 
 INSERT INTO Has (PropertyID, ItemName)
-VALUES  ('00000', 'Onion');
+VALUES  ('00002', 'Onion');
 
 INSERT INTO Has (PropertyID, ItemName)
-VALUES  ('00000', 'Daisy');
+VALUES  ('00004', 'Daisy');
 
 INSERT INTO Has (PropertyID, ItemName)
 VALUES  ('00003', 'Peach');
