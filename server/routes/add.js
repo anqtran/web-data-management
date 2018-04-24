@@ -259,7 +259,8 @@ router.post('/unLogVisitHistory/:username/:propid', (req, response) => {
     if (err) {
       return response.status(200).json({Error: true, success: false, errors: errors});
     } else {
-      
+            return response.status(200).json({Error: false, success: true, errors: errors});
+
     }
   })
 });
@@ -310,9 +311,10 @@ router.post('/logVisitHistory/:username/:propid/:rating', (req, response) => {
   connection.query(sql, body, function(err, res) {
     if (err) {
       console.log('err => ',err);
-      return response--.status(200).json({Error: true, success: false, errors: errors});
+      return response.status(200).json({Error: true, success: false, errors: errors});
     } else {
-      
+      return response.status(200).json({Error: false, success: true, errors: errors});
+
     }
   })
 });

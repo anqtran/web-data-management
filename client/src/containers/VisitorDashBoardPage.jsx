@@ -186,8 +186,7 @@ export default class VisitorDashBoardPage extends React.Component {
             
           }
 
-          self.isLog = false;
-          self.newLogLabel = "Log Visit"
+     
           if (!items[0].avgRating) {
             items[0].avgRating = "N/A";
           } 
@@ -195,13 +194,17 @@ export default class VisitorDashBoardPage extends React.Component {
       .then(function(items1) {
         console.log('this.state.Username => ',self.state.Username);
         console.log('items1 => ',items1);
-        if (items1[0].length > 0 ) {
+        if (items1.length > 0 ) {
           self.setState({
-            rating: items1
+            rating: items1,
+            logged: true,
+            logLabel: "Un-Log Visit"
           })
         } else {
           self.setState({
           rating: 0,
+          logged: false,
+          logLabel: "Log Visit"
         });
         }
         
@@ -214,8 +217,6 @@ export default class VisitorDashBoardPage extends React.Component {
             isCrop: self.isTrueCrop,
             animals: items[2],
             crops: items[1],
-            logged: self.isLog,
-            logLabel: self.newLogLabel,
             openViewProperty: true
           });
         console.log('self.state.detailProperty => ',self.state.detailProperty);
@@ -259,6 +260,7 @@ export default class VisitorDashBoardPage extends React.Component {
     handleLogVisit = () => {
       if (this.state.logged ) {
         // deleteLogHistory();
+        var self = this;
         unLogVisitHistory(this.state.Username, this.state.detailProperty.ID)
       .then(function(items) {
         console.log('this.state.Username => ',self.state.Username);
@@ -267,7 +269,7 @@ export default class VisitorDashBoardPage extends React.Component {
           logLabel: "Log Visit"
 
         });
-        if (!this.state.selectViewDetailProperty ) {
+        if (!self.state.selectViewDetailProperty ) {
           self.setState({
             selectViewDetailProperty: null,
             openViewProperty: false
@@ -283,6 +285,7 @@ export default class VisitorDashBoardPage extends React.Component {
       });
         
       } else if ( this.state.rating != 0) {
+        var self = this;
         logVisitHistory(this.state.Username, this.state.detailProperty.ID, this.state.rating)
       .then(function(items) {
         console.log('this.state.Username => ',self.state.Username);
@@ -291,7 +294,7 @@ export default class VisitorDashBoardPage extends React.Component {
           logLabel: "Un-Log Visit"
 
         });
-        if (!this.state.selectViewDetailProperty ) {
+        if (!self.state.selectViewDetailProperty ) {
           self.setState({
             selectViewDetailProperty: null,
             openViewProperty: false
