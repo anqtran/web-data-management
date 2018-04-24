@@ -16,74 +16,69 @@ export default class OwnerDashboardTableForm extends React.Component {
         data: [],
         select:null
       }
-      // this.items = getOwnerProperties('orchardowner');
-      // console.log('this.items => ',this.items);
-      // this.state = {
-      //   select: null,
-      //   data:[]
-      // }
-      // console.log('this.state.data => ',this.state.data);
     };
   
     componentWillMount() {
       var self = this;
-      console.log("Mouting")
-      getOwnerProperties('orchardowner')
+      var location = window.location.href;
+      var index = location.lastIndexOf('/');
+      var Username = location.substring(index + 1);
+      getOwnerProperties(Username)
       .then(function(items) {
-        console.log("Items:" + JSON.stringify(items))
-        self.setState( {
-          select: null,
-          data: items
-        })
+      items.forEach((item) => {
+        if(!item.numberofVisit) {
+          item.numberofVisit = 0;
+        }
+        if(!item.avgRating) {
+          item.avgRating = 'N/A';
+        }
+        if(item.ApprovedBy) {
+          item.ApprovedBy = 1;
+        } else {
+          item.ApprovedBy = 0;
+        }
       })
-      // // this.s = getOwnerProperties("orchardowner");
-      // // console.log('s => ', getOwnerProperties("orchardowner"));
-      // this.setState({
-      //   data: this.s
-      //   });
-      // console.log('tdrt: ',this.state.data);
+        self.setState({
+          select: null,
+          data: items,
+          Username : Username
+        });
+      })
     }
 
-    // componentWillUnmount() {
-
-    // }
-
     onManageProperty = (row) => {
-      var id = this.state.data[0].ID
+      var id = this.state.select;
       console.log(id);
-      window.location.replace("http://localhost:3000/owner/manageproperty/" + id);
       if (this.state.select !== null) {
-        
+        window.location.replace("http://localhost:3000/owner/manageproperty/" + id);
+      } else {
+        NotificationManager.warning('You have not selected a property');
       }
     }
 
     onAddProperty = (row) => {
       console.log("Running");
-      // console.log('this.state.data => ',this.state.data);
-      // console.log("Props:", this.props)
       window.location.replace("http://localhost:3000/owner/addproperty");
     }
 
     onAddSelectedRow = (row) => {
-      console.log(this.state.select === row);
+      console.log("onAddSelectedRow called", this.state.select === row);
       if (this.state.select === row) {
         this.setState({
           select: null
         });
       } else {
         this.setState({
-          select: row
+          select: row.ID
         });
       }
+      console.log('select => ',row.ID);
     }
 
     render() {
       console.log('this.state => ',this.state);
       return (
         <OwnerTable
-        //   onCellEdit={ this.onCellEdit }
-        //   onAddRow={ this.onAddRow }
-        //   onDeleteRow={ this.onDeleteRow }
           onAddSelectedRow={ this.onAddSelectedRow }
           onManageProperty ={ this.onManageProperty }
           onAddProperty={ this.onAddProperty }
@@ -94,23 +89,14 @@ export default class OwnerDashboardTableForm extends React.Component {
   }
   
   class OwnerTable extends React.Component {
-    // constructor(props) {
-    //   super(props);
-    // }
   
     remote(remoteObj) {
-      // Only cell editing, insert and delete row will be handled by remote store
-    //   remoteObj.cellEdit = true;
       remoteObj.insertRow = true;
       remoteObj.dropRow = true;
       return remoteObj;
     }
 
     handleAddPropertyButtonClick = (onClick) => {
-      // Custom your onClick event here,
-      // it's not necessary to implement this function if you have no any process before onClick
-      // console.log('This is my custom function for InserButton click event');
-      // console.log(this.props.selectArr);
       this.props.onAddProperty();
     //   onClick();
     }
@@ -143,9 +129,6 @@ export default class OwnerDashboardTableForm extends React.Component {
     }
 
     render() {
-    //   const cellEditProp = {
-    //     mode: 'dbclick'
-    //   };
       const selectRow = {
         mode: 'radio',
         bgColor: '#4285F4',
@@ -161,11 +144,7 @@ export default class OwnerDashboardTableForm extends React.Component {
                         selectRow={ selectRow }
                         remote={ this.remote }
                         insertRow deleteRow search pagination
-                        // cellEdit={ cellEditProp }
                         options={ {
-                        //   onCellEdit: this.props.onCellEdit,
-                        //   onDeleteRow: this.props.onDeleteRow,
-                        //   onAddRow: this.props.onAddRow,
                         onManageProperty: this.props.onManageProperty,
                         onAddProperty: this.props.onAddProperty,
                           insertBtn: this.AddPropertyButton,
@@ -196,7 +175,6 @@ export default class OwnerDashboardTableForm extends React.Component {
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
 
-            // editable={ { type: 'text', validator: this.itemNameValidator } }
           >
           Name
           </TableHeaderColumn>
@@ -208,7 +186,6 @@ export default class OwnerDashboardTableForm extends React.Component {
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
 
-            // editable={ { type: 'select', options: { values: itemType } } }
           >
           Address
           </TableHeaderColumn>
@@ -256,6 +233,19 @@ export default class OwnerDashboardTableForm extends React.Component {
           >
           Type
           </TableHeaderColumn>
+
+          <TableHeaderColumn 
+            dataField='ApprovedBy' 
+            dataSort={ true } 
+            dataAlign='center'
+            width='10%'
+            tdStyle={ { whiteSpace: 'normal' } } 
+            thStyle={ { whiteSpace: 'normal' } }
+
+          >
+          Is Valid
+          </TableHeaderColumn>
+
           <TableHeaderColumn 
             dataField='isPublic' 
             dataSort={ true } 
@@ -263,7 +253,6 @@ export default class OwnerDashboardTableForm extends React.Component {
             width='8%'
             tdStyle={ { whiteSpace: 'normal' } } 
             thStyle={ { whiteSpace: 'normal' } }
-
           >
           Public
           </TableHeaderColumn>
@@ -278,17 +267,6 @@ export default class OwnerDashboardTableForm extends React.Component {
           >
           Commercial
           </TableHeaderColumn>
-          {/* <TableHeaderColumn 
-            dataField='Owner' 
-            dataSort={ true } 
-            dataAlign='center'
-            width='10%'
-            tdStyle={ { whiteSpace: 'normal' } } 
-            thStyle={ { whiteSpace: 'normal' } }
-
-          >
-          Owner
-          </TableHeaderColumn> */}
           <TableHeaderColumn 
             dataField='numberofVisit' 
             dataSort={ true } 
@@ -311,24 +289,6 @@ export default class OwnerDashboardTableForm extends React.Component {
           >
           Average Rating
           </TableHeaderColumn>
-          {/* <TableHeaderColumn 
-            dataField='ApprovedBy' 
-            dataSort={ true } 
-            dataAlign='center'
-            width='10%'
-            tdStyle={ { whiteSpace: 'normal' } } 
-            thStyle={ { whiteSpace: 'normal' } }
-
-          >
-          Verried By
-          </TableHeaderColumn> */}
-          {/* <TableHeaderColumn 
-            dataField='numProp' 
-            dataSort={ true }
-            dataAlign='center'
-          >
-          Number of Properties
-          </TableHeaderColumn> */}
         </BootstrapTable>
         <NotificationContainer/>
         </div>

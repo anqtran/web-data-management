@@ -45,17 +45,9 @@ export default class VisitorDashBoardPage extends React.Component {
       getAllProperties()
       .then(function(items) {
         console.log('items => ',items);
-      //   for (var item : items ) {
-      //   if(!item.numberofVisit) {
-      //     item.numberofVisit = 'N/A';
-      //   }
-      //   if(!item.avgRating) {
-      //     item.avgRating = 'N/A';
-      //   }
-      // }
       items.forEach((item) => {
         if(!item.numberofVisit) {
-          item.numberofVisit = 'N/A';
+          item.numberofVisit = 0;
         }
         if(!item.avgRating) {
           item.avgRating = 'N/A';
