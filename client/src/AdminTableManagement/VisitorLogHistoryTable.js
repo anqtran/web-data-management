@@ -41,7 +41,7 @@ const VisitorLogHistoryTable = ({
           Name
           </TableHeaderColumn>
           <TableHeaderColumn
-            dataField='Date'
+            dataField='VisitDate'
             dataSort={ true }
             dataAlign='center'
             width='10%'
@@ -53,7 +53,7 @@ const VisitorLogHistoryTable = ({
           </TableHeaderColumn>
 
           <TableHeaderColumn
-            dataField='rating'
+            dataField='Rating'
             dataSort={ true }
             dataAlign='center'
             width='8%'

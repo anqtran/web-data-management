@@ -48,9 +48,9 @@ export function addOwner(property, user) {
 
 export function logVisitHistory(username, propid, rating) {
   return new Promise(function(resolve, reject) {
+    console.log('log Visit is running ');
     axios.post(`/add/logVisitHistory/${username}/${propid}/${rating}`) 
     .then(function (res) {
-
       if (res.data.Error) {
         console.log('resonve => ');
         resolve(res.data)

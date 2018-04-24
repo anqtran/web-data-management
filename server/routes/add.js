@@ -251,7 +251,7 @@ connection.query(sql,body, function(err,res){
 });
 
 
-router.post('unLogVisitHistory/:username/:propid', (req, response) => {
+router.post('/unLogVisitHistory/:username/:propid', (req, response) => {
   const errors = {};
   var sql = "DELETE FROM Visits WHERE Username = (?) AND PropertyID = (?) ";
   var body = [req.params.username, req.params.propid];
@@ -264,15 +264,18 @@ router.post('unLogVisitHistory/:username/:propid', (req, response) => {
   })
 });
 
-router.post('logVisitHistory/:username/:propid/:rating', (req, response) => {
+router.post('/logVisitHistory/:username/:propid/:rating', (req, response) => {
+  console.log('connecting to log Visit History');
   const errors = {};
   var sql = "INSERT INTO Visit VALUES(?, ?, ?, ?)";
   var date = new Date((new Date).getTime());
   var dt = date.getFullYear().toString() + "-"+(date.getMonth() + 1).toString().padStart(2,"0") + "-"+ date.getMonth().toString().padStart(2,"0");
   // var formatted = dt.format('')
+  console.log('dt => ',dt);
   var body = [req.params.username, req.params.propid, dt, req.params.rating];
   connection.query(sql, body, function(err, res) {
     if (err) {
+      console.log('err => ',err);
       return res.status(200).json({Error: true, success: false, errors: errors});
     } else {
       
