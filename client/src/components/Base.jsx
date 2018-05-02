@@ -29,14 +29,14 @@ const Base = ({ children }) => (
   <div>
     <div className="top-bar">
       <div className="top-bar-left">
-        <NavLink to="/">Atlanta Gardens, Farms, and Orchards</NavLink>
+        <NavLink to="/">Database Web Management</NavLink>
       </div>
 
 
       <div className="top-bar-right">
         <Link to="/login">Log in</Link>
         <Link to="/signup/visitor"> Visitor Sign up</Link>
-        <Link to="/signup/owner"> Owner Sign up</Link>
+        <Link to="/signup/owner"> Member Sign up</Link>
 
       </div>
     </div>
